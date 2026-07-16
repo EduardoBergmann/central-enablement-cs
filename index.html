@@ -238,6 +238,25 @@
   .routing-note h3 { font-size: 1.15rem; }
   .routing-note p { margin-top: 12px; font-size: .96rem; }
 
+  /* Automations by role */
+  .auto-item { display: grid; gap: 3px; padding: 11px 0; border-top: 1px solid var(--line); }
+  .auto-item:first-of-type { border-top: none; padding-top: 4px; }
+  .auto-item .man { font-size: .89rem; color: var(--muted); }
+  .auto-item .man b { color: var(--body); font-weight: 600; }
+  .auto-item .aut { font-size: .89rem; color: var(--body); }
+  .auto-item .aut b { color: var(--signal-ink); font-weight: 700; }
+
+  /* Skills */
+  .skill-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  @media (max-width: 760px) { .skill-cards { grid-template-columns: 1fr; } }
+  .skill { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); }
+  .skill .cmd { display: inline-block; font-family: var(--mono); font-size: .8rem; font-weight: 700; color: var(--signal-ink); background: var(--signal-soft); padding: 4px 10px; border-radius: 7px; }
+  .skill h4 { color: var(--ink); font-size: 1.15rem; margin: 12px 0 8px; }
+  .skill p { font-size: .95rem; }
+  .skill .tag { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  .skill .tag .pip { width: 8px; height: 8px; border-radius: 50%; background: var(--signal); }
+  .skill.real .tag .pip { background: var(--human); }
+
   /* Timeline */
   .timeline { position: relative; display: grid; gap: 0; margin-left: 8px; }
   .tl-item { display: grid; grid-template-columns: auto 1fr; gap: 22px; padding-bottom: 26px; position: relative; }
@@ -298,7 +317,8 @@
         <a href="#ambiente">Instalar</a>
         <a href="#conversar">Conversar</a>
         <a href="#revisar">Revisar</a>
-        <a href="#dados">Buscar dados</a>
+        <a href="#skills">Skills</a>
+        <a href="#dados">Dados</a>
         <a href="#rotina">Rotina</a>
         <a href="#pratica">Na prática</a>
       </div>
@@ -474,12 +494,12 @@
         <article class="dpoint">
           <div class="dp-num" aria-hidden="true"></div>
           <div class="dp-body">
-            <h4>Revise e finalize no app</h4>
-            <p>Antes de agir, confira números e nomes — ele inventa. E toda ação prática, encerre no sistema na hora: é o que dá visibilidade ao gestor e sustenta o SLA de 24h.</p>
+            <h4>Revise antes de agir</h4>
+            <p>Antes de usar qualquer coisa, confira números e nomes — ele inventa. E lembre: o Claude tira o braçal do caminho, mas a decisão e o contato com o cliente continuam seus.</p>
             <ul class="dp-list">
               <li>Revisar o dado crítico contra a fonte.</li>
-              <li>Registrar a ação no app <b>imediatamente</b>.</li>
-              <li>Respeitar a validação humana (ex.: conta com 7 dias de atraso).</li>
+              <li>Deixar a decisão final com a pessoa.</li>
+              <li>Respeitar os momentos que pedem gente (ex.: cliente em risco).</li>
             </ul>
             <a class="dp-more" href="#revisar">Aprofundar: Revisar sempre · Regras de ouro →</a>
           </div>
@@ -495,7 +515,7 @@
           <h3>O que muda quando o time trabalha assim</h3>
         </div>
       </div>
-      <p class="d-foco"><b>Foco desta trilha:</b> enxergar o ganho de eficiência sem perder confiabilidade, visibilidade nem SLA.</p>
+      <p class="d-foco"><b>Foco desta trilha:</b> enxergar o ganho de eficiência sem perder confiabilidade, controle nem o toque humano com o cliente.</p>
       <div class="dpoints">
         <article class="dpoint">
           <div class="dp-num" aria-hidden="true"></div>
@@ -536,8 +556,8 @@
         <article class="dpoint">
           <div class="dp-num" aria-hidden="true"></div>
           <div class="dp-body">
-            <h4>Visibilidade e SLA preservados</h4>
-            <p>A automação respeita os fluxos humanos: onde precisa do CS (ex.: conta com 7 dias de atraso), ela para e espera. E toda ação é finalizada no app — o que mantém o gestor com visão e o <b>SLA de 24h</b> medível.</p>
+            <h4>O humano continua no centro</h4>
+            <p>A automação respeita os fluxos humanos: onde precisa do CS (ex.: um cliente em risco ou chateado), ela para e espera. A IA devolve tempo pro time fazer o que máquina não faz — ouvir e resolver com o cliente.</p>
             <a class="dp-more" href="#regras">Aprofundar: Regras de ouro →</a>
           </div>
         </article>
@@ -785,6 +805,44 @@
   </div>
 </section>
 
+<!-- ================= SKILLS ================= -->
+<section id="skills">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Skills</span>
+      <h2>Ensine uma vez. Use pra sempre — e todo mundo igual.</h2>
+      <p>Uma <b>skill</b> é um procedimento salvo: você ensina ao Claude, uma vez, o passo a passo de como o time faz uma tarefa — e ele repete igualzinho toda vez, pra qualquer pessoa. Em vez de reexplicar o formato certo em cada conversa, você cria a skill uma vez e chama por um atalho.</p>
+    </div>
+
+    <div class="mcp-lead reveal">
+      <div class="glyph" aria-hidden="true">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.3 4.7 5.2.8-3.8 3.6.9 5.1L12 14.8 7.4 17.2l.9-5.1L4.5 8.5l5.2-.8z"/></svg>
+      </div>
+      <div>
+        <h3>Por que isso importa</h3>
+        <p>Skill padroniza a qualidade: o resultado não depende mais de quem pediu nem de quem lembrou do jeito certo. O integrante novo já herda o "jeito da casa" no primeiro dia, e ninguém reinventa a roda. É a diferença entre "cada um pede de um jeito" e "o time inteiro entrega no mesmo padrão".</p>
+      </div>
+    </div>
+
+    <div class="skill-cards">
+      <div class="skill real reveal">
+        <span class="cmd">skill de revisão</span>
+        <h4>A que a gente usa de verdade</h4>
+        <p>Depois de qualquer mudança no nosso app de gestão de risco, uma skill de revisão roda <b>sozinha</b> e confere o trabalho contra os padrões do time <em>antes</em> de entregar. Foi assim que a gente pegou erros antes deles irem pro ar — a revisão deixou de ser "se alguém lembrar" e virou automática.</p>
+        <span class="tag"><span class="pip"></span>Exemplo real do time</span>
+      </div>
+      <div class="skill reveal">
+        <span class="cmd">/resumo-reuniao</span>
+        <h4>Um exemplo pro CS</h4>
+        <p>Ensine a skill uma vez: "extraia da reunião os combinados, o responsável e o prazo, e monte em HTML no formato X". Pronto — qualquer pessoa do time chama <b>/resumo-reuniao</b>, cola a transcrição e recebe o resumo sempre no mesmo padrão, sem reexplicar nada.</p>
+        <span class="tag"><span class="pip"></span>Ideia pra criar</span>
+      </div>
+    </div>
+
+    <p class="note reveal"><b>Como criar (sem programar):</b> descreva pro Claude o passo a passo de como você faz a tarefa e peça pra ele salvar isso como uma skill. Depois é só chamar pelo atalho. Dica: as melhores skills nascem de um caso de rotina que deu certo — ver <a href="#rotina">Casos de rotina</a>.</p>
+  </div>
+</section>
+
 <!-- ================= DADOS / MCP ================= -->
 <section id="dados">
   <div class="wrap">
@@ -933,6 +991,32 @@
       </div>
     </div>
 
+    <h3 class="sub reveal">Tire da sua rotina, devolva tempo pro cliente</h3>
+    <p class="reveal" style="max-width:64ch;color:var(--body);margin-bottom:20px;">Toda hora gasta em tarefa braçal é hora que não foi pro cliente. Veja o que dá pra tirar do prato — por papel. A regra é sempre a mesma: a máquina faz o repetitivo, você fica com a conversa.</p>
+    <div class="lib-grid">
+      <div class="ex reveal">
+        <span class="ex-team">CSM</span>
+        <h4>Menos planilha, mais relação</h4>
+        <div class="auto-item"><span class="man">Manual: montar o <b>resumo de risco/health</b> pra reunião toda semana</span><span class="aut"><b>Auto:</b> o Claude puxa do app e monta em HTML em minutos</span></div>
+        <div class="auto-item"><span class="man">Manual: caçar <b>quem atrasou pagamento</b> e abrir tarefa na mão</span><span class="aut"><b>Auto:</b> uma régua cria a tarefa e encerra sozinha quando ele paga</span></div>
+        <div class="auto-item"><span class="man">Manual: passar a limpo as <b>notas de call</b></span><span class="aut"><b>Auto:</b> transcrição vira resumo + próximos passos</span></div>
+      </div>
+      <div class="ex reveal">
+        <span class="ex-team">Analista de Suporte</span>
+        <h4>Menos triagem, mais solução</h4>
+        <div class="auto-item"><span class="man">Manual: ouvir <b>áudios longos de WhatsApp</b> inteiros</span><span class="aut"><b>Auto:</b> resumo em HTML com pedidos e combinados destacados</span></div>
+        <div class="auto-item"><span class="man">Manual: <b>triar demandas repetidas</b> e replicar em tarefa</span><span class="aut"><b>Auto:</b> um bot identifica o domínio do cliente e cria a tarefa no Super App</span></div>
+        <div class="auto-item"><span class="man">Manual: escrever <b>a mesma resposta</b> de sempre</span><span class="aut"><b>Auto:</b> rascunho padrão a partir da base — é só revisar e enviar</span></div>
+      </div>
+      <div class="ex reveal">
+        <span class="ex-team">Vendas</span>
+        <h4>Menos preparação, mais conversa</h4>
+        <div class="auto-item"><span class="man">Manual: <b>higienizar a lista</b> de prospecção (validar CNPJ, tirar inativo)</span><span class="aut"><b>Auto:</b> o Claude cruza e limpa a base em minutos</span></div>
+        <div class="auto-item"><span class="man">Manual: <b>pesquisar a conta</b> antes de cada call</span><span class="aut"><b>Auto:</b> um brief do cliente compilado na hora</span></div>
+        <div class="auto-item"><span class="man">Manual: montar <b>follow-up ou proposta</b> do zero</span><span class="aut"><b>Auto:</b> rascunho a partir do contexto colado, pronto pra ajustar</span></div>
+      </div>
+    </div>
+
     <div class="callout reveal">
       <div class="ct">
         <h3>O detalhe que faz funcionar: disciplina, não mágica.</h3>
@@ -948,26 +1032,26 @@
   <div class="wrap">
     <div class="sec-head reveal">
       <span class="eyebrow">Regras de ouro</span>
-      <h2>Automação não dispensa o humano — organiza ele.</h2>
-      <p>Ganhar tempo com o Claude só vale se o processo continuar confiável e visível. Estas são as regras que o time não abre mão.</p>
+      <h2>A automação serve pra você ser mais humano, não menos.</h2>
+      <p>Ganhar tempo com o Claude só vale se a pessoa continuar no centro. A máquina cuida do repetitivo; o cuidado com o cliente é seu. Estas são as regras que o time não abre mão.</p>
     </div>
 
     <div class="rules-grid">
       <div class="rule hot reveal">
-        <h4>Finalize sempre no app</h4>
-        <p>Toda ação prática feita no sistema deve ser encerrada imediatamente no aplicativo. É o que dá visibilidade ao gestor e permite medir o tempo de resposta.</p>
+        <h4>A pessoa no centro</h4>
+        <p>O tempo que a IA te devolve é pra ouvir, entender e resolver com o cliente. Automatize o braçal justamente pra ter <b>mais</b> contato humano — não menos.</p>
       </div>
       <div class="rule hot reveal">
-        <h4>SLA de 24 horas</h4>
-        <p>O prazo de resposta é rigoroso. A automação ajuda a cumprir, mas a régua continua sendo o tempo — não deixe demanda parada.</p>
+        <h4>A decisão final é sempre sua</h4>
+        <p>O Claude sugere e faz o trabalho repetitivo. Quem decide cobrar, cancelar, priorizar ou como falar com o cliente é a pessoa — nunca a máquina sozinha.</p>
       </div>
       <div class="rule reveal">
-        <h4>Respeite os fluxos humanos</h4>
-        <p>Algumas etapas exigem o CS na alça: contas com 7 dias de atraso passam por análise manual antes do cancelamento definitivo. A máquina para e espera.</p>
+        <h4>Onde pede gente, entra gente</h4>
+        <p>Momentos sensíveis — um cliente chateado, uma conta em risco — passam por uma pessoa antes de qualquer ação definitiva. A automação para e espera o seu ok.</p>
       </div>
       <div class="rule reveal">
         <h4>Confira antes de confiar</h4>
-        <p>O Claude erra com confiança. Leia o que voltou, compare com o que você sabe, e só então use. A decisão final é sempre humana. Ver <a href="#revisar">Revisar sempre</a>.</p>
+        <p>O Claude erra com confiança. Leia o que voltou, compare com o que você sabe, e só então use. A responsabilidade final é humana. Ver <a href="#revisar">Revisar sempre</a>.</p>
       </div>
     </div>
   </div>
@@ -1017,7 +1101,7 @@
       <div class="brand" style="margin-bottom:8px;"><span class="dot" aria-hidden="true"></span><span>Central de Enablement · Time de CS</span></div>
       <p class="muted">Conteúdo extraído das reuniões do time (Eduardo, Letícia, Jaine, Leonardo) e das fontes oficiais da Anthropic. Material vivo — cresce a cada novo caso.</p>
     </div>
-    <span class="pill"><span class="pip"></span>versão 0.4 · trilhas com dossiê próprio</span>
+    <span class="pill"><span class="pip"></span>versão 0.5 · skills, automações por papel e foco humano</span>
   </div>
 </footer>
 
