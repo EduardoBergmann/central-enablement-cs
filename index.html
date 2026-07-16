@@ -11,35 +11,22 @@
 <body>
 <style>
   :root {
-    --bg: #F4F6F5;
-    --surface: #FFFFFF;
-    --surface-2: #EDF1EF;
-    --ink: #14201F;
-    --body: #3B4744;
-    --muted: #697673;
-    --line: #DCE3E0;
-    --signal: #0C8F7E;
-    --signal-ink: #076456;
-    --signal-soft: #E1F1EE;
-    --human: #C9502F;
-    --human-soft: #F8E7E0;
-    --warn: #B5761A;
-    --warn-soft: #F7ECD8;
+    --bg: #F4F6F5; --surface: #FFFFFF; --surface-2: #EDF1EF;
+    --ink: #14201F; --body: #3B4744; --muted: #697673; --line: #DCE3E0;
+    --signal: #0C8F7E; --signal-ink: #076456; --signal-soft: #E1F1EE;
+    --human: #C9502F; --human-soft: #F8E7E0;
+    --warn: #B5761A; --warn-soft: #F7ECD8;
     --shadow: 0 1px 2px rgba(20,32,31,.04), 0 8px 30px rgba(20,32,31,.06);
-    --radius: 14px;
-    --maxw: 1120px;
-
+    --radius: 14px; --maxw: 1120px;
     --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     --mono: "Cascadia Code", "SF Mono", "JetBrains Mono", "Fira Code", Consolas, "Liberation Mono", monospace;
   }
-
   @media (prefers-color-scheme: dark) {
     :root {
       --bg: #0D1413; --surface: #141F1D; --surface-2: #1A2624;
       --ink: #EAF1EF; --body: #B2BFBC; --muted: #7C8A87; --line: #24322F;
       --signal: #2FD4BF; --signal-ink: #6FE7D8; --signal-soft: #12312C;
-      --human: #F0805C; --human-soft: #331C15;
-      --warn: #E0A64B; --warn-soft: #2E2413;
+      --human: #F0805C; --human-soft: #331C15; --warn: #E0A64B; --warn-soft: #2E2413;
       --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 34px rgba(0,0,0,.35);
     }
   }
@@ -47,54 +34,45 @@
     --bg: #0D1413; --surface: #141F1D; --surface-2: #1A2624;
     --ink: #EAF1EF; --body: #B2BFBC; --muted: #7C8A87; --line: #24322F;
     --signal: #2FD4BF; --signal-ink: #6FE7D8; --signal-soft: #12312C;
-    --human: #F0805C; --human-soft: #331C15;
-    --warn: #E0A64B; --warn-soft: #2E2413;
+    --human: #F0805C; --human-soft: #331C15; --warn: #E0A64B; --warn-soft: #2E2413;
     --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 34px rgba(0,0,0,.35);
   }
   :root[data-theme="light"] {
     --bg: #F4F6F5; --surface: #FFFFFF; --surface-2: #EDF1EF;
     --ink: #14201F; --body: #3B4744; --muted: #697673; --line: #DCE3E0;
     --signal: #0C8F7E; --signal-ink: #076456; --signal-soft: #E1F1EE;
-    --human: #C9502F; --human-soft: #F8E7E0;
-    --warn: #B5761A; --warn-soft: #F7ECD8;
+    --human: #C9502F; --human-soft: #F8E7E0; --warn: #B5761A; --warn-soft: #F7ECD8;
     --shadow: 0 1px 2px rgba(20,32,31,.04), 0 8px 30px rgba(20,32,31,.06);
   }
 
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-
-  body {
-    margin: 0; background: var(--bg); color: var(--body);
-    font-family: var(--sans); font-size: 17px; line-height: 1.6;
-    -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
-  }
+  body { margin: 0; background: var(--bg); color: var(--body); font-family: var(--sans); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
   .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
-
   h1, h2, h3, h4 { color: var(--ink); font-weight: 800; letter-spacing: -.02em; line-height: 1.1; text-wrap: balance; margin: 0; }
   p { margin: 0; }
   a { color: var(--signal-ink); text-decoration: none; }
   a:hover { text-decoration: underline; }
-
   .eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--signal-ink); font-weight: 600; }
   .kbd { font-family: var(--mono); font-size: .82em; background: var(--surface-2); border: 1px solid var(--line); border-bottom-width: 2px; padding: 2px 7px; border-radius: 6px; color: var(--ink); white-space: nowrap; }
-  .code { font-family: var(--mono); font-size: .84em; background: var(--surface-2); padding: 3px 7px; border-radius: 6px; color: var(--signal-ink); }
+  .code { font-family: var(--mono); font-size: .84em; background: var(--surface-2); padding: 3px 7px; border-radius: 6px; color: var(--signal-ink); word-break: break-all; }
 
-  /* ---------- Topbar ---------- */
+  /* Topbar */
   .topbar { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--bg) 86%, transparent); backdrop-filter: saturate(160%) blur(10px); border-bottom: 1px solid var(--line); }
   .topbar .wrap { display: flex; align-items: center; gap: 20px; height: 60px; }
   .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; color: var(--ink); letter-spacing: -.01em; }
   .brand .dot { width: 11px; height: 11px; border-radius: 50%; background: var(--signal); box-shadow: 0 0 0 4px var(--signal-soft); flex: none; }
   .brand small { font-family: var(--mono); font-weight: 500; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
-  .nav { margin-left: auto; display: flex; gap: 4px; align-items: center; }
-  .nav a { color: var(--muted); font-size: 14px; font-weight: 600; padding: 8px 11px; border-radius: 8px; }
+  .nav { margin-left: auto; display: flex; gap: 2px; align-items: center; }
+  .nav a { color: var(--muted); font-size: 13.5px; font-weight: 600; padding: 8px 10px; border-radius: 8px; }
   .nav a:hover { color: var(--ink); background: var(--surface-2); text-decoration: none; }
   .toggle { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 9px; cursor: pointer; background: var(--surface); border: 1px solid var(--line); color: var(--ink); }
   .toggle:hover { border-color: var(--signal); }
-  .nav-links { display: flex; gap: 2px; }
-  @media (max-width: 940px) { .nav-links { display: none; } }
+  .nav-links { display: flex; gap: 1px; }
+  @media (max-width: 1040px) { .nav-links { display: none; } }
 
-  /* ---------- Hero ---------- */
+  /* Hero */
   .hero { position: relative; overflow: hidden; border-bottom: 1px solid var(--line); }
   .hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .5; }
   @media (prefers-color-scheme: dark) { .hero canvas { opacity: .65; } }
@@ -114,13 +92,14 @@
   .hero-meta .num { font-family: var(--mono); font-size: 1.65rem; font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; }
   .hero-meta .lbl { font-size: 13px; color: var(--muted); max-width: 22ch; }
 
-  /* ---------- Section frame ---------- */
-  section { padding: 76px 0; border-bottom: 1px solid var(--line); }
-  .sec-head { max-width: 660px; margin-bottom: 40px; }
+  /* Section frame */
+  section { padding: 76px 0; border-bottom: 1px solid var(--line); transition: background .45s ease; }
+  .sec-head { max-width: 680px; margin-bottom: 40px; }
   .sec-head h2 { font-size: clamp(1.7rem, 3.6vw, 2.45rem); margin-top: 12px; }
   .sec-head p { margin-top: 14px; color: var(--body); font-size: 1.05rem; }
+  .sub { color: var(--ink); font-size: 1.15rem; font-weight: 800; letter-spacing: -.01em; margin: 34px 0 16px; }
 
-  /* ---------- Tracks ---------- */
+  /* Tracks */
   .track-tabs { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 26px; }
   .track-tab { display: flex; align-items: center; gap: 12px; text-align: left; padding: 16px 18px; border-radius: 12px; cursor: pointer; background: var(--surface); border: 1px solid var(--line); color: var(--ink); flex: 1 1 260px; transition: border-color .15s ease, background .15s ease; }
   .track-tab:hover { border-color: var(--signal); }
@@ -132,14 +111,14 @@
   .track-panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 30px; box-shadow: var(--shadow); }
   .track-panel[hidden] { display: none; }
   .track-panel .plabel { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--human); font-weight: 600; }
-  .track-panel h3 { font-size: 1.4rem; margin: 8px 0 18px; }
+  .track-panel h3 { font-size: 1.4rem; margin: 8px 0 0; }
+  .track-focus { margin: 14px 0 20px; font-size: .98rem; color: var(--body); background: var(--signal-soft); border-radius: 10px; padding: 13px 16px; }
+  .track-focus b { color: var(--ink); }
   .steplist { display: grid; gap: 14px; counter-reset: step; margin: 0; padding: 0; }
   .steplist li { list-style: none; display: flex; gap: 16px; align-items: flex-start; }
   .steplist li::before { counter-increment: step; content: counter(step); font-family: var(--mono); font-weight: 700; font-size: 13px; width: 28px; height: 28px; border-radius: 8px; flex: none; display: flex; align-items: center; justify-content: center; background: var(--signal-soft); color: var(--signal-ink); }
   .steplist li b { color: var(--ink); }
   .steplist li p { font-size: .96rem; }
-  .track-focus { margin: 0 0 20px; font-size: .98rem; color: var(--body); background: var(--signal-soft); border-radius: 10px; padding: 13px 16px; }
-  .track-focus b { color: var(--ink); }
   .track-path { margin-top: 24px; padding-top: 20px; border-top: 1px dashed var(--line); }
   .track-path .tp-label { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
   .track-path .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; align-items: center; }
@@ -148,31 +127,41 @@
   .track-path .chip .n { font-family: var(--mono); font-size: 11px; color: var(--signal-ink); }
   .track-path .arrow { color: var(--muted); font-size: .8rem; }
 
-  /* ---------- Adaptive section emphasis ---------- */
-  section { transition: background .45s ease; }
+  /* Adaptive emphasis */
   section[data-featured="true"] { background: color-mix(in srgb, var(--signal-soft) 45%, var(--bg)); }
   .sec-flag { display: none; }
-  section[data-featured="true"] .sec-flag {
-    display: flex; width: fit-content; align-items: center; gap: 7px; margin-bottom: 14px;
-    font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; font-weight: 600;
-    color: var(--signal-ink); background: var(--surface);
-    border: 1px solid color-mix(in srgb, var(--signal) 38%, var(--line));
-    padding: 5px 12px; border-radius: 999px;
-  }
+  section[data-featured="true"] .sec-flag { display: flex; width: fit-content; align-items: center; gap: 7px; margin-bottom: 14px; font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; font-weight: 600; color: var(--signal-ink); background: var(--surface); border: 1px solid color-mix(in srgb, var(--signal) 38%, var(--line)); padding: 5px 12px; border-radius: 999px; }
 
-  /* ---------- Setup / environment ---------- */
-  .env-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 26px; align-items: start; }
+  /* Downloads */
+  .dl-list { display: grid; gap: 12px; }
+  .dl { display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+  .dl .di { width: 36px; height: 36px; border-radius: 9px; background: var(--signal-soft); color: var(--signal-ink); display: flex; align-items: center; justify-content: center; font-size: 19px; flex: none; }
+  .dl .dt strong { color: var(--ink); display: block; font-size: .98rem; }
+  .dl .dt span { font-size: .86rem; color: var(--muted); }
+  .dl .db { font-size: .85rem; font-weight: 700; white-space: nowrap; padding: 8px 14px; border-radius: 8px; background: var(--signal); color: #04211D; transition: transform .12s ease; }
+  .dl .db:hover { text-decoration: none; transform: translateY(-1px); }
+  .dl .db.ghost { background: var(--surface-2); color: var(--ink); border: 1px solid var(--line); }
+  @media (max-width: 580px) { .dl { grid-template-columns: auto 1fr; } .dl .db { grid-column: 2; justify-self: start; } }
+
+  .prompt-tip { background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--signal); border-radius: 12px; padding: 22px 24px; box-shadow: var(--shadow); }
+  .prompt-tip h4 { color: var(--ink); font-size: 1.08rem; }
+  .prompt-tip p { font-size: .96rem; margin-top: 8px; }
+  .prompt-tip .q { font-family: var(--mono); font-size: .86rem; line-height: 1.6; color: var(--body); background: var(--surface-2); border: 1px solid var(--line); border-radius: 9px; padding: 14px 16px; margin-top: 14px; }
+  .prompt-tip .q::before { content: "“"; color: var(--human); font-weight: 700; }
+  .prompt-tip .q::after { content: "”"; color: var(--human); font-weight: 700; }
+
+  .env-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; align-items: start; margin-top: 16px; }
   @media (max-width: 900px) { .env-grid { grid-template-columns: 1fr; } }
-  .env-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; box-shadow: var(--shadow); }
-  .env-card h3 { font-size: 1.2rem; margin-bottom: 18px; }
   .tshoot { background: var(--warn-soft); border: 1px solid color-mix(in srgb, var(--warn) 40%, var(--line)); border-radius: var(--radius); padding: 24px; }
   .tshoot h3 { font-size: 1.1rem; display: flex; align-items: center; gap: 9px; color: var(--ink); }
   .tshoot .badge { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--warn); background: var(--surface); padding: 3px 8px; border-radius: 6px; border: 1px solid color-mix(in srgb, var(--warn) 35%, var(--line)); }
   .tshoot ol { margin: 16px 0 0; padding-left: 20px; display: grid; gap: 10px; }
   .tshoot li { font-size: .94rem; color: var(--body); }
   .tshoot li b { color: var(--ink); }
+  .note { font-size: .9rem; color: var(--muted); margin-top: 14px; padding: 12px 14px; background: var(--surface-2); border-radius: 9px; }
+  .note b { color: var(--ink); }
 
-  /* ---------- Conversation turns ---------- */
+  /* Conversation turns */
   .turns { display: grid; gap: 22px; }
   .turn { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
   .turn-row { display: grid; grid-template-columns: 1fr 1fr; }
@@ -192,7 +181,25 @@
   .turn-lesson { padding: 14px 24px; border-top: 1px dashed var(--line); font-size: .9rem; color: var(--muted); display: flex; gap: 10px; align-items: baseline; }
   .turn-lesson b { color: var(--signal-ink); font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; flex: none; }
 
-  /* ---------- MCP routing ---------- */
+  /* Card grids */
+  .lib-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px; }
+  .ex { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 10px; }
+  .ex .ex-team { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--signal-ink); font-weight: 600; }
+  .ex h4 { color: var(--ink); font-size: 1.08rem; font-weight: 700; }
+  .ex .prompt { font-family: var(--mono); font-size: .84rem; line-height: 1.5; color: var(--body); background: var(--surface-2); border-radius: 9px; padding: 12px 14px; border: 1px solid var(--line); }
+  .ex .prompt::before { content: "“"; color: var(--human); font-weight: 700; }
+  .ex .prompt::after { content: "”"; color: var(--human); font-weight: 700; }
+  .ex .result { font-size: .9rem; color: var(--muted); margin-top: auto; }
+  .ex .result b { color: var(--ink); font-weight: 600; }
+
+  /* Anatomy */
+  .anatomy { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 2px; background: var(--line); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+  .anatomy .part { background: var(--surface); padding: 16px 18px; }
+  .anatomy .part .pl { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .07em; color: var(--signal-ink); font-weight: 600; }
+  .anatomy .part p { font-size: .88rem; margin-top: 7px; color: var(--body); }
+  .anatomy .part p em { color: var(--ink); font-style: normal; font-weight: 600; }
+
+  /* MCP */
   .mcp-lead { display: grid; grid-template-columns: auto 1fr; gap: 22px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px 28px; box-shadow: var(--shadow); margin-bottom: 26px; }
   @media (max-width: 700px) { .mcp-lead { grid-template-columns: 1fr; } }
   .mcp-lead .glyph { width: 84px; height: 84px; border-radius: 18px; background: var(--signal-soft); color: var(--signal-ink); display: flex; align-items: center; justify-content: center; }
@@ -214,18 +221,7 @@
   .routing-note h3 { font-size: 1.15rem; }
   .routing-note p { margin-top: 12px; font-size: .96rem; }
 
-  /* ---------- Example / routine library ---------- */
-  .lib-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px; }
-  .ex { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 10px; }
-  .ex .ex-team { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--signal-ink); font-weight: 600; }
-  .ex h4 { color: var(--ink); font-size: 1.08rem; font-weight: 700; }
-  .ex .prompt { font-family: var(--mono); font-size: .84rem; line-height: 1.5; color: var(--body); background: var(--surface-2); border-radius: 9px; padding: 12px 14px; border: 1px solid var(--line); }
-  .ex .prompt::before { content: "“"; color: var(--human); font-weight: 700; }
-  .ex .prompt::after { content: "”"; color: var(--human); font-weight: 700; }
-  .ex .result { font-size: .9rem; color: var(--muted); margin-top: auto; }
-  .ex .result b { color: var(--ink); font-weight: 600; }
-
-  /* ---------- Case study timeline ---------- */
+  /* Timeline */
   .timeline { position: relative; display: grid; gap: 0; margin-left: 8px; }
   .tl-item { display: grid; grid-template-columns: auto 1fr; gap: 22px; padding-bottom: 26px; position: relative; }
   .tl-item:not(:last-child)::before { content: ""; position: absolute; left: 7px; top: 20px; bottom: -6px; width: 2px; background: var(--line); }
@@ -234,14 +230,17 @@
   .tl-body .when { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
   .tl-body p { font-size: .95rem; margin-top: 6px; }
 
-  /* ---------- Golden rules ---------- */
+  /* Rules */
   .rules-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 18px; }
-  .rule { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; border-top: 3px solid var(--signal); }
+  .rule { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; border-top: 3px solid var(--signal); display: flex; flex-direction: column; }
   .rule h4 { font-size: 1.08rem; margin-bottom: 8px; }
   .rule p { font-size: .93rem; }
   .rule.hot { border-top-color: var(--human); }
+  .rule .q { font-family: var(--mono); font-size: .8rem; line-height: 1.5; color: var(--body); background: var(--surface-2); border: 1px solid var(--line); border-radius: 8px; padding: 9px 11px; margin-top: 12px; }
+  .rule .q::before { content: "“"; color: var(--human); font-weight: 700; }
+  .rule .q::after { content: "”"; color: var(--human); font-weight: 700; }
 
-  /* ---------- Grow ---------- */
+  /* Grow */
   .grow-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
   .grow-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; }
   .grow-card .gnum { font-family: var(--mono); font-size: 13px; color: var(--signal-ink); font-weight: 700; }
@@ -261,7 +260,8 @@
   footer .muted { color: var(--muted); font-size: 13px; }
   .pill { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; font-family: var(--mono); padding: 5px 11px; border-radius: 999px; background: var(--surface-2); color: var(--muted); letter-spacing: .04em; }
   .pill .pip { width: 7px; height: 7px; border-radius: 50%; background: var(--signal); }
-  .note-tag { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-family: var(--mono); color: var(--human); background: var(--human-soft); padding: 4px 9px; border-radius: 6px; letter-spacing: .05em; text-transform: uppercase; font-weight: 600; }
+  .src-note { font-size: 12px; color: var(--muted); margin-top: 22px; }
+  .src-note a { color: var(--muted); text-decoration: underline; }
 
   .js .reveal { opacity: 0; transform: translateY(14px); }
   .js .reveal.in { opacity: 1; transform: none; transition: opacity .6s ease, transform .6s ease; }
@@ -278,8 +278,9 @@
     <nav class="nav" aria-label="Seções">
       <div class="nav-links">
         <a href="#comecar">Começar</a>
-        <a href="#ambiente">Ambiente</a>
+        <a href="#ambiente">Instalar</a>
         <a href="#conversar">Conversar</a>
+        <a href="#revisar">Revisar</a>
         <a href="#dados">Buscar dados</a>
         <a href="#rotina">Rotina</a>
         <a href="#pratica">Na prática</a>
@@ -295,17 +296,17 @@
   <canvas id="wave" aria-hidden="true"></canvas>
   <div class="wrap">
     <div class="hero-inner">
-      <span class="eyebrow reveal">Guia vivo do time · leva ~12 min de leitura</span>
+      <span class="eyebrow reveal">Guia vivo do time · leva ~15 min de leitura</span>
       <h1 class="reveal">Aprender a <span class="hl">conversar com o Claude</span> é aprender a delegar.</h1>
-      <p class="lede reveal">Você não precisa saber programar. Precisa saber pedir bem, dar contexto e conferir o que volta. Esta central reúne as práticas que o nosso time definiu — configurar o ambiente, escrever bons comandos e delegar tarefas de rotina — com exemplos reais das nossas reuniões e projetos.</p>
+      <p class="lede reveal">Você não precisa saber programar. Precisa saber pedir bem, dar contexto e — importante — conferir o que volta, porque o Claude às vezes inventa. Esta central reúne as práticas do nosso time: instalar o ambiente, escrever bons comandos, revisar com atenção e delegar tarefas de rotina, com exemplos reais e fontes oficiais.</p>
       <div class="hero-cta reveal">
         <a href="#comecar" class="btn btn-primary">Escolher minha trilha →</a>
-        <a href="#conversar" class="btn btn-ghost">Ver o jeito de conversar</a>
+        <a href="#ambiente" class="btn btn-ghost">Instalar do zero</a>
       </div>
       <div class="hero-meta reveal">
         <div class="stat"><span class="num">3</span><span class="lbl">trilhas por perfil</span></div>
-        <div class="stat"><span class="num">1</span><span class="lbl">ambiente central: o VS&nbsp;Code</span></div>
-        <div class="stat"><span class="num">24h</span><span class="lbl">o SLA que a rotina precisa respeitar</span></div>
+        <div class="stat"><span class="num">4</span><span class="lbl">programas pra instalar (com link)</span></div>
+        <div class="stat"><span class="num">100%</span><span class="lbl">do que ele te dá você confere</span></div>
       </div>
     </div>
   </div>
@@ -317,7 +318,7 @@
     <div class="sec-head reveal">
       <span class="eyebrow">Por onde começar</span>
       <h2>Escolha a porta de entrada que é a sua.</h2>
-      <p>O caminho muda conforme onde você está hoje. Clique no seu perfil — o resto da página serve pros três, mas isto aqui te dá o primeiro passo certo.</p>
+      <p>O caminho muda conforme onde você está hoje. Clique no seu perfil — as seções que mais importam pra você acendem, e o painel mostra sua trilha na ordem certa.</p>
     </div>
 
     <div class="track-tabs reveal" role="tablist" aria-label="Trilhas por perfil">
@@ -338,19 +339,19 @@
     <div class="track-panel reveal" id="panel-novo" role="tabpanel" aria-labelledby="tab-novo" tabindex="0">
       <span class="plabel">Trilha · Cheguei agora</span>
       <h3>Sua primeira semana com o Claude</h3>
-      <p class="track-focus"><b>Foco desta porta:</b> sair do zero e resolver sua primeira tarefa com segurança.</p>
+      <p class="track-focus"><b>Foco desta porta:</b> sair do zero — instalar o ambiente e resolver sua primeira tarefa com segurança.</p>
       <ol class="steplist">
-        <li><div><b>Monte o ambiente antes de tudo.</b><p>O time trabalha no VS&nbsp;Code, não na versão web. Siga o passo a passo em <a href="#ambiente">Configurar o ambiente</a> — leva uns minutos e destrava todo o resto.</p></div></li>
-        <li><div><b>Trate como um colega, não como um buscador.</b><p>Não é o Google. É alguém que faz junto com você. Fale em frases inteiras, do jeito que explicaria pra uma pessoa.</p></div></li>
-        <li><div><b>Descreva o problema antes da solução.</b><p>A regra de ouro do time: conte o contexto e a dor primeiro, deixe o Claude sugerir o caminho. Não force uma direção técnica logo de cara.</p></div></li>
-        <li><div><b>Peça em HTML e confira antes de usar.</b><p>Documentos em HTML ficam mais organizados. E sempre revise o que voltou — ele erra com confiança; você continua sendo o responsável.</p></div></li>
+        <li><div><b>Instale o ambiente (com calma).</b><p>São 4 programas, todos com link e passo a passo em <a href="#ambiente">Instalar do zero</a>. Dica: depois de instalar o VS&nbsp;Code e a extensão, o próprio Claude te guia a terminar o resto.</p></div></li>
+        <li><div><b>Trate como um colega, não como um buscador.</b><p>Não é o Google. É alguém que faz junto com você. Fale em frases inteiras — como o time diz: imagine um estagiário brilhante no primeiro dia, que precisa de contexto claro.</p></div></li>
+        <li><div><b>Descreva o problema antes da solução.</b><p>A regra de ouro: conte o contexto e a dor primeiro, deixe o Claude sugerir o caminho. Veja as técnicas em <a href="#conversar">O jeito de conversar</a>.</p></div></li>
+        <li><div><b>Confira sempre — ele inventa às vezes.</b><p>O Claude pode afirmar algo errado com total confiança (chama-se "alucinação"). Antes de usar, revise. Aprenda a se proteger em <a href="#revisar">Revisar sempre</a>.</p></div></li>
       </ol>
       <div class="track-path">
         <span class="tp-label">Sua trilha sugerida</span>
         <div class="chips">
-          <a class="chip" href="#ambiente"><span class="n">1</span> Configurar o ambiente</a><span class="arrow">→</span>
+          <a class="chip" href="#ambiente"><span class="n">1</span> Instalar do zero</a><span class="arrow">→</span>
           <a class="chip" href="#conversar"><span class="n">2</span> O jeito de conversar</a><span class="arrow">→</span>
-          <a class="chip" href="#rotina"><span class="n">3</span> Um caso de rotina</a><span class="arrow">→</span>
+          <a class="chip" href="#revisar"><span class="n">3</span> Revisar sempre</a><span class="arrow">→</span>
           <a class="chip" href="#regras"><span class="n">4</span> Regras de ouro</a>
         </div>
       </div>
@@ -359,20 +360,20 @@
     <div class="track-panel reveal" id="panel-time" role="tabpanel" aria-labelledby="tab-time" tabindex="0" hidden>
       <span class="plabel">Trilha · Rotina do time</span>
       <h3>Do "isso me toma horas" para "isso o Claude faz"</h3>
-      <p class="track-focus"><b>Foco desta porta:</b> pegar uma tarefa chata da sua rotina e delegar de ponta a ponta.</p>
+      <p class="track-focus"><b>Foco desta porta:</b> pegar uma tarefa chata da sua rotina e delegar de ponta a ponta, com segurança.</p>
       <ol class="steplist">
         <li><div><b>Nomeie a dor, não a solução.</b><p>Em vez de "cria uma macro", diga "toda semana eu pego esses dados e monto esse resumo na mão — quero parar". Deixe ele propor o como.</p></div></li>
-        <li><div><b>Dê o material junto.</b><p>Cole a planilha, o áudio, a transcrição, o print. Quanto mais contexto real, melhor o resultado — e menos idas e vindas.</p></div></li>
-        <li><div><b>Separe cada demanda em seu projeto.</b><p>Um projeto só pra transcrição de áudios, outro só pra campanha de reativação. Novo fluxo, nova sessão (o ícone laranja). Ver <a href="#rotina">Casos de rotina</a>.</p></div></li>
-        <li><div><b>Finalize sempre no app.</b><p>Terminou uma ação? Registre imediatamente no sistema. É o que dá visibilidade pro gestor e mantém o SLA de 24h. Ver <a href="#regras">Regras de ouro</a>.</p></div></li>
+        <li><div><b>Dê o material e defina os conceitos.</b><p>Cole a planilha, o áudio, o print. E seja preciso: <b>churn</b> (perda de receita) ≠ <b>cancelamento</b> (ação deliberada). Conceito vago gera base errada.</p></div></li>
+        <li><div><b>Peça dados sem saber SQL.</b><p>Via MCP, o Claude busca direto nos sistemas. "Quantos clientes entraram em risco esse mês?" Ver <a href="#dados">Buscar dados</a> e os <a href="#rotina">Casos de rotina</a>.</p></div></li>
+        <li><div><b>Revise antes de agir e finalize no app.</b><p>Confira números e nomes (ele inventa — ver <a href="#revisar">Revisar</a>). Terminou uma ação? Registre no sistema na hora — é o que sustenta o SLA de 24h.</p></div></li>
       </ol>
       <div class="track-path">
         <span class="tp-label">Sua trilha sugerida</span>
         <div class="chips">
           <a class="chip" href="#conversar"><span class="n">1</span> O jeito de conversar</a><span class="arrow">→</span>
-          <a class="chip" href="#dados"><span class="n">2</span> Buscar dados</a><span class="arrow">→</span>
-          <a class="chip" href="#rotina"><span class="n">3</span> Casos de rotina</a><span class="arrow">→</span>
-          <a class="chip" href="#regras"><span class="n">4</span> Regras de ouro</a>
+          <a class="chip" href="#revisar"><span class="n">2</span> Revisar sempre</a><span class="arrow">→</span>
+          <a class="chip" href="#dados"><span class="n">3</span> Buscar dados</a><span class="arrow">→</span>
+          <a class="chip" href="#rotina"><span class="n">4</span> Casos de rotina</a>
         </div>
       </div>
     </div>
@@ -380,57 +381,83 @@
     <div class="track-panel reveal" id="panel-lider" role="tabpanel" aria-labelledby="tab-lider" tabindex="0" hidden>
       <span class="plabel">Trilha · Liderança</span>
       <h3>O que muda quando o time trabalha assim</h3>
-      <p class="track-focus"><b>Foco desta porta:</b> enxergar o ganho de eficiência sem perder visibilidade nem SLA.</p>
+      <p class="track-focus"><b>Foco desta porta:</b> enxergar o ganho de eficiência sem perder confiabilidade, visibilidade nem SLA.</p>
       <ol class="steplist">
         <li><div><b>Trabalho braçal sai do caminho do time.</b><p>Higienização de base, análise de consumo, resumo de áudios, planilhas de controle — tarefas manuais e demoradas passam a rodar em minutos, liberando o CSM pra falar com cliente.</p></div></li>
         <li><div><b>Uma ferramenta no lugar de várias.</b><p>Via MCP, o Claude busca dado direto nos sistemas — o time para de abrir plataforma por plataforma. Ver <a href="#dados">Buscar dados</a>.</p></div></li>
-        <li><div><b>Software interno sem depender só de dev.</b><p>Nosso app de gestão de risco de churn foi construído conversando com o Claude, passo a passo, com revisão a cada mudança. Ver <a href="#pratica">Na prática</a>.</p></div></li>
-        <li><div><b>Visibilidade e SLA preservados.</b><p>A automação respeita os fluxos humanos: onde precisa de validação do CS, ela para e espera. E toda ação é finalizada no app, medindo o tempo de resposta.</p></div></li>
+        <li><div><b>Confiabilidade é uma disciplina, não sorte.</b><p>O Claude erra com confiança. O time trabalha com revisão obrigatória e dados ligados à fonte real. Ver <a href="#revisar">Revisar sempre</a> e <a href="#pratica">Na prática</a>.</p></div></li>
+        <li><div><b>Visibilidade e SLA preservados.</b><p>A automação respeita os fluxos humanos: onde precisa de validação do CS, ela para e espera. Toda ação é finalizada no app, medindo o tempo de resposta.</p></div></li>
       </ol>
       <div class="track-path">
         <span class="tp-label">Sua trilha sugerida</span>
         <div class="chips">
           <a class="chip" href="#pratica"><span class="n">1</span> Na prática</a><span class="arrow">→</span>
           <a class="chip" href="#dados"><span class="n">2</span> Buscar dados</a><span class="arrow">→</span>
-          <a class="chip" href="#regras"><span class="n">3</span> Regras de ouro</a><span class="arrow">→</span>
-          <a class="chip" href="#crescer"><span class="n">4</span> Como a central cresce</a>
+          <a class="chip" href="#revisar"><span class="n">3</span> Revisar sempre</a><span class="arrow">→</span>
+          <a class="chip" href="#regras"><span class="n">4</span> Regras de ouro</a>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ================= AMBIENTE ================= -->
+<!-- ================= AMBIENTE / INSTALAR ================= -->
 <section id="ambiente">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="eyebrow">Configurar o ambiente</span>
+      <span class="eyebrow">Instalar do zero</span>
       <h2>O VS Code é a nossa mesa de trabalho.</h2>
-      <p>O time decidiu centralizar tudo no VS&nbsp;Code — em vez da versão web — pra construir projetos, analisar dados e salvar documentos de forma organizada. É onde o Claude vira "Claude Code" (o time às vezes chama de <em>Cloud</em>).</p>
+      <p>O time centraliza tudo no VS&nbsp;Code — em vez da versão web — pra construir projetos, analisar dados e salvar documentos de forma organizada. É lá que o Claude vira o <b>Claude Code</b>, um painel de IA dentro do editor. São 4 instalações; siga na ordem, sem pressa.</p>
     </div>
 
+    <div class="reveal">
+      <h3 class="sub" style="margin-top:0;">O que baixar (nesta ordem)</h3>
+      <div class="dl-list">
+        <div class="dl">
+          <span class="di" aria-hidden="true">📝</span>
+          <span class="dt"><strong>1. VS Code</strong><span>O editor onde o Claude Code vai morar. Na instalação, marque "Add to PATH".</span></span>
+          <a class="db" href="https://code.visualstudio.com/download" target="_blank" rel="noopener">Baixar</a>
+        </div>
+        <div class="dl">
+          <span class="di" aria-hidden="true">⚙️</span>
+          <span class="dt"><strong>2. Node.js (versão LTS)</strong><span>O "motor" que o Claude Code usa pra rodar liso. Baixe a opção LTS (recomendada).</span></span>
+          <a class="db" href="https://nodejs.org/en/download" target="_blank" rel="noopener">Baixar</a>
+        </div>
+        <div class="dl">
+          <span class="di" aria-hidden="true">🔀</span>
+          <span class="dt"><strong>3. Git para Windows</strong><span>Guarda o histórico dos arquivos e ajuda o Claude a rodar comandos no Windows.</span></span>
+          <a class="db" href="https://git-scm.com/download/win" target="_blank" rel="noopener">Baixar</a>
+        </div>
+        <div class="dl">
+          <span class="di" aria-hidden="true">✨</span>
+          <span class="dt"><strong>4. Extensão Claude Code</strong><span>Dentro do VS&nbsp;Code: <span class="kbd">Ctrl + Shift + X</span> → busque "Claude Code" (por Anthropic) → Instalar.</span></span>
+          <a class="db ghost" href="https://code.claude.com/docs" target="_blank" rel="noopener">Ver docs</a>
+        </div>
+      </div>
+      <p class="note reveal"><b>Precisa de conta paga do Claude.</b> O Claude Code funciona com plano <b>Pro, Max, Team ou Enterprise</b> — o plano grátis do Claude não inclui. Se não sabe qual você tem, fale com quem cuida das ferramentas no time. Ao abrir a extensão, você faz login pelo navegador com sua conta Claude.</p>
+    </div>
+
+    <h3 class="sub reveal">A dica que economiza a maior dor de cabeça</h3>
     <div class="env-grid">
-      <div class="env-card reveal">
-        <h3>Passo a passo</h3>
-        <ol class="steplist">
-          <li><div><b>Instale a extensão Claude Code</b><p>Dentro do VS&nbsp;Code, na aba de extensões. É ela que traz o Claude pra dentro do editor.</p></div></li>
-          <li><div><b>Crie a pasta "GitHub" nos Documentos</b><p>É onde vão morar os repositórios e os arquivos gerados (os HTMLs, dashboards, guias). Tudo organizado num lugar só.</p></div></li>
-          <li><div><b>Sincronize com o GitHub</b><p>Autorize as permissões. Isso deixa a publicação de dashboards e apps muito mais simples lá na frente.</p></div></li>
-          <li><div><b>Guarde referências no repositório</b><p>Salve guias e documentos antigos numa pasta central que o Claude possa ler — assim ele tem histórico e contexto pras novas demandas.</p></div></li>
-        </ol>
+      <div class="prompt-tip reveal">
+        <h4>Peça pro Claude te instalar tudo</h4>
+        <p>Depois que o <b>VS&nbsp;Code + a extensão</b> estiverem prontos e você logado, o próprio Claude vira seu instalador guiado. Abra o painel dele (o ícone ✨) e cole:</p>
+        <p class="q">Estou no Windows 11 e nunca instalei ferramentas de desenvolvedor. Me guie passo a passo pra deixar tudo pronto pra trabalhar: confira se eu já tenho Node.js e Git instalados; se faltar algum, me diga exatamente o que baixar e instalar, um de cada vez, e espere eu confirmar antes de seguir. No fim, confirme que está tudo funcionando.</p>
       </div>
 
       <div class="tshoot reveal">
-        <h3>⚠️ Deu "bad credentials"? <span class="badge">troubleshooting</span></h3>
+        <h3>⚠️ Deu "bad credentials"? <span class="badge">login</span></h3>
         <p style="margin-top:12px;font-size:.95rem;color:var(--body);">Erro de credencial ao sincronizar com o GitHub é comum. Faça assim:</p>
         <ol>
           <li><b>Feche</b> as janelas de erro.</li>
-          <li>Confira que o <b>navegador está logado com o perfil e e-mail corporativos corretos</b> — é ele que autoriza o acesso.</li>
+          <li>Confira que o <b>navegador está logado com o e-mail corporativo correto</b> — é ele que autoriza o acesso.</li>
           <li>Reinicie a janela: <span class="kbd">Ctrl + Shift + P</span> → digite <span class="code">Developer: Reload Window</span>.</li>
-          <li>Tente a autenticação de novo.</li>
+          <li>Tente de novo.</li>
         </ol>
+        <p class="note" style="background:transparent;padding:0;margin-top:14px;"><b>Regra do Windows:</b> depois de instalar Node.js ou Git, <b>feche e reabra o VS&nbsp;Code</b> — janelas antigas não enxergam o que acabou de ser instalado.</p>
       </div>
     </div>
+    <p class="src-note reveal">Links e passos conferidos nas fontes oficiais: <a href="https://code.visualstudio.com/download" target="_blank" rel="noopener">VS&nbsp;Code</a>, <a href="https://nodejs.org/en/download" target="_blank" rel="noopener">Node.js</a>, <a href="https://git-scm.com/download/win" target="_blank" rel="noopener">Git</a>, <a href="https://code.claude.com/docs" target="_blank" rel="noopener">Claude Code</a>.</p>
   </div>
 </section>
 
@@ -440,7 +467,7 @@
     <div class="sec-head reveal">
       <span class="eyebrow">O jeito de conversar · engenharia de prompt</span>
       <h2>A habilidade não é técnica. É saber pedir.</h2>
-      <p>Cada bloco é uma prática que o time definiu. Do lado esquerdo, o que você diz. Do lado direito, o que o Claude faz com isso. A lição embaixo é o que você leva pra sua próxima conversa.</p>
+      <p>Cada bloco é uma prática que o time definiu, alinhada às recomendações oficiais da Anthropic. Do lado esquerdo, o que você diz. Do lado direito, o que o Claude faz. A lição embaixo é o que você leva pra sua próxima conversa.</p>
     </div>
 
     <div class="turns">
@@ -500,6 +527,107 @@
         <div class="turn-lesson"><b>Lição</b><span>Você molda <em>como</em> o Claude fala com você. Se veio difícil, peça a versão que você entende — traduzir é papel dele.</span></div>
       </div>
     </div>
+
+    <h3 class="sub reveal">7 técnicas que sempre melhoram o resultado</h3>
+    <div class="lib-grid">
+      <div class="ex reveal">
+        <span class="ex-team">Contexto</span>
+        <h4>Fale como pra um estagiário no 1º dia</h4>
+        <p class="prompt">Você vai me ajudar com relatórios de CS de telecom B2B. Nosso cliente paga por ramal e...</p>
+        <p class="result"><b>Por quê:</b> ele é brilhante mas não conhece seu contexto. Explique o cenário, o objetivo e pra quem é.</p>
+      </div>
+      <div class="ex reveal">
+        <span class="ex-team">Formato</span>
+        <h4>Diga exatamente o formato que quer</h4>
+        <p class="prompt">Responde em tabela, com colunas Cliente, MRR e Status. Tom direto, no máximo 5 linhas por item.</p>
+        <p class="result"><b>Por quê:</b> sem pedir formato, você recebe o formato genérico. Peça tabela, tópicos, HTML, tom.</p>
+      </div>
+      <div class="ex reveal">
+        <span class="ex-team">Exemplo</span>
+        <h4>Mostre um exemplo do que espera</h4>
+        <p class="prompt">Aqui vai um resumo que ficou bom [cola o modelo]. Faça os próximos no mesmo estilo.</p>
+        <p class="result"><b>Por quê:</b> um bom exemplo vale mais que um parágrafo de instrução. Mostrar &gt; explicar.</p>
+      </div>
+      <div class="ex reveal">
+        <span class="ex-team">Raciocínio</span>
+        <h4>Peça pra pensar passo a passo</h4>
+        <p class="prompt">Antes de responder, pense passo a passo e mostre o raciocínio. Depois dê a conclusão.</p>
+        <p class="result"><b>Por quê:</b> em contas e lógica, "pensar antes" reduz erro e deixa você conferir o caminho.</p>
+      </div>
+      <div class="ex reveal">
+        <span class="ex-team">Papel</span>
+        <h4>Dê um papel a ele</h4>
+        <p class="prompt">Aja como um analista de Customer Success experiente e critique este plano de retenção.</p>
+        <p class="result"><b>Por quê:</b> um papel foca o tom e a profundidade. Uma frase já muda a resposta.</p>
+      </div>
+      <div class="ex reveal">
+        <span class="ex-team">Ordem</span>
+        <h4>Material longo primeiro, pergunta por último</h4>
+        <p class="prompt">[cola o documento grande] ... Agora, com base no texto acima, responda: ...</p>
+        <p class="result"><b>Por quê:</b> com documentos longos, colar o material antes da pergunta melhora bastante a resposta.</p>
+      </div>
+      <div class="ex reveal">
+        <span class="ex-team">Iterar</span>
+        <h4>A 1ª resposta é rascunho</h4>
+        <p class="prompt">Bom começo. Agora encurta, foca no cliente X e deixa o tom mais formal.</p>
+        <p class="result"><b>Por quê:</b> conversar de volta é onde o resultado aparece. Refine em vez de recomeçar.</p>
+      </div>
+    </div>
+    <p class="src-note reveal">Baseado nas boas práticas oficiais de <a href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview" target="_blank" rel="noopener">engenharia de prompt da Anthropic</a>.</p>
+  </div>
+</section>
+
+<!-- ================= REVISAR / ALUCINAÇÃO ================= -->
+<section id="revisar">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Revisar sempre</span>
+      <h2>O Claude às vezes inventa. E diz com a maior confiança.</h2>
+      <p>Isso tem nome: <b>alucinação</b>. O Claude foi treinado pra prever o texto mais provável, não pra consultar uma verdade. Quando não sabe algo, ele tende a <em>completar</em> com algo plausível — um número, um nome, uma citação — no mesmo tom seguro de quando acerta. Por isso, no nosso time, revisar não é opcional: é o que separa um material massa de um erro publicado.</p>
+    </div>
+
+    <div class="callout reveal" style="margin-top:0;margin-bottom:34px;">
+      <div class="ct">
+        <h3>A regra de bolso</h3>
+        <p>Quanto mais uma decisão depende de um dado, mais você confere esse dado. Nome de cliente, valor de MRR, data, número de contrato, citação de documento — trate como "a conferir" até você bater com a fonte. Desconfie especialmente de <b>precisão suspeita</b> (um número exato demais que ninguém te deu).</p>
+      </div>
+    </div>
+
+    <h3 class="sub reveal" style="margin-top:0;">6 jeitos de reduzir a invenção (com frases prontas)</h3>
+    <div class="rules-grid">
+      <div class="rule hot reveal">
+        <h4>Dê permissão pra dizer "não sei"</h4>
+        <p>A técnica mais simples e das mais eficazes: deixe explícito que admitir incerteza é aceitável.</p>
+        <p class="q">Se você não tiver certeza ou faltar informação, diga "não tenho dados suficientes" em vez de chutar.</p>
+      </div>
+      <div class="rule reveal">
+        <h4>Prenda ele ao material que você deu</h4>
+        <p>Impede que ele "complete" com o conhecimento geral dele no lugar dos seus dados.</p>
+        <p class="q">Responda apenas com base nos documentos que colei acima, não no seu conhecimento geral.</p>
+      </div>
+      <div class="rule reveal">
+        <h4>Exija a fonte de cada afirmação</h4>
+        <p>Torna a resposta auditável — e o próprio ato de citar já derruba invenções.</p>
+        <p class="q">Para cada número e afirmação, cite o trecho de onde tirou. Se não achar, remova a frase.</p>
+      </div>
+      <div class="rule reveal">
+        <h4>Peça o raciocínio antes da resposta</h4>
+        <p>Ver o passo a passo revela lógica torta ou uma suposição que ele inventou no caminho.</p>
+        <p class="q">Explique seu raciocínio passo a passo antes de me dar a conclusão.</p>
+      </div>
+      <div class="rule reveal">
+        <h4>Rode duas vezes e compare</h4>
+        <p>Faça a mesma pergunta em duas conversas. Se as respostas divergirem no que importa, é sinal de invenção.</p>
+        <p class="q">(mesma pergunta, em uma nova sessão — e compare os dois resultados)</p>
+      </div>
+      <div class="rule hot reveal">
+        <h4>Confira nomes, números e datas na mão</h4>
+        <p>A revisão humana é a última linha — e a mais importante. Para decisões de alto risco, sempre valide o dado crítico na fonte real.</p>
+        <p class="q">(você, batendo o número contra o app ou a planilha antes de usar)</p>
+      </div>
+    </div>
+    <p class="note reveal"><b>O melhor antídoto é ligar o Claude à fonte real.</b> Quando ele busca o dado ao vivo via MCP (em vez de "lembrar" de cabeça), a chance de invenção cai muito — porque a resposta vem do sistema, não da memória. Veja <a href="#dados">Buscar dados</a>.</p>
+    <p class="src-note reveal">Técnicas e exemplos adaptados do guia oficial <a href="https://docs.anthropic.com/en/docs/test-and-evaluate/strengthen-guardrails/reduce-hallucinations" target="_blank" rel="noopener">"Reduce hallucinations" da Anthropic</a>.</p>
   </div>
 </section>
 
@@ -509,7 +637,7 @@
     <div class="sec-head reveal">
       <span class="eyebrow">Buscar dados sem saber SQL · MCP</span>
       <h2>Você pergunta em português. Ele vai na fonte certa.</h2>
-      <p>O MCP conecta o Claude aos nossos sistemas. Você não precisa saber onde cada número mora — mas ele precisa, e já sabe.</p>
+      <p>O MCP conecta o Claude aos nossos sistemas. Você não precisa saber onde cada número mora — mas ele precisa, e já sabe. Bônus: dado buscado ao vivo é dado que ele não precisa inventar.</p>
     </div>
 
     <div class="mcp-lead reveal">
@@ -553,32 +681,42 @@
     <div class="sec-head reveal">
       <span class="eyebrow">Casos de rotina</span>
       <h2>Situação real → como pedir. Copie e adapte.</h2>
-      <p>Estes casos saíram das nossas reuniões — o dia a dia que o time já delega ou está delegando pro Claude. Use como ponto de partida.</p>
+      <p>Estes casos saíram das nossas reuniões — o dia a dia que o time já delega ou está delegando pro Claude. Antes deles, a "anatomia" de um pedido que funciona.</p>
     </div>
 
+    <h3 class="sub reveal" style="margin-top:0;">Anatomia de um bom pedido</h3>
+    <div class="anatomy reveal">
+      <div class="part"><span class="pl">Contexto</span><p><em>Quem você é e a situação.</em> "Sou do CS, cuido de clientes de telecom B2B."</p></div>
+      <div class="part"><span class="pl">Tarefa</span><p><em>O que quer, em verbo.</em> "Resuma este áudio em tópicos de decisão."</p></div>
+      <div class="part"><span class="pl">Formato</span><p><em>Como quer receber.</em> "Em HTML, com título e lista."</p></div>
+      <div class="part"><span class="pl">Restrições</span><p><em>Limites e conceitos.</em> "Só o que está no áudio. Não invente nomes."</p></div>
+      <div class="part"><span class="pl">Material</span><p><em>O insumo colado.</em> A transcrição, a planilha, o print.</p></div>
+    </div>
+
+    <h3 class="sub reveal">Casos que o time já usa</h3>
     <div class="lib-grid">
       <div class="ex reveal">
         <span class="ex-team">CS · Áudios</span>
         <h4>Resumir áudios de WhatsApp</h4>
-        <p class="prompt">Segue um áudio longo do cliente. Compila os pontos principais num documento HTML curto e útil, destacando pedidos e combinados.</p>
-        <p class="result"><b>Resultado:</b> resumo pronto sem ouvir tudo de novo. Dica: abra uma sessão nova (ícone laranja) pra cada fluxo.</p>
+        <p class="prompt">Segue um áudio longo do cliente. Compila os pontos principais num documento HTML curto, destacando pedidos e combinados. Use só o que está no áudio.</p>
+        <p class="result"><b>Resultado:</b> resumo pronto sem ouvir tudo de novo. Dica: abra uma sessão nova pra cada fluxo.</p>
       </div>
       <div class="ex reveal">
         <span class="ex-team">CS · Base de dados</span>
         <h4>Higienizar lista de clientes</h4>
-        <p class="prompt">Cruza essa lista de clientes cancelados, valida o status dos CNPJs e remove as empresas inativas da base de prospecção.</p>
-        <p class="result"><b>Resultado:</b> base limpa em minutos, sem checar cadastro por cadastro.</p>
+        <p class="prompt">Cruza essa lista de clientes cancelados, valida o status dos CNPJs e remove as empresas inativas da base de prospecção. Me mostre o que removeu e por quê.</p>
+        <p class="result"><b>Resultado:</b> base limpa em minutos, sem checar cadastro por cadastro — e você audita o que saiu.</p>
       </div>
       <div class="ex reveal">
         <span class="ex-team">CS · Consumo</span>
         <h4>Analisar consumo de clientes</h4>
-        <p class="prompt">Analisa o consumo destes clientes e me aponta quem caiu de uso no último mês. Pega da fonte de ligações.</p>
+        <p class="prompt">Analisa o consumo destes clientes e me aponta quem caiu de uso no último mês. Pega da fonte de ligações e declara a fonte.</p>
         <p class="result"><b>Resultado:</b> substitui a verificação manual demorada que era feita no Lightdash.</p>
       </div>
       <div class="ex reveal">
         <span class="ex-team">CS · Reativação</span>
         <h4>Montar planilha de reativação</h4>
-        <p class="prompt">Monta a base de reativação com colunas de MRR antes do cancelamento, CNPJ, data de cancelamento, último pagamento, quantidade de ramais e plano (Ilimitado / Recarga).</p>
+        <p class="prompt">Monta a base de reativação com colunas: MRR antes do cancelamento, CNPJ, data de cancelamento, último pagamento, quantidade de ramais e plano (Ilimitado / Recarga).</p>
         <p class="result"><b>Resultado:</b> planilha filtrável, com "ramais" como medida de usuários (mais precisa).</p>
       </div>
       <div class="ex reveal">
@@ -675,7 +813,7 @@
       </div>
       <div class="rule reveal">
         <h4>Confira antes de confiar</h4>
-        <p>O Claude erra com confiança. Leia o que voltou, compare com o que você sabe, e só então use. A decisão final é sempre humana.</p>
+        <p>O Claude erra com confiança. Leia o que voltou, compare com o que você sabe, e só então use. A decisão final é sempre humana. Ver <a href="#revisar">Revisar sempre</a>.</p>
       </div>
     </div>
   </div>
@@ -687,14 +825,14 @@
     <div class="sec-head reveal">
       <span class="eyebrow">Como esta central cresce</span>
       <h2>Um material vivo, não um PDF esquecido.</h2>
-      <p>A ideia é que esta página vire o ponto único onde todo material de enablement mora — e que ganhe camadas conforme o time usa.</p>
+      <p>A ideia é que esta página seja o ponto único onde todo material de enablement mora — e que ganhe camadas conforme o time usa.</p>
     </div>
 
     <div class="grow-grid">
       <div class="grow-card ready reveal">
         <span class="gnum">01</span>
-        <h4>Estrutura no ar</h4>
-        <p>Trilhas, ambiente, fundamentos, casos de rotina e regras de ouro — já com o conteúdo real das reuniões.</p>
+        <h4>Trilhas com conteúdo real</h4>
+        <p>Instalação, fundamentos, revisão, busca de dados e casos de rotina — com passo a passo, exemplos e fontes oficiais.</p>
         <span class="status"><span class="pip"></span>Feito</span>
       </div>
       <div class="grow-card reveal">
@@ -723,9 +861,9 @@
   <div class="wrap">
     <div>
       <div class="brand" style="margin-bottom:8px;"><span class="dot" aria-hidden="true"></span><span>Central de Enablement · Time de CS</span></div>
-      <p class="muted">Conteúdo extraído das reuniões do time (Eduardo, Letícia, Jaine, Leonardo). Material vivo — cresce a cada novo caso.</p>
+      <p class="muted">Conteúdo extraído das reuniões do time (Eduardo, Letícia, Jaine, Leonardo) e das fontes oficiais da Anthropic. Material vivo — cresce a cada novo caso.</p>
     </div>
-    <span class="pill"><span class="pip"></span>versão 0.2 · com práticas reais</span>
+    <span class="pill"><span class="pip"></span>versão 0.3 · com instalação, prompt e revisão</span>
   </div>
 </footer>
 
@@ -739,22 +877,19 @@
       if (root.dataset.theme) return root.dataset.theme;
       return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     }
-    btn.addEventListener('click', function () {
-      root.dataset.theme = current() === 'dark' ? 'light' : 'dark';
-    });
+    btn.addEventListener('click', function () { root.dataset.theme = current() === 'dark' ? 'light' : 'dark'; });
   })();
 
   (function () {
     var tabs = Array.prototype.slice.call(document.querySelectorAll('.track-tab'));
     var panels = { 'tab-novo': 'panel-novo', 'tab-time': 'panel-time', 'tab-lider': 'panel-lider' };
-    var ALL_SECTIONS = ['ambiente', 'conversar', 'dados', 'rotina', 'pratica', 'regras', 'crescer'];
+    var ALL_SECTIONS = ['ambiente', 'conversar', 'revisar', 'dados', 'rotina', 'pratica', 'regras', 'crescer'];
     var featureMap = {
-      'tab-novo': ['ambiente', 'conversar', 'rotina', 'regras'],
-      'tab-time': ['conversar', 'dados', 'rotina', 'regras'],
-      'tab-lider': ['pratica', 'dados', 'regras', 'crescer']
+      'tab-novo': ['ambiente', 'conversar', 'revisar', 'regras'],
+      'tab-time': ['conversar', 'revisar', 'dados', 'rotina'],
+      'tab-lider': ['pratica', 'dados', 'revisar', 'regras']
     };
 
-    // Garante o selo "Recomendado" em cada seção destacável (visibilidade controlada por CSS).
     ALL_SECTIONS.forEach(function (id) {
       var s = document.getElementById(id);
       if (!s) return;
@@ -793,7 +928,6 @@
       });
     });
 
-    // Aplica o destaque da trilha selecionada por padrão já no carregamento.
     var initial = tabs.filter(function (t) { return t.getAttribute('aria-selected') === 'true'; })[0] || tabs[0];
     if (initial) select(initial);
   })();
