@@ -93,44 +93,61 @@
   .hero-meta .lbl { font-size: 13px; color: var(--muted); max-width: 22ch; }
 
   /* Section frame */
-  section { padding: 76px 0; border-bottom: 1px solid var(--line); transition: background .45s ease; }
+  section { padding: 76px 0; border-bottom: 1px solid var(--line); }
   .sec-head { max-width: 680px; margin-bottom: 40px; }
   .sec-head h2 { font-size: clamp(1.7rem, 3.6vw, 2.45rem); margin-top: 12px; }
   .sec-head p { margin-top: 14px; color: var(--body); font-size: 1.05rem; }
   .sub { color: var(--ink); font-size: 1.15rem; font-weight: 800; letter-spacing: -.01em; margin: 34px 0 16px; }
 
-  /* Tracks */
-  .track-tabs { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 26px; }
+  /* Track selector */
+  .track-tabs { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 28px; }
   .track-tab { display: flex; align-items: center; gap: 12px; text-align: left; padding: 16px 18px; border-radius: 12px; cursor: pointer; background: var(--surface); border: 1px solid var(--line); color: var(--ink); flex: 1 1 260px; transition: border-color .15s ease, background .15s ease; }
   .track-tab:hover { border-color: var(--signal); }
-  .track-tab[aria-selected="true"] { border-color: var(--signal); background: var(--signal-soft); }
+  .track-tab[aria-selected="true"] { border-color: var(--signal); background: var(--signal-soft); box-shadow: var(--shadow); }
   .track-tab .ico { font-size: 26px; line-height: 1; flex: none; }
   .track-tab .tt { display: flex; flex-direction: column; }
   .track-tab .tt strong { font-size: 15px; }
   .track-tab .tt span { font-size: 13px; color: var(--muted); }
-  .track-panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 30px; box-shadow: var(--shadow); }
-  .track-panel[hidden] { display: none; }
-  .track-panel .plabel { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--human); font-weight: 600; }
-  .track-panel h3 { font-size: 1.4rem; margin: 8px 0 0; }
-  .track-focus { margin: 14px 0 20px; font-size: .98rem; color: var(--body); background: var(--signal-soft); border-radius: 10px; padding: 13px 16px; }
-  .track-focus b { color: var(--ink); }
-  .steplist { display: grid; gap: 14px; counter-reset: step; margin: 0; padding: 0; }
-  .steplist li { list-style: none; display: flex; gap: 16px; align-items: flex-start; }
-  .steplist li::before { counter-increment: step; content: counter(step); font-family: var(--mono); font-weight: 700; font-size: 13px; width: 28px; height: 28px; border-radius: 8px; flex: none; display: flex; align-items: center; justify-content: center; background: var(--signal-soft); color: var(--signal-ink); }
-  .steplist li b { color: var(--ink); }
-  .steplist li p { font-size: .96rem; }
-  .track-path { margin-top: 24px; padding-top: 20px; border-top: 1px dashed var(--line); }
-  .track-path .tp-label { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
-  .track-path .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; align-items: center; }
-  .track-path .chip { display: inline-flex; align-items: center; gap: 8px; padding: 8px 13px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--line); color: var(--ink); font-size: .85rem; font-weight: 600; }
-  .track-path .chip:hover { border-color: var(--signal); text-decoration: none; }
-  .track-path .chip .n { font-family: var(--mono); font-size: 11px; color: var(--signal-ink); }
-  .track-path .arrow { color: var(--muted); font-size: .8rem; }
 
-  /* Adaptive emphasis */
-  section[data-featured="true"] { background: color-mix(in srgb, var(--signal-soft) 45%, var(--bg)); }
-  .sec-flag { display: none; }
-  section[data-featured="true"] .sec-flag { display: flex; width: fit-content; align-items: center; gap: 7px; margin-bottom: 14px; font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; font-weight: 600; color: var(--signal-ink); background: var(--surface); border: 1px solid color-mix(in srgb, var(--signal) 38%, var(--line)); padding: 5px 12px; border-radius: 999px; }
+  /* Dossier (swaps per track) */
+  .dossier[hidden] { display: none; }
+  .dossier-head { display: flex; align-items: flex-start; gap: 16px; flex-wrap: wrap; padding: 4px 2px 0; }
+  .dossier-head .plabel { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--human); font-weight: 600; }
+  .dossier-head h3 { font-size: clamp(1.4rem, 3vw, 1.9rem); margin-top: 6px; }
+  .d-foco { margin: 14px 0 0; font-size: 1rem; color: var(--body); background: var(--signal-soft); border-radius: 10px; padding: 13px 16px; }
+  .d-foco b { color: var(--ink); }
+  .dpoints { display: grid; gap: 16px; margin-top: 24px; counter-reset: dp; }
+  .dpoint { display: grid; grid-template-columns: auto 1fr; gap: 20px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px 26px; box-shadow: var(--shadow); }
+  @media (max-width: 640px) { .dpoint { grid-template-columns: 1fr; gap: 12px; padding: 22px; } }
+  .dp-num { counter-increment: dp; width: 34px; height: 34px; border-radius: 9px; background: var(--signal); color: #04211D; font-family: var(--mono); font-weight: 700; display: flex; align-items: center; justify-content: center; font-size: 15px; flex: none; }
+  .dp-num::before { content: counter(dp); }
+  .dp-body h4 { font-size: 1.22rem; }
+  .dp-body > p { margin-top: 9px; font-size: 1rem; color: var(--body); }
+  .dp-body > p b { color: var(--ink); }
+  .dp-ex { margin-top: 15px; background: var(--surface-2); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+  .dp-ex .lbl { font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  .dp-ex .q { font-family: var(--mono); font-size: .85rem; line-height: 1.55; color: var(--body); margin-top: 8px; }
+  .dp-ex .q::before { content: "“"; color: var(--human); font-weight: 700; }
+  .dp-ex .q::after { content: "”"; color: var(--human); font-weight: 700; }
+  .ba { display: grid; gap: 9px; margin-top: 4px; }
+  .ba .row { display: grid; grid-template-columns: auto 1fr; gap: 10px; align-items: start; }
+  .ba .mark { font-family: var(--mono); font-weight: 700; font-size: .9rem; }
+  .ba .no .mark { color: var(--human); }
+  .ba .yes .mark { color: var(--signal-ink); }
+  .ba .txt { font-size: .9rem; color: var(--body); }
+  .ba .no .txt { color: var(--muted); }
+  .dp-list { margin: 4px 0 0; padding-left: 18px; display: grid; gap: 6px; }
+  .dp-list li { font-size: .92rem; color: var(--body); }
+  .dp-list li b { color: var(--ink); }
+  .dp-route { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
+  .dp-route .r { font-family: var(--mono); font-size: 11px; font-weight: 700; padding: 5px 9px; border-radius: 6px; background: var(--signal-soft); color: var(--signal-ink); }
+  .dp-more { display: inline-flex; align-items: center; gap: 6px; margin-top: 15px; font-size: .88rem; font-weight: 700; color: var(--signal-ink); }
+
+  /* Library band */
+  .lib-band { background: var(--surface-2); border-bottom: 1px solid var(--line); }
+  .lib-band .wrap { padding: 46px 24px; }
+  .lib-band h2 { font-size: clamp(1.4rem, 3vw, 2rem); margin-top: 8px; }
+  .lib-band p { margin-top: 12px; color: var(--body); max-width: 62ch; font-size: 1.02rem; }
 
   /* Downloads */
   .dl-list { display: grid; gap: 12px; }
@@ -277,7 +294,7 @@
     </div>
     <nav class="nav" aria-label="Seções">
       <div class="nav-links">
-        <a href="#comecar">Começar</a>
+        <a href="#comecar">Trilhas</a>
         <a href="#ambiente">Instalar</a>
         <a href="#conversar">Conversar</a>
         <a href="#revisar">Revisar</a>
@@ -298,13 +315,13 @@
     <div class="hero-inner">
       <span class="eyebrow reveal">Guia vivo do time · leva ~15 min de leitura</span>
       <h1 class="reveal">Aprender a <span class="hl">conversar com o Claude</span> é aprender a delegar.</h1>
-      <p class="lede reveal">Você não precisa saber programar. Precisa saber pedir bem, dar contexto e — importante — conferir o que volta, porque o Claude às vezes inventa. Esta central reúne as práticas do nosso time: instalar o ambiente, escrever bons comandos, revisar com atenção e delegar tarefas de rotina, com exemplos reais e fontes oficiais.</p>
+      <p class="lede reveal">Você não precisa saber programar. Precisa saber pedir bem, dar contexto e — importante — conferir o que volta, porque o Claude às vezes inventa. Escolha sua trilha abaixo: o conteúdo se ajusta ao seu perfil, com exemplos reais e fontes oficiais.</p>
       <div class="hero-cta reveal">
         <a href="#comecar" class="btn btn-primary">Escolher minha trilha →</a>
         <a href="#ambiente" class="btn btn-ghost">Instalar do zero</a>
       </div>
       <div class="hero-meta reveal">
-        <div class="stat"><span class="num">3</span><span class="lbl">trilhas por perfil</span></div>
+        <div class="stat"><span class="num">3</span><span class="lbl">trilhas que trocam o conteúdo</span></div>
         <div class="stat"><span class="num">4</span><span class="lbl">programas pra instalar (com link)</span></div>
         <div class="stat"><span class="num">100%</span><span class="lbl">do que ele te dá você confere</span></div>
       </div>
@@ -312,94 +329,231 @@
   </div>
 </section>
 
-<!-- ================= TRACKS ================= -->
+<!-- ================= TRACKS / DOSSIÊS ================= -->
 <section id="comecar">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="eyebrow">Por onde começar</span>
-      <h2>Escolha a porta de entrada que é a sua.</h2>
-      <p>O caminho muda conforme onde você está hoje. Clique no seu perfil — as seções que mais importam pra você acendem, e o painel mostra sua trilha na ordem certa.</p>
+      <span class="eyebrow">Sua trilha</span>
+      <h2>Escolha seu perfil — o conteúdo muda pra você.</h2>
+      <p>Clique numa porta e o dossiê abaixo troca inteiro, detalhando os pontos que importam pra quem você é. Cada ponto tem exemplo prático e um link pra aprofundar na biblioteca.</p>
     </div>
 
     <div class="track-tabs reveal" role="tablist" aria-label="Trilhas por perfil">
-      <button class="track-tab" role="tab" aria-selected="true" aria-controls="panel-novo" id="tab-novo">
+      <button class="track-tab" role="tab" aria-selected="true" aria-controls="dossie-novo" id="tab-novo">
         <span class="ico" aria-hidden="true">🌱</span>
         <span class="tt"><strong>Cheguei agora</strong><span>Nunca usei o Claude</span></span>
       </button>
-      <button class="track-tab" role="tab" aria-selected="false" aria-controls="panel-time" id="tab-time" tabindex="-1">
+      <button class="track-tab" role="tab" aria-selected="false" aria-controls="dossie-time" id="tab-time" tabindex="-1">
         <span class="ico" aria-hidden="true">🛠️</span>
         <span class="tt"><strong>Quero resolver algo da rotina</strong><span>CS, vendas, operação</span></span>
       </button>
-      <button class="track-tab" role="tab" aria-selected="false" aria-controls="panel-lider" id="tab-lider" tabindex="-1">
+      <button class="track-tab" role="tab" aria-selected="false" aria-controls="dossie-lider" id="tab-lider" tabindex="-1">
         <span class="ico" aria-hidden="true">📊</span>
         <span class="tt"><strong>Quero entender o potencial</strong><span>Liderança</span></span>
       </button>
     </div>
 
-    <div class="track-panel reveal" id="panel-novo" role="tabpanel" aria-labelledby="tab-novo" tabindex="0">
-      <span class="plabel">Trilha · Cheguei agora</span>
-      <h3>Sua primeira semana com o Claude</h3>
-      <p class="track-focus"><b>Foco desta porta:</b> sair do zero — instalar o ambiente e resolver sua primeira tarefa com segurança.</p>
-      <ol class="steplist">
-        <li><div><b>Instale o ambiente (com calma).</b><p>São 4 programas, todos com link e passo a passo em <a href="#ambiente">Instalar do zero</a>. Dica: depois de instalar o VS&nbsp;Code e a extensão, o próprio Claude te guia a terminar o resto.</p></div></li>
-        <li><div><b>Trate como um colega, não como um buscador.</b><p>Não é o Google. É alguém que faz junto com você. Fale em frases inteiras — como o time diz: imagine um estagiário brilhante no primeiro dia, que precisa de contexto claro.</p></div></li>
-        <li><div><b>Descreva o problema antes da solução.</b><p>A regra de ouro: conte o contexto e a dor primeiro, deixe o Claude sugerir o caminho. Veja as técnicas em <a href="#conversar">O jeito de conversar</a>.</p></div></li>
-        <li><div><b>Confira sempre — ele inventa às vezes.</b><p>O Claude pode afirmar algo errado com total confiança (chama-se "alucinação"). Antes de usar, revise. Aprenda a se proteger em <a href="#revisar">Revisar sempre</a>.</p></div></li>
-      </ol>
-      <div class="track-path">
-        <span class="tp-label">Sua trilha sugerida</span>
-        <div class="chips">
-          <a class="chip" href="#ambiente"><span class="n">1</span> Instalar do zero</a><span class="arrow">→</span>
-          <a class="chip" href="#conversar"><span class="n">2</span> O jeito de conversar</a><span class="arrow">→</span>
-          <a class="chip" href="#revisar"><span class="n">3</span> Revisar sempre</a><span class="arrow">→</span>
-          <a class="chip" href="#regras"><span class="n">4</span> Regras de ouro</a>
+    <!-- DOSSIÊ · CHEGUEI AGORA -->
+    <div class="dossier reveal" id="dossie-novo" role="tabpanel" aria-labelledby="tab-novo" tabindex="0">
+      <div class="dossier-head">
+        <div>
+          <span class="plabel">Trilha · Cheguei agora</span>
+          <h3>Sua primeira semana com o Claude</h3>
         </div>
+      </div>
+      <p class="d-foco"><b>Foco desta trilha:</b> sair do zero — montar o ambiente e resolver sua primeira tarefa com segurança.</p>
+      <div class="dpoints">
+        <article class="dpoint">
+          <div class="dp-num" aria-hidden="true"></div>
+          <div class="dp-body">
+            <h4>Monte seu ambiente (uma vez só)</h4>
+            <p>O Claude do time mora dentro do <b>VS Code</b>, não no navegador. São 4 instalações rápidas, nesta ordem — depois você nunca mais mexe nisso.</p>
+            <ul class="dp-list">
+              <li><b>1. VS Code</b> — o editor, sua mesa de trabalho.</li>
+              <li><b>2. Node.js (LTS)</b> — o "motor" que faz o Claude rodar liso.</li>
+              <li><b>3. Git</b> — guarda o histórico dos arquivos.</li>
+              <li><b>4. Extensão Claude Code</b> — traz o Claude pra dentro do editor.</li>
+            </ul>
+            <p style="margin-top:12px;font-size:.92rem;color:var(--muted);">Precisa de conta paga do Claude (Pro, Max ou Team) — o plano grátis não inclui.</p>
+            <a class="dp-more" href="#ambiente">Aprofundar: Instalar do zero, com botões de download →</a>
+          </div>
+        </article>
+        <article class="dpoint">
+          <div class="dp-num" aria-hidden="true"></div>
+          <div class="dp-body">
+            <h4>Fale com ele como com um colega novo</h4>
+            <p>Não é buscador. Pense num <b>estagiário brilhante no primeiro dia</b>: faz tudo rápido, mas só sabe o que você contar. Frases inteiras, com contexto.</p>
+            <div class="dp-ex">
+              <div class="ba">
+                <div class="row no"><span class="mark">✗</span><span class="txt">"dados churn maio"</span></div>
+                <div class="row yes"><span class="mark">✓</span><span class="txt">"Sou do CS de telecom B2B. Preciso da lista de clientes que entraram em risco de churn em maio, com MRR e motivo. Me diga se faltar alguma informação."</span></div>
+              </div>
+            </div>
+            <a class="dp-more" href="#conversar">Aprofundar: O jeito de conversar (7 técnicas) →</a>
+          </div>
+        </article>
+        <article class="dpoint">
+          <div class="dp-num" aria-hidden="true"></div>
+          <div class="dp-body">
+            <h4>Descreva o problema antes da solução</h4>
+            <p>A regra de ouro do time. Em vez de já mandar o "como", conte a dor e o cenário — deixe o Claude propor os caminhos, e você escolhe qual seguir.</p>
+            <div class="dp-ex">
+              <span class="lbl">Cole algo assim</span>
+              <p class="q">Toda segunda eu monto na mão um resumo de risco pra reunião — toma 1h. Aqui está o modelo atual [cola]. Como você faria isso mais rápido? Me dê 2 ou 3 opções antes de executar.</p>
+            </div>
+            <a class="dp-more" href="#conversar">Aprofundar: O jeito de conversar →</a>
+          </div>
+        </article>
+        <article class="dpoint">
+          <div class="dp-num" aria-hidden="true"></div>
+          <div class="dp-body">
+            <h4>Confira sempre: ele inventa às vezes</h4>
+            <p>O Claude pode afirmar um número, nome ou data errados com <b>total confiança</b> — isso se chama alucinação. Antes de usar qualquer coisa, revise. Três hábitos já resolvem a maior parte:</p>
+            <ul class="dp-list">
+              <li>Peça: <b>"se não tiver certeza, diga 'não sei' em vez de chutar".</b></li>
+              <li>Confira nome, número e data na fonte antes de mandar pra frente.</li>
+              <li>Peça a fonte de cada dado importante.</li>
+            </ul>
+            <a class="dp-more" href="#revisar">Aprofundar: Revisar sempre (6 técnicas) →</a>
+          </div>
+        </article>
       </div>
     </div>
 
-    <div class="track-panel reveal" id="panel-time" role="tabpanel" aria-labelledby="tab-time" tabindex="0" hidden>
-      <span class="plabel">Trilha · Rotina do time</span>
-      <h3>Do "isso me toma horas" para "isso o Claude faz"</h3>
-      <p class="track-focus"><b>Foco desta porta:</b> pegar uma tarefa chata da sua rotina e delegar de ponta a ponta, com segurança.</p>
-      <ol class="steplist">
-        <li><div><b>Nomeie a dor, não a solução.</b><p>Em vez de "cria uma macro", diga "toda semana eu pego esses dados e monto esse resumo na mão — quero parar". Deixe ele propor o como.</p></div></li>
-        <li><div><b>Dê o material e defina os conceitos.</b><p>Cole a planilha, o áudio, o print. E seja preciso: <b>churn</b> (perda de receita) ≠ <b>cancelamento</b> (ação deliberada). Conceito vago gera base errada.</p></div></li>
-        <li><div><b>Peça dados sem saber SQL.</b><p>Via MCP, o Claude busca direto nos sistemas. "Quantos clientes entraram em risco esse mês?" Ver <a href="#dados">Buscar dados</a> e os <a href="#rotina">Casos de rotina</a>.</p></div></li>
-        <li><div><b>Revise antes de agir e finalize no app.</b><p>Confira números e nomes (ele inventa — ver <a href="#revisar">Revisar</a>). Terminou uma ação? Registre no sistema na hora — é o que sustenta o SLA de 24h.</p></div></li>
-      </ol>
-      <div class="track-path">
-        <span class="tp-label">Sua trilha sugerida</span>
-        <div class="chips">
-          <a class="chip" href="#conversar"><span class="n">1</span> O jeito de conversar</a><span class="arrow">→</span>
-          <a class="chip" href="#revisar"><span class="n">2</span> Revisar sempre</a><span class="arrow">→</span>
-          <a class="chip" href="#dados"><span class="n">3</span> Buscar dados</a><span class="arrow">→</span>
-          <a class="chip" href="#rotina"><span class="n">4</span> Casos de rotina</a>
+    <!-- DOSSIÊ · ROTINA DO TIME -->
+    <div class="dossier reveal" id="dossie-time" role="tabpanel" aria-labelledby="tab-time" tabindex="0" hidden>
+      <div class="dossier-head">
+        <div>
+          <span class="plabel">Trilha · Rotina do time</span>
+          <h3>Do "isso me toma horas" para "isso o Claude faz"</h3>
         </div>
+      </div>
+      <p class="d-foco"><b>Foco desta trilha:</b> pegar uma tarefa chata da rotina e delegar de ponta a ponta, com segurança.</p>
+      <div class="dpoints">
+        <article class="dpoint">
+          <div class="dp-num" aria-hidden="true"></div>
+          <div class="dp-body">
+            <h4>Nomeie a dor, não a solução</h4>
+            <p>Seu maior ganho vem de descrever o trabalho chato como ele é — não de já pedir uma ferramenta pronta. Quase sempre o Claude propõe um caminho melhor do que você imaginou.</p>
+            <div class="dp-ex">
+              <div class="ba">
+                <div class="row no"><span class="mark">✗</span><span class="txt">"cria uma macro de Excel"</span></div>
+                <div class="row yes"><span class="mark">✓</span><span class="txt">"Toda semana eu cruzo essas duas planilhas na mão pra achar clientes cancelados que ainda estão na base de prospecção. Toma 2h. Como automatizar?"</span></div>
+              </div>
+            </div>
+            <a class="dp-more" href="#rotina">Aprofundar: Anatomia de um bom pedido + casos →</a>
+          </div>
+        </article>
+        <article class="dpoint">
+          <div class="dp-num" aria-hidden="true"></div>
+          <div class="dp-body">
+            <h4>Dê o material e trave os conceitos</h4>
+            <p>Cole o insumo real (planilha, áudio, print) e seja preciso nos termos — conceito vago vira base errada. O clássico do time: <b>churn</b> (perda de receita/risco) ≠ <b>cancelamento</b> (ação deliberada); quem está em recarga ainda usa a ferramenta.</p>
+            <div class="dp-ex">
+              <span class="lbl">Exemplo com colunas exatas</span>
+              <p class="q">Monta a base de reativação. Colunas: MRR antes do cancelamento, CNPJ, data de cancelamento, último pagamento, qtd de ramais e plano (Ilimitado/Recarga). Só cancelamento deliberado — não misture com churn de pagamento.</p>
+            </div>
+            <a class="dp-more" href="#conversar">Aprofundar: Precisão conceitual →</a>
+          </div>
+        </article>
+        <article class="dpoint">
+          <div class="dp-num" aria-hidden="true"></div>
+          <div class="dp-body">
+            <h4>Puxe dados sem saber SQL</h4>
+            <p>Via MCP, o Claude busca direto nos sistemas — você pergunta em português. Só diga <b>de onde</b> quer o número: a mesma pergunta na fonte errada devolve resposta que parece certa e está errada.</p>
+            <div class="dp-route">
+              <span class="r">App de risco</span><span class="r">Lightdash (ligações)</span><span class="r">Código</span>
+            </div>
+            <div class="dp-ex">
+              <span class="lbl">Pergunta pronta</span>
+              <p class="q">Quantos clientes entraram em risco crítico nos últimos 30 dias e quanto é em MRR? Pega do app e me declara a fonte.</p>
+            </div>
+            <a class="dp-more" href="#dados">Aprofundar: Buscar dados (MCP) →</a>
+          </div>
+        </article>
+        <article class="dpoint">
+          <div class="dp-num" aria-hidden="true"></div>
+          <div class="dp-body">
+            <h4>Revise e finalize no app</h4>
+            <p>Antes de agir, confira números e nomes — ele inventa. E toda ação prática, encerre no sistema na hora: é o que dá visibilidade ao gestor e sustenta o SLA de 24h.</p>
+            <ul class="dp-list">
+              <li>Revisar o dado crítico contra a fonte.</li>
+              <li>Registrar a ação no app <b>imediatamente</b>.</li>
+              <li>Respeitar a validação humana (ex.: conta com 7 dias de atraso).</li>
+            </ul>
+            <a class="dp-more" href="#revisar">Aprofundar: Revisar sempre · Regras de ouro →</a>
+          </div>
+        </article>
       </div>
     </div>
 
-    <div class="track-panel reveal" id="panel-lider" role="tabpanel" aria-labelledby="tab-lider" tabindex="0" hidden>
-      <span class="plabel">Trilha · Liderança</span>
-      <h3>O que muda quando o time trabalha assim</h3>
-      <p class="track-focus"><b>Foco desta porta:</b> enxergar o ganho de eficiência sem perder confiabilidade, visibilidade nem SLA.</p>
-      <ol class="steplist">
-        <li><div><b>Trabalho braçal sai do caminho do time.</b><p>Higienização de base, análise de consumo, resumo de áudios, planilhas de controle — tarefas manuais e demoradas passam a rodar em minutos, liberando o CSM pra falar com cliente.</p></div></li>
-        <li><div><b>Uma ferramenta no lugar de várias.</b><p>Via MCP, o Claude busca dado direto nos sistemas — o time para de abrir plataforma por plataforma. Ver <a href="#dados">Buscar dados</a>.</p></div></li>
-        <li><div><b>Confiabilidade é uma disciplina, não sorte.</b><p>O Claude erra com confiança. O time trabalha com revisão obrigatória e dados ligados à fonte real. Ver <a href="#revisar">Revisar sempre</a> e <a href="#pratica">Na prática</a>.</p></div></li>
-        <li><div><b>Visibilidade e SLA preservados.</b><p>A automação respeita os fluxos humanos: onde precisa de validação do CS, ela para e espera. Toda ação é finalizada no app, medindo o tempo de resposta.</p></div></li>
-      </ol>
-      <div class="track-path">
-        <span class="tp-label">Sua trilha sugerida</span>
-        <div class="chips">
-          <a class="chip" href="#pratica"><span class="n">1</span> Na prática</a><span class="arrow">→</span>
-          <a class="chip" href="#dados"><span class="n">2</span> Buscar dados</a><span class="arrow">→</span>
-          <a class="chip" href="#revisar"><span class="n">3</span> Revisar sempre</a><span class="arrow">→</span>
-          <a class="chip" href="#regras"><span class="n">4</span> Regras de ouro</a>
+    <!-- DOSSIÊ · LIDERANÇA -->
+    <div class="dossier reveal" id="dossie-lider" role="tabpanel" aria-labelledby="tab-lider" tabindex="0" hidden>
+      <div class="dossier-head">
+        <div>
+          <span class="plabel">Trilha · Liderança</span>
+          <h3>O que muda quando o time trabalha assim</h3>
         </div>
+      </div>
+      <p class="d-foco"><b>Foco desta trilha:</b> enxergar o ganho de eficiência sem perder confiabilidade, visibilidade nem SLA.</p>
+      <div class="dpoints">
+        <article class="dpoint">
+          <div class="dp-num" aria-hidden="true"></div>
+          <div class="dp-body">
+            <h4>Trabalho braçal sai do caminho do time</h4>
+            <p>Tarefas manuais e diárias passam a rodar em minutos — ou sozinhas. O CSM volta pro que importa: falar com cliente. Exemplos que já saíram do nosso próprio app de gestão de risco:</p>
+            <ul class="dp-list">
+              <li>Réguas de cobrança que criam e encerram tarefas sozinhas.</li>
+              <li>Cancelamentos importados automaticamente, todo dia.</li>
+              <li>Planilha de CS que se abastece sozinha (só leitura).</li>
+            </ul>
+            <a class="dp-more" href="#pratica">Aprofundar: Na prática (a linha do tempo real) →</a>
+          </div>
+        </article>
+        <article class="dpoint">
+          <div class="dp-num" aria-hidden="true"></div>
+          <div class="dp-body">
+            <h4>Uma ferramenta no lugar de várias</h4>
+            <p>O MCP é um <b>"tradutor de linguagem"</b>: deixa o Claude acessar os sistemas da empresa e buscar ou fazer coisas sozinho, sem o time abrir plataforma por plataforma. Menos troca de contexto, menos erro de copiar e colar.</p>
+            <div class="dp-route">
+              <span class="r">App de risco</span><span class="r">Lightdash</span><span class="r">Código</span>
+            </div>
+            <a class="dp-more" href="#dados">Aprofundar: Buscar dados →</a>
+          </div>
+        </article>
+        <article class="dpoint">
+          <div class="dp-num" aria-hidden="true"></div>
+          <div class="dp-body">
+            <h4>Confiabilidade é disciplina, não sorte</h4>
+            <p>O Claude erra com confiança. O que torna isso seguro é o método: <b>revisão obrigatória</b> do que sai e dados ligados à <b>fonte real</b> (via MCP) em vez de "memória". Onde o risco é real, ele para e pede autorização com a evidência na mão.</p>
+            <div class="dp-ex">
+              <span class="lbl">O princípio</span>
+              <p class="q">Mudanças pequenas, reversíveis e revisadas. Nada de "grande virada" sem como desfazer.</p>
+            </div>
+            <a class="dp-more" href="#revisar">Aprofundar: Revisar sempre · Na prática →</a>
+          </div>
+        </article>
+        <article class="dpoint">
+          <div class="dp-num" aria-hidden="true"></div>
+          <div class="dp-body">
+            <h4>Visibilidade e SLA preservados</h4>
+            <p>A automação respeita os fluxos humanos: onde precisa do CS (ex.: conta com 7 dias de atraso), ela para e espera. E toda ação é finalizada no app — o que mantém o gestor com visão e o <b>SLA de 24h</b> medível.</p>
+            <a class="dp-more" href="#regras">Aprofundar: Regras de ouro →</a>
+          </div>
+        </article>
       </div>
     </div>
   </div>
 </section>
+
+<!-- ================= BIBLIOTECA (banda divisória) ================= -->
+<div class="lib-band">
+  <div class="wrap reveal">
+    <span class="eyebrow">Biblioteca completa</span>
+    <h2>O detalhe por trás de cada link.</h2>
+    <p>As trilhas acima te apontam pra cá. Esta é a referência aprofundada — vale pros três perfis. Use como consulta sempre que um "aprofundar →" te trouxer.</p>
+  </div>
+</div>
 
 <!-- ================= AMBIENTE / INSTALAR ================= -->
 <section id="ambiente">
@@ -589,7 +743,7 @@
     <div class="callout reveal" style="margin-top:0;margin-bottom:34px;">
       <div class="ct">
         <h3>A regra de bolso</h3>
-        <p>Quanto mais uma decisão depende de um dado, mais você confere esse dado. Nome de cliente, valor de MRR, data, número de contrato, citação de documento — trate como "a conferir" até você bater com a fonte. Desconfie especialmente de <b>precisão suspeita</b> (um número exato demais que ninguém te deu).</p>
+        <p>Quanto mais uma decisão depende de um dado, mais você confere esse dado. Nome de cliente, valor de MRR, data, número de contrato, citação de documento — trate como "a conferir" até bater com a fonte. Desconfie especialmente de <b>precisão suspeita</b> (um número exato demais que ninguém te deu).</p>
       </div>
     </div>
 
@@ -831,8 +985,8 @@
     <div class="grow-grid">
       <div class="grow-card ready reveal">
         <span class="gnum">01</span>
-        <h4>Trilhas com conteúdo real</h4>
-        <p>Instalação, fundamentos, revisão, busca de dados e casos de rotina — com passo a passo, exemplos e fontes oficiais.</p>
+        <h4>Trilhas com conteúdo próprio</h4>
+        <p>Cada perfil tem um dossiê que troca inteiro ao escolher a trilha, com exemplos e links pra biblioteca.</p>
         <span class="status"><span class="pip"></span>Feito</span>
       </div>
       <div class="grow-card reveal">
@@ -863,7 +1017,7 @@
       <div class="brand" style="margin-bottom:8px;"><span class="dot" aria-hidden="true"></span><span>Central de Enablement · Time de CS</span></div>
       <p class="muted">Conteúdo extraído das reuniões do time (Eduardo, Letícia, Jaine, Leonardo) e das fontes oficiais da Anthropic. Material vivo — cresce a cada novo caso.</p>
     </div>
-    <span class="pill"><span class="pip"></span>versão 0.3 · com instalação, prompt e revisão</span>
+    <span class="pill"><span class="pip"></span>versão 0.4 · trilhas com dossiê próprio</span>
   </div>
 </footer>
 
@@ -882,40 +1036,16 @@
 
   (function () {
     var tabs = Array.prototype.slice.call(document.querySelectorAll('.track-tab'));
-    var panels = { 'tab-novo': 'panel-novo', 'tab-time': 'panel-time', 'tab-lider': 'panel-lider' };
-    var ALL_SECTIONS = ['ambiente', 'conversar', 'revisar', 'dados', 'rotina', 'pratica', 'regras', 'crescer'];
-    var featureMap = {
-      'tab-novo': ['ambiente', 'conversar', 'revisar', 'regras'],
-      'tab-time': ['conversar', 'revisar', 'dados', 'rotina'],
-      'tab-lider': ['pratica', 'dados', 'revisar', 'regras']
-    };
-
-    ALL_SECTIONS.forEach(function (id) {
-      var s = document.getElementById(id);
-      if (!s) return;
-      var head = s.querySelector('.sec-head');
-      if (head && !head.querySelector('.sec-flag')) {
-        var f = document.createElement('span');
-        f.className = 'sec-flag';
-        f.textContent = '★ Recomendado pra sua trilha';
-        head.insertBefore(f, head.firstChild);
-      }
-    });
-
+    var dossies = { 'tab-novo': 'dossie-novo', 'tab-time': 'dossie-time', 'tab-lider': 'dossie-lider' };
     function select(tab) {
       tabs.forEach(function (t) {
         var on = t === tab;
         t.setAttribute('aria-selected', on ? 'true' : 'false');
         t.tabIndex = on ? 0 : -1;
-        document.getElementById(panels[t.id]).hidden = !on;
-      });
-      var feats = featureMap[tab.id] || [];
-      ALL_SECTIONS.forEach(function (id) {
-        var s = document.getElementById(id);
-        if (s) s.setAttribute('data-featured', feats.indexOf(id) >= 0 ? 'true' : 'false');
+        var d = document.getElementById(dossies[t.id]);
+        if (d) d.hidden = !on;
       });
     }
-
     tabs.forEach(function (tab, i) {
       tab.addEventListener('click', function () { select(tab); });
       tab.addEventListener('keydown', function (e) {
@@ -927,7 +1057,6 @@
         }
       });
     });
-
     var initial = tabs.filter(function (t) { return t.getAttribute('aria-selected') === 'true'; })[0] || tabs[0];
     if (initial) select(initial);
   })();
