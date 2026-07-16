@@ -138,6 +138,27 @@
   .steplist li::before { counter-increment: step; content: counter(step); font-family: var(--mono); font-weight: 700; font-size: 13px; width: 28px; height: 28px; border-radius: 8px; flex: none; display: flex; align-items: center; justify-content: center; background: var(--signal-soft); color: var(--signal-ink); }
   .steplist li b { color: var(--ink); }
   .steplist li p { font-size: .96rem; }
+  .track-focus { margin: 0 0 20px; font-size: .98rem; color: var(--body); background: var(--signal-soft); border-radius: 10px; padding: 13px 16px; }
+  .track-focus b { color: var(--ink); }
+  .track-path { margin-top: 24px; padding-top: 20px; border-top: 1px dashed var(--line); }
+  .track-path .tp-label { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  .track-path .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; align-items: center; }
+  .track-path .chip { display: inline-flex; align-items: center; gap: 8px; padding: 8px 13px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--line); color: var(--ink); font-size: .85rem; font-weight: 600; }
+  .track-path .chip:hover { border-color: var(--signal); text-decoration: none; }
+  .track-path .chip .n { font-family: var(--mono); font-size: 11px; color: var(--signal-ink); }
+  .track-path .arrow { color: var(--muted); font-size: .8rem; }
+
+  /* ---------- Adaptive section emphasis ---------- */
+  section { transition: background .45s ease; }
+  section[data-featured="true"] { background: color-mix(in srgb, var(--signal-soft) 45%, var(--bg)); }
+  .sec-flag { display: none; }
+  section[data-featured="true"] .sec-flag {
+    display: flex; width: fit-content; align-items: center; gap: 7px; margin-bottom: 14px;
+    font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; font-weight: 600;
+    color: var(--signal-ink); background: var(--surface);
+    border: 1px solid color-mix(in srgb, var(--signal) 38%, var(--line));
+    padding: 5px 12px; border-radius: 999px;
+  }
 
   /* ---------- Setup / environment ---------- */
   .env-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 26px; align-items: start; }
@@ -317,34 +338,64 @@
     <div class="track-panel reveal" id="panel-novo" role="tabpanel" aria-labelledby="tab-novo" tabindex="0">
       <span class="plabel">Trilha · Cheguei agora</span>
       <h3>Sua primeira semana com o Claude</h3>
+      <p class="track-focus"><b>Foco desta porta:</b> sair do zero e resolver sua primeira tarefa com segurança.</p>
       <ol class="steplist">
         <li><div><b>Monte o ambiente antes de tudo.</b><p>O time trabalha no VS&nbsp;Code, não na versão web. Siga o passo a passo em <a href="#ambiente">Configurar o ambiente</a> — leva uns minutos e destrava todo o resto.</p></div></li>
         <li><div><b>Trate como um colega, não como um buscador.</b><p>Não é o Google. É alguém que faz junto com você. Fale em frases inteiras, do jeito que explicaria pra uma pessoa.</p></div></li>
         <li><div><b>Descreva o problema antes da solução.</b><p>A regra de ouro do time: conte o contexto e a dor primeiro, deixe o Claude sugerir o caminho. Não force uma direção técnica logo de cara.</p></div></li>
         <li><div><b>Peça em HTML e confira antes de usar.</b><p>Documentos em HTML ficam mais organizados. E sempre revise o que voltou — ele erra com confiança; você continua sendo o responsável.</p></div></li>
       </ol>
+      <div class="track-path">
+        <span class="tp-label">Sua trilha sugerida</span>
+        <div class="chips">
+          <a class="chip" href="#ambiente"><span class="n">1</span> Configurar o ambiente</a><span class="arrow">→</span>
+          <a class="chip" href="#conversar"><span class="n">2</span> O jeito de conversar</a><span class="arrow">→</span>
+          <a class="chip" href="#rotina"><span class="n">3</span> Um caso de rotina</a><span class="arrow">→</span>
+          <a class="chip" href="#regras"><span class="n">4</span> Regras de ouro</a>
+        </div>
+      </div>
     </div>
 
     <div class="track-panel reveal" id="panel-time" role="tabpanel" aria-labelledby="tab-time" tabindex="0" hidden>
       <span class="plabel">Trilha · Rotina do time</span>
       <h3>Do "isso me toma horas" para "isso o Claude faz"</h3>
+      <p class="track-focus"><b>Foco desta porta:</b> pegar uma tarefa chata da sua rotina e delegar de ponta a ponta.</p>
       <ol class="steplist">
         <li><div><b>Nomeie a dor, não a solução.</b><p>Em vez de "cria uma macro", diga "toda semana eu pego esses dados e monto esse resumo na mão — quero parar". Deixe ele propor o como.</p></div></li>
         <li><div><b>Dê o material junto.</b><p>Cole a planilha, o áudio, a transcrição, o print. Quanto mais contexto real, melhor o resultado — e menos idas e vindas.</p></div></li>
         <li><div><b>Separe cada demanda em seu projeto.</b><p>Um projeto só pra transcrição de áudios, outro só pra campanha de reativação. Novo fluxo, nova sessão (o ícone laranja). Ver <a href="#rotina">Casos de rotina</a>.</p></div></li>
         <li><div><b>Finalize sempre no app.</b><p>Terminou uma ação? Registre imediatamente no sistema. É o que dá visibilidade pro gestor e mantém o SLA de 24h. Ver <a href="#regras">Regras de ouro</a>.</p></div></li>
       </ol>
+      <div class="track-path">
+        <span class="tp-label">Sua trilha sugerida</span>
+        <div class="chips">
+          <a class="chip" href="#conversar"><span class="n">1</span> O jeito de conversar</a><span class="arrow">→</span>
+          <a class="chip" href="#dados"><span class="n">2</span> Buscar dados</a><span class="arrow">→</span>
+          <a class="chip" href="#rotina"><span class="n">3</span> Casos de rotina</a><span class="arrow">→</span>
+          <a class="chip" href="#regras"><span class="n">4</span> Regras de ouro</a>
+        </div>
+      </div>
     </div>
 
     <div class="track-panel reveal" id="panel-lider" role="tabpanel" aria-labelledby="tab-lider" tabindex="0" hidden>
       <span class="plabel">Trilha · Liderança</span>
       <h3>O que muda quando o time trabalha assim</h3>
+      <p class="track-focus"><b>Foco desta porta:</b> enxergar o ganho de eficiência sem perder visibilidade nem SLA.</p>
       <ol class="steplist">
         <li><div><b>Trabalho braçal sai do caminho do time.</b><p>Higienização de base, análise de consumo, resumo de áudios, planilhas de controle — tarefas manuais e demoradas passam a rodar em minutos, liberando o CSM pra falar com cliente.</p></div></li>
         <li><div><b>Uma ferramenta no lugar de várias.</b><p>Via MCP, o Claude busca dado direto nos sistemas — o time para de abrir plataforma por plataforma. Ver <a href="#dados">Buscar dados</a>.</p></div></li>
         <li><div><b>Software interno sem depender só de dev.</b><p>Nosso app de gestão de risco de churn foi construído conversando com o Claude, passo a passo, com revisão a cada mudança. Ver <a href="#pratica">Na prática</a>.</p></div></li>
         <li><div><b>Visibilidade e SLA preservados.</b><p>A automação respeita os fluxos humanos: onde precisa de validação do CS, ela para e espera. E toda ação é finalizada no app, medindo o tempo de resposta.</p></div></li>
       </ol>
+      <div class="track-path">
+        <span class="tp-label">Sua trilha sugerida</span>
+        <div class="chips">
+          <a class="chip" href="#pratica"><span class="n">1</span> Na prática</a><span class="arrow">→</span>
+          <a class="chip" href="#dados"><span class="n">2</span> Buscar dados</a><span class="arrow">→</span>
+          <a class="chip" href="#regras"><span class="n">3</span> Regras de ouro</a><span class="arrow">→</span>
+          <a class="chip" href="#crescer"><span class="n">4</span> Como a central cresce</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -696,6 +747,26 @@
   (function () {
     var tabs = Array.prototype.slice.call(document.querySelectorAll('.track-tab'));
     var panels = { 'tab-novo': 'panel-novo', 'tab-time': 'panel-time', 'tab-lider': 'panel-lider' };
+    var ALL_SECTIONS = ['ambiente', 'conversar', 'dados', 'rotina', 'pratica', 'regras', 'crescer'];
+    var featureMap = {
+      'tab-novo': ['ambiente', 'conversar', 'rotina', 'regras'],
+      'tab-time': ['conversar', 'dados', 'rotina', 'regras'],
+      'tab-lider': ['pratica', 'dados', 'regras', 'crescer']
+    };
+
+    // Garante o selo "Recomendado" em cada seção destacável (visibilidade controlada por CSS).
+    ALL_SECTIONS.forEach(function (id) {
+      var s = document.getElementById(id);
+      if (!s) return;
+      var head = s.querySelector('.sec-head');
+      if (head && !head.querySelector('.sec-flag')) {
+        var f = document.createElement('span');
+        f.className = 'sec-flag';
+        f.textContent = '★ Recomendado pra sua trilha';
+        head.insertBefore(f, head.firstChild);
+      }
+    });
+
     function select(tab) {
       tabs.forEach(function (t) {
         var on = t === tab;
@@ -703,7 +774,13 @@
         t.tabIndex = on ? 0 : -1;
         document.getElementById(panels[t.id]).hidden = !on;
       });
+      var feats = featureMap[tab.id] || [];
+      ALL_SECTIONS.forEach(function (id) {
+        var s = document.getElementById(id);
+        if (s) s.setAttribute('data-featured', feats.indexOf(id) >= 0 ? 'true' : 'false');
+      });
     }
+
     tabs.forEach(function (tab, i) {
       tab.addEventListener('click', function () { select(tab); });
       tab.addEventListener('keydown', function (e) {
@@ -715,6 +792,10 @@
         }
       });
     });
+
+    // Aplica o destaque da trilha selecionada por padrão já no carregamento.
+    var initial = tabs.filter(function (t) { return t.getAttribute('aria-selected') === 'true'; })[0] || tabs[0];
+    if (initial) select(initial);
   })();
 
   (function () {
