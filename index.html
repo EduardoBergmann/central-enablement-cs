@@ -1,0 +1,771 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Central de Enablement do time de CS — usar o Claude no dia a dia.">
+<title>Central de Enablement · Time de CS</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%A1%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+<style>
+  :root {
+    --bg: #F4F6F5;
+    --surface: #FFFFFF;
+    --surface-2: #EDF1EF;
+    --ink: #14201F;
+    --body: #3B4744;
+    --muted: #697673;
+    --line: #DCE3E0;
+    --signal: #0C8F7E;
+    --signal-ink: #076456;
+    --signal-soft: #E1F1EE;
+    --human: #C9502F;
+    --human-soft: #F8E7E0;
+    --warn: #B5761A;
+    --warn-soft: #F7ECD8;
+    --shadow: 0 1px 2px rgba(20,32,31,.04), 0 8px 30px rgba(20,32,31,.06);
+    --radius: 14px;
+    --maxw: 1120px;
+
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --mono: "Cascadia Code", "SF Mono", "JetBrains Mono", "Fira Code", Consolas, "Liberation Mono", monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0D1413; --surface: #141F1D; --surface-2: #1A2624;
+      --ink: #EAF1EF; --body: #B2BFBC; --muted: #7C8A87; --line: #24322F;
+      --signal: #2FD4BF; --signal-ink: #6FE7D8; --signal-soft: #12312C;
+      --human: #F0805C; --human-soft: #331C15;
+      --warn: #E0A64B; --warn-soft: #2E2413;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 34px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0D1413; --surface: #141F1D; --surface-2: #1A2624;
+    --ink: #EAF1EF; --body: #B2BFBC; --muted: #7C8A87; --line: #24322F;
+    --signal: #2FD4BF; --signal-ink: #6FE7D8; --signal-soft: #12312C;
+    --human: #F0805C; --human-soft: #331C15;
+    --warn: #E0A64B; --warn-soft: #2E2413;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 34px rgba(0,0,0,.35);
+  }
+  :root[data-theme="light"] {
+    --bg: #F4F6F5; --surface: #FFFFFF; --surface-2: #EDF1EF;
+    --ink: #14201F; --body: #3B4744; --muted: #697673; --line: #DCE3E0;
+    --signal: #0C8F7E; --signal-ink: #076456; --signal-soft: #E1F1EE;
+    --human: #C9502F; --human-soft: #F8E7E0;
+    --warn: #B5761A; --warn-soft: #F7ECD8;
+    --shadow: 0 1px 2px rgba(20,32,31,.04), 0 8px 30px rgba(20,32,31,.06);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+  body {
+    margin: 0; background: var(--bg); color: var(--body);
+    font-family: var(--sans); font-size: 17px; line-height: 1.6;
+    -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+  }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+  h1, h2, h3, h4 { color: var(--ink); font-weight: 800; letter-spacing: -.02em; line-height: 1.1; text-wrap: balance; margin: 0; }
+  p { margin: 0; }
+  a { color: var(--signal-ink); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--signal-ink); font-weight: 600; }
+  .kbd { font-family: var(--mono); font-size: .82em; background: var(--surface-2); border: 1px solid var(--line); border-bottom-width: 2px; padding: 2px 7px; border-radius: 6px; color: var(--ink); white-space: nowrap; }
+  .code { font-family: var(--mono); font-size: .84em; background: var(--surface-2); padding: 3px 7px; border-radius: 6px; color: var(--signal-ink); }
+
+  /* ---------- Topbar ---------- */
+  .topbar { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--bg) 86%, transparent); backdrop-filter: saturate(160%) blur(10px); border-bottom: 1px solid var(--line); }
+  .topbar .wrap { display: flex; align-items: center; gap: 20px; height: 60px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; color: var(--ink); letter-spacing: -.01em; }
+  .brand .dot { width: 11px; height: 11px; border-radius: 50%; background: var(--signal); box-shadow: 0 0 0 4px var(--signal-soft); flex: none; }
+  .brand small { font-family: var(--mono); font-weight: 500; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  .nav { margin-left: auto; display: flex; gap: 4px; align-items: center; }
+  .nav a { color: var(--muted); font-size: 14px; font-weight: 600; padding: 8px 11px; border-radius: 8px; }
+  .nav a:hover { color: var(--ink); background: var(--surface-2); text-decoration: none; }
+  .toggle { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 9px; cursor: pointer; background: var(--surface); border: 1px solid var(--line); color: var(--ink); }
+  .toggle:hover { border-color: var(--signal); }
+  .nav-links { display: flex; gap: 2px; }
+  @media (max-width: 940px) { .nav-links { display: none; } }
+
+  /* ---------- Hero ---------- */
+  .hero { position: relative; overflow: hidden; border-bottom: 1px solid var(--line); }
+  .hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .5; }
+  @media (prefers-color-scheme: dark) { .hero canvas { opacity: .65; } }
+  .hero .wrap { position: relative; padding: 86px 24px 74px; }
+  .hero-inner { max-width: 730px; }
+  .hero h1 { font-size: clamp(2.4rem, 6vw, 4.05rem); margin: 20px 0 0; }
+  .hero h1 .hl { color: var(--signal-ink); }
+  .hero .lede { font-size: clamp(1.05rem, 2.4vw, 1.28rem); color: var(--body); margin-top: 22px; max-width: 60ch; }
+  .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 10px; font-weight: 700; font-size: 15px; cursor: pointer; border: 1px solid transparent; transition: transform .12s ease; }
+  .btn:hover { text-decoration: none; transform: translateY(-1px); }
+  .btn-primary { background: var(--signal); color: #04211D; }
+  .btn-ghost { background: var(--surface); color: var(--ink); border-color: var(--line); }
+  .btn-ghost:hover { border-color: var(--signal); }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 26px; margin-top: 46px; }
+  .hero-meta .stat { display: flex; flex-direction: column; }
+  .hero-meta .num { font-family: var(--mono); font-size: 1.65rem; font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .hero-meta .lbl { font-size: 13px; color: var(--muted); max-width: 22ch; }
+
+  /* ---------- Section frame ---------- */
+  section { padding: 76px 0; border-bottom: 1px solid var(--line); }
+  .sec-head { max-width: 660px; margin-bottom: 40px; }
+  .sec-head h2 { font-size: clamp(1.7rem, 3.6vw, 2.45rem); margin-top: 12px; }
+  .sec-head p { margin-top: 14px; color: var(--body); font-size: 1.05rem; }
+
+  /* ---------- Tracks ---------- */
+  .track-tabs { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 26px; }
+  .track-tab { display: flex; align-items: center; gap: 12px; text-align: left; padding: 16px 18px; border-radius: 12px; cursor: pointer; background: var(--surface); border: 1px solid var(--line); color: var(--ink); flex: 1 1 260px; transition: border-color .15s ease, background .15s ease; }
+  .track-tab:hover { border-color: var(--signal); }
+  .track-tab[aria-selected="true"] { border-color: var(--signal); background: var(--signal-soft); }
+  .track-tab .ico { font-size: 26px; line-height: 1; flex: none; }
+  .track-tab .tt { display: flex; flex-direction: column; }
+  .track-tab .tt strong { font-size: 15px; }
+  .track-tab .tt span { font-size: 13px; color: var(--muted); }
+  .track-panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 30px; box-shadow: var(--shadow); }
+  .track-panel[hidden] { display: none; }
+  .track-panel .plabel { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--human); font-weight: 600; }
+  .track-panel h3 { font-size: 1.4rem; margin: 8px 0 18px; }
+  .steplist { display: grid; gap: 14px; counter-reset: step; margin: 0; padding: 0; }
+  .steplist li { list-style: none; display: flex; gap: 16px; align-items: flex-start; }
+  .steplist li::before { counter-increment: step; content: counter(step); font-family: var(--mono); font-weight: 700; font-size: 13px; width: 28px; height: 28px; border-radius: 8px; flex: none; display: flex; align-items: center; justify-content: center; background: var(--signal-soft); color: var(--signal-ink); }
+  .steplist li b { color: var(--ink); }
+  .steplist li p { font-size: .96rem; }
+
+  /* ---------- Setup / environment ---------- */
+  .env-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 26px; align-items: start; }
+  @media (max-width: 900px) { .env-grid { grid-template-columns: 1fr; } }
+  .env-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; box-shadow: var(--shadow); }
+  .env-card h3 { font-size: 1.2rem; margin-bottom: 18px; }
+  .tshoot { background: var(--warn-soft); border: 1px solid color-mix(in srgb, var(--warn) 40%, var(--line)); border-radius: var(--radius); padding: 24px; }
+  .tshoot h3 { font-size: 1.1rem; display: flex; align-items: center; gap: 9px; color: var(--ink); }
+  .tshoot .badge { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--warn); background: var(--surface); padding: 3px 8px; border-radius: 6px; border: 1px solid color-mix(in srgb, var(--warn) 35%, var(--line)); }
+  .tshoot ol { margin: 16px 0 0; padding-left: 20px; display: grid; gap: 10px; }
+  .tshoot li { font-size: .94rem; color: var(--body); }
+  .tshoot li b { color: var(--ink); }
+
+  /* ---------- Conversation turns ---------- */
+  .turns { display: grid; gap: 22px; }
+  .turn { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+  .turn-row { display: grid; grid-template-columns: 1fr 1fr; }
+  @media (max-width: 760px) { .turn-row { grid-template-columns: 1fr; } }
+  .turn-side { padding: 22px 24px; }
+  .turn-you { border-right: 1px solid var(--line); }
+  @media (max-width: 760px) { .turn-you { border-right: none; border-bottom: 1px solid var(--line); } }
+  .turn-tag { display: inline-flex; align-items: center; gap: 7px; font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; font-weight: 600; margin-bottom: 12px; }
+  .turn-you .turn-tag { color: var(--human); }
+  .turn-claude { background: var(--surface-2); }
+  .turn-claude .turn-tag { color: var(--signal-ink); }
+  .turn-tag .pip { width: 8px; height: 8px; border-radius: 50%; }
+  .turn-you .pip { background: var(--human); }
+  .turn-claude .pip { background: var(--signal); }
+  .turn-side .say { font-size: 1rem; color: var(--ink); }
+  .turn-side .say.mono { font-family: var(--mono); font-size: .9rem; line-height: 1.55; color: var(--body); }
+  .turn-lesson { padding: 14px 24px; border-top: 1px dashed var(--line); font-size: .9rem; color: var(--muted); display: flex; gap: 10px; align-items: baseline; }
+  .turn-lesson b { color: var(--signal-ink); font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; flex: none; }
+
+  /* ---------- MCP routing ---------- */
+  .mcp-lead { display: grid; grid-template-columns: auto 1fr; gap: 22px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px 28px; box-shadow: var(--shadow); margin-bottom: 26px; }
+  @media (max-width: 700px) { .mcp-lead { grid-template-columns: 1fr; } }
+  .mcp-lead .glyph { width: 84px; height: 84px; border-radius: 18px; background: var(--signal-soft); color: var(--signal-ink); display: flex; align-items: center; justify-content: center; }
+  .mcp-lead h3 { font-size: 1.25rem; }
+  .mcp-lead p { margin-top: 8px; font-size: 1rem; }
+  .routing { display: grid; grid-template-columns: 1.1fr 1fr; gap: 30px; align-items: start; }
+  @media (max-width: 900px) { .routing { grid-template-columns: 1fr; } }
+  .route-list { display: grid; gap: 12px; }
+  .route { display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+  .route .src { font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .04em; padding: 6px 10px; border-radius: 7px; white-space: nowrap; text-align: center; }
+  .route .src.sb { background: var(--signal-soft); color: var(--signal-ink); }
+  .route .src.ld { background: #EAE3F6; color: #5B3FA8; }
+  .route .src.repo { background: var(--human-soft); color: var(--human); }
+  @media (prefers-color-scheme: dark) { .route .src.ld { background: #241C38; color: #B79BF0; } }
+  :root[data-theme="dark"] .route .src.ld { background: #241C38; color: #B79BF0; }
+  .route .q { font-size: .95rem; color: var(--body); }
+  .route .q b { color: var(--ink); }
+  .routing-note { background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--human); border-radius: 12px; padding: 22px 24px; box-shadow: var(--shadow); }
+  .routing-note h3 { font-size: 1.15rem; }
+  .routing-note p { margin-top: 12px; font-size: .96rem; }
+
+  /* ---------- Example / routine library ---------- */
+  .lib-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px; }
+  .ex { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 10px; }
+  .ex .ex-team { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--signal-ink); font-weight: 600; }
+  .ex h4 { color: var(--ink); font-size: 1.08rem; font-weight: 700; }
+  .ex .prompt { font-family: var(--mono); font-size: .84rem; line-height: 1.5; color: var(--body); background: var(--surface-2); border-radius: 9px; padding: 12px 14px; border: 1px solid var(--line); }
+  .ex .prompt::before { content: "“"; color: var(--human); font-weight: 700; }
+  .ex .prompt::after { content: "”"; color: var(--human); font-weight: 700; }
+  .ex .result { font-size: .9rem; color: var(--muted); margin-top: auto; }
+  .ex .result b { color: var(--ink); font-weight: 600; }
+
+  /* ---------- Case study timeline ---------- */
+  .timeline { position: relative; display: grid; gap: 0; margin-left: 8px; }
+  .tl-item { display: grid; grid-template-columns: auto 1fr; gap: 22px; padding-bottom: 26px; position: relative; }
+  .tl-item:not(:last-child)::before { content: ""; position: absolute; left: 7px; top: 20px; bottom: -6px; width: 2px; background: var(--line); }
+  .tl-dot { width: 16px; height: 16px; border-radius: 50%; background: var(--surface); border: 3px solid var(--signal); margin-top: 3px; z-index: 1; }
+  .tl-body h4 { color: var(--ink); font-size: 1.05rem; font-weight: 700; margin: 0 0 4px; }
+  .tl-body .when { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .tl-body p { font-size: .95rem; margin-top: 6px; }
+
+  /* ---------- Golden rules ---------- */
+  .rules-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 18px; }
+  .rule { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; border-top: 3px solid var(--signal); }
+  .rule h4 { font-size: 1.08rem; margin-bottom: 8px; }
+  .rule p { font-size: .93rem; }
+  .rule.hot { border-top-color: var(--human); }
+
+  /* ---------- Grow ---------- */
+  .grow-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
+  .grow-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; }
+  .grow-card .gnum { font-family: var(--mono); font-size: 13px; color: var(--signal-ink); font-weight: 700; }
+  .grow-card h4 { color: var(--ink); font-size: 1.1rem; margin: 10px 0 8px; }
+  .grow-card p { font-size: .93rem; }
+  .grow-card .status { margin-top: 14px; display: inline-flex; align-items: center; gap: 7px; font-size: 12px; font-family: var(--mono); color: var(--muted); }
+  .grow-card .status .pip { width: 8px; height: 8px; border-radius: 50%; background: var(--human); }
+  .grow-card.ready .status .pip { background: var(--signal); }
+
+  .callout { background: linear-gradient(135deg, var(--signal-soft), var(--surface)); border: 1px solid var(--line); border-radius: var(--radius); padding: 32px; display: flex; gap: 24px; align-items: center; flex-wrap: wrap; margin-top: 30px; }
+  .callout .ct { flex: 1 1 320px; }
+  .callout h3 { font-size: 1.3rem; }
+  .callout p { margin-top: 10px; font-size: 1rem; }
+
+  footer { padding: 46px 0; border-bottom: none; }
+  footer .wrap { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; align-items: center; }
+  footer .muted { color: var(--muted); font-size: 13px; }
+  .pill { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; font-family: var(--mono); padding: 5px 11px; border-radius: 999px; background: var(--surface-2); color: var(--muted); letter-spacing: .04em; }
+  .pill .pip { width: 7px; height: 7px; border-radius: 50%; background: var(--signal); }
+  .note-tag { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-family: var(--mono); color: var(--human); background: var(--human-soft); padding: 4px 9px; border-radius: 6px; letter-spacing: .05em; text-transform: uppercase; font-weight: 600; }
+
+  .js .reveal { opacity: 0; transform: translateY(14px); }
+  .js .reveal.in { opacity: 1; transform: none; transition: opacity .6s ease, transform .6s ease; }
+  @media (prefers-reduced-motion: reduce) { .js .reveal { opacity: 1 !important; transform: none !important; } }
+  :focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; border-radius: 4px; }
+</style>
+
+<header class="topbar">
+  <div class="wrap">
+    <div class="brand">
+      <span class="dot" aria-hidden="true"></span>
+      <span>Central de Enablement<br><small>Time de CS · usar o Claude no dia a dia</small></span>
+    </div>
+    <nav class="nav" aria-label="Seções">
+      <div class="nav-links">
+        <a href="#comecar">Começar</a>
+        <a href="#ambiente">Ambiente</a>
+        <a href="#conversar">Conversar</a>
+        <a href="#dados">Buscar dados</a>
+        <a href="#rotina">Rotina</a>
+        <a href="#pratica">Na prática</a>
+      </div>
+      <button class="toggle" id="themeToggle" aria-label="Alternar tema claro/escuro" title="Alternar tema">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" style="border-top:none;">
+  <canvas id="wave" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div class="hero-inner">
+      <span class="eyebrow reveal">Guia vivo do time · leva ~12 min de leitura</span>
+      <h1 class="reveal">Aprender a <span class="hl">conversar com o Claude</span> é aprender a delegar.</h1>
+      <p class="lede reveal">Você não precisa saber programar. Precisa saber pedir bem, dar contexto e conferir o que volta. Esta central reúne as práticas que o nosso time definiu — configurar o ambiente, escrever bons comandos e delegar tarefas de rotina — com exemplos reais das nossas reuniões e projetos.</p>
+      <div class="hero-cta reveal">
+        <a href="#comecar" class="btn btn-primary">Escolher minha trilha →</a>
+        <a href="#conversar" class="btn btn-ghost">Ver o jeito de conversar</a>
+      </div>
+      <div class="hero-meta reveal">
+        <div class="stat"><span class="num">3</span><span class="lbl">trilhas por perfil</span></div>
+        <div class="stat"><span class="num">1</span><span class="lbl">ambiente central: o VS&nbsp;Code</span></div>
+        <div class="stat"><span class="num">24h</span><span class="lbl">o SLA que a rotina precisa respeitar</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TRACKS ================= -->
+<section id="comecar">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Por onde começar</span>
+      <h2>Escolha a porta de entrada que é a sua.</h2>
+      <p>O caminho muda conforme onde você está hoje. Clique no seu perfil — o resto da página serve pros três, mas isto aqui te dá o primeiro passo certo.</p>
+    </div>
+
+    <div class="track-tabs reveal" role="tablist" aria-label="Trilhas por perfil">
+      <button class="track-tab" role="tab" aria-selected="true" aria-controls="panel-novo" id="tab-novo">
+        <span class="ico" aria-hidden="true">🌱</span>
+        <span class="tt"><strong>Cheguei agora</strong><span>Nunca usei o Claude</span></span>
+      </button>
+      <button class="track-tab" role="tab" aria-selected="false" aria-controls="panel-time" id="tab-time" tabindex="-1">
+        <span class="ico" aria-hidden="true">🛠️</span>
+        <span class="tt"><strong>Quero resolver algo da rotina</strong><span>CS, vendas, operação</span></span>
+      </button>
+      <button class="track-tab" role="tab" aria-selected="false" aria-controls="panel-lider" id="tab-lider" tabindex="-1">
+        <span class="ico" aria-hidden="true">📊</span>
+        <span class="tt"><strong>Quero entender o potencial</strong><span>Liderança</span></span>
+      </button>
+    </div>
+
+    <div class="track-panel reveal" id="panel-novo" role="tabpanel" aria-labelledby="tab-novo" tabindex="0">
+      <span class="plabel">Trilha · Cheguei agora</span>
+      <h3>Sua primeira semana com o Claude</h3>
+      <ol class="steplist">
+        <li><div><b>Monte o ambiente antes de tudo.</b><p>O time trabalha no VS&nbsp;Code, não na versão web. Siga o passo a passo em <a href="#ambiente">Configurar o ambiente</a> — leva uns minutos e destrava todo o resto.</p></div></li>
+        <li><div><b>Trate como um colega, não como um buscador.</b><p>Não é o Google. É alguém que faz junto com você. Fale em frases inteiras, do jeito que explicaria pra uma pessoa.</p></div></li>
+        <li><div><b>Descreva o problema antes da solução.</b><p>A regra de ouro do time: conte o contexto e a dor primeiro, deixe o Claude sugerir o caminho. Não force uma direção técnica logo de cara.</p></div></li>
+        <li><div><b>Peça em HTML e confira antes de usar.</b><p>Documentos em HTML ficam mais organizados. E sempre revise o que voltou — ele erra com confiança; você continua sendo o responsável.</p></div></li>
+      </ol>
+    </div>
+
+    <div class="track-panel reveal" id="panel-time" role="tabpanel" aria-labelledby="tab-time" tabindex="0" hidden>
+      <span class="plabel">Trilha · Rotina do time</span>
+      <h3>Do "isso me toma horas" para "isso o Claude faz"</h3>
+      <ol class="steplist">
+        <li><div><b>Nomeie a dor, não a solução.</b><p>Em vez de "cria uma macro", diga "toda semana eu pego esses dados e monto esse resumo na mão — quero parar". Deixe ele propor o como.</p></div></li>
+        <li><div><b>Dê o material junto.</b><p>Cole a planilha, o áudio, a transcrição, o print. Quanto mais contexto real, melhor o resultado — e menos idas e vindas.</p></div></li>
+        <li><div><b>Separe cada demanda em seu projeto.</b><p>Um projeto só pra transcrição de áudios, outro só pra campanha de reativação. Novo fluxo, nova sessão (o ícone laranja). Ver <a href="#rotina">Casos de rotina</a>.</p></div></li>
+        <li><div><b>Finalize sempre no app.</b><p>Terminou uma ação? Registre imediatamente no sistema. É o que dá visibilidade pro gestor e mantém o SLA de 24h. Ver <a href="#regras">Regras de ouro</a>.</p></div></li>
+      </ol>
+    </div>
+
+    <div class="track-panel reveal" id="panel-lider" role="tabpanel" aria-labelledby="tab-lider" tabindex="0" hidden>
+      <span class="plabel">Trilha · Liderança</span>
+      <h3>O que muda quando o time trabalha assim</h3>
+      <ol class="steplist">
+        <li><div><b>Trabalho braçal sai do caminho do time.</b><p>Higienização de base, análise de consumo, resumo de áudios, planilhas de controle — tarefas manuais e demoradas passam a rodar em minutos, liberando o CSM pra falar com cliente.</p></div></li>
+        <li><div><b>Uma ferramenta no lugar de várias.</b><p>Via MCP, o Claude busca dado direto nos sistemas — o time para de abrir plataforma por plataforma. Ver <a href="#dados">Buscar dados</a>.</p></div></li>
+        <li><div><b>Software interno sem depender só de dev.</b><p>Nosso app de gestão de risco de churn foi construído conversando com o Claude, passo a passo, com revisão a cada mudança. Ver <a href="#pratica">Na prática</a>.</p></div></li>
+        <li><div><b>Visibilidade e SLA preservados.</b><p>A automação respeita os fluxos humanos: onde precisa de validação do CS, ela para e espera. E toda ação é finalizada no app, medindo o tempo de resposta.</p></div></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ================= AMBIENTE ================= -->
+<section id="ambiente">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Configurar o ambiente</span>
+      <h2>O VS Code é a nossa mesa de trabalho.</h2>
+      <p>O time decidiu centralizar tudo no VS&nbsp;Code — em vez da versão web — pra construir projetos, analisar dados e salvar documentos de forma organizada. É onde o Claude vira "Claude Code" (o time às vezes chama de <em>Cloud</em>).</p>
+    </div>
+
+    <div class="env-grid">
+      <div class="env-card reveal">
+        <h3>Passo a passo</h3>
+        <ol class="steplist">
+          <li><div><b>Instale a extensão Claude Code</b><p>Dentro do VS&nbsp;Code, na aba de extensões. É ela que traz o Claude pra dentro do editor.</p></div></li>
+          <li><div><b>Crie a pasta "GitHub" nos Documentos</b><p>É onde vão morar os repositórios e os arquivos gerados (os HTMLs, dashboards, guias). Tudo organizado num lugar só.</p></div></li>
+          <li><div><b>Sincronize com o GitHub</b><p>Autorize as permissões. Isso deixa a publicação de dashboards e apps muito mais simples lá na frente.</p></div></li>
+          <li><div><b>Guarde referências no repositório</b><p>Salve guias e documentos antigos numa pasta central que o Claude possa ler — assim ele tem histórico e contexto pras novas demandas.</p></div></li>
+        </ol>
+      </div>
+
+      <div class="tshoot reveal">
+        <h3>⚠️ Deu "bad credentials"? <span class="badge">troubleshooting</span></h3>
+        <p style="margin-top:12px;font-size:.95rem;color:var(--body);">Erro de credencial ao sincronizar com o GitHub é comum. Faça assim:</p>
+        <ol>
+          <li><b>Feche</b> as janelas de erro.</li>
+          <li>Confira que o <b>navegador está logado com o perfil e e-mail corporativos corretos</b> — é ele que autoriza o acesso.</li>
+          <li>Reinicie a janela: <span class="kbd">Ctrl + Shift + P</span> → digite <span class="code">Developer: Reload Window</span>.</li>
+          <li>Tente a autenticação de novo.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONVERSAR ================= -->
+<section id="conversar">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">O jeito de conversar · engenharia de prompt</span>
+      <h2>A habilidade não é técnica. É saber pedir.</h2>
+      <p>Cada bloco é uma prática que o time definiu. Do lado esquerdo, o que você diz. Do lado direito, o que o Claude faz com isso. A lição embaixo é o que você leva pra sua próxima conversa.</p>
+    </div>
+
+    <div class="turns">
+      <div class="turn reveal">
+        <div class="turn-row">
+          <div class="turn-side turn-you">
+            <span class="turn-tag"><span class="pip"></span>Você diz</span>
+            <p class="say">"Tenho esse problema e esse cenário [descreve o contexto]. Ainda não sei o melhor caminho — analisa e me sugere as opções."</p>
+          </div>
+          <div class="turn-side turn-claude">
+            <span class="turn-tag"><span class="pip"></span>O Claude faz</span>
+            <p class="say mono">Analisa o cenário e propõe caminhos, em vez de sair executando uma direção que você chutou às cegas no começo.</p>
+          </div>
+        </div>
+        <div class="turn-lesson"><b>Regra de ouro</b><span>Contexto primeiro. Descreva o problema e a situação atual <em>antes</em> de pedir a solução — deixe o Claude sugerir o rumo.</span></div>
+      </div>
+
+      <div class="turn reveal">
+        <div class="turn-row">
+          <div class="turn-side turn-you">
+            <span class="turn-tag"><span class="pip"></span>Você diz</span>
+            <p class="say">"Me devolve isso em HTML, organizado visualmente — pode ser um guia, um plano de ação ou um dashboard."</p>
+          </div>
+          <div class="turn-side turn-claude">
+            <span class="turn-tag"><span class="pip"></span>O Claude faz</span>
+            <p class="say mono">Gera um documento estruturado e fácil de consultar em vez de texto corrido. Dá pra montar um dashboard operacional em poucas horas.</p>
+          </div>
+        </div>
+        <div class="turn-lesson"><b>Padrão do time</b><span>Peça em HTML sempre que possível. Fica mais legível, visual e didático — inclusive esta própria central é um HTML.</span></div>
+      </div>
+
+      <div class="turn reveal">
+        <div class="turn-row">
+          <div class="turn-side turn-you">
+            <span class="turn-tag"><span class="pip"></span>Você diz</span>
+            <p class="say">"Atenção aos termos: <b>churn</b> é perda de receita / risco de pagamento; <b>cancelamento</b> é ação deliberada. Não misture — quem está em recarga ainda usa a ferramenta."</p>
+          </div>
+          <div class="turn-side turn-claude">
+            <span class="turn-tag"><span class="pip"></span>O Claude faz</span>
+            <p class="say mono">Processa a base com a definição certa, sem incluir cliente errado. E ao montar planilhas, usa as colunas exatas que você pediu (MRR, ramais, CNPJ, datas, plano).</p>
+          </div>
+        </div>
+        <div class="turn-lesson"><b>Precisão conceitual</b><span>Defina os termos do negócio. Instrução vaga gera base de dados errada — seja específico com os conceitos e com as colunas.</span></div>
+      </div>
+
+      <div class="turn reveal">
+        <div class="turn-row">
+          <div class="turn-side turn-you">
+            <span class="turn-tag"><span class="pip"></span>Você diz</span>
+            <p class="say">"Me explica em português o que essa mudança faz na prática, o pior caso se der errado, e se dá pra desfazer."</p>
+          </div>
+          <div class="turn-side turn-claude">
+            <span class="turn-tag"><span class="pip"></span>O Claude passa a fazer</span>
+            <p class="say mono">Efeito prático → pior caso → como reverter. Detalhe técnico só quando você pedir, sempre ancorando em "isso é reversível / isso não é".</p>
+          </div>
+        </div>
+        <div class="turn-lesson"><b>Lição</b><span>Você molda <em>como</em> o Claude fala com você. Se veio difícil, peça a versão que você entende — traduzir é papel dele.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= DADOS / MCP ================= -->
+<section id="dados">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Buscar dados sem saber SQL · MCP</span>
+      <h2>Você pergunta em português. Ele vai na fonte certa.</h2>
+      <p>O MCP conecta o Claude aos nossos sistemas. Você não precisa saber onde cada número mora — mas ele precisa, e já sabe.</p>
+    </div>
+
+    <div class="mcp-lead reveal">
+      <div class="glyph" aria-hidden="true">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h10M4 7l3-3M4 7l3 3"/><path d="M20 17H10M20 17l-3-3M20 17l-3 3"/></svg>
+      </div>
+      <div>
+        <h3>O MCP é um "tradutor de linguagem"</h3>
+        <p>É assim que o time descreve: ele deixa o Claude acessar as diferentes ferramentas e sistemas da empresa pra buscar informação ou fazer tarefas sozinho — sem você abrir plataforma por plataforma.</p>
+      </div>
+    </div>
+
+    <div class="routing reveal">
+      <div class="route-list">
+        <div class="route">
+          <span class="src sb">App de risco</span>
+          <p class="q"><b>Risco, MRR, segmento, cobrança, atividades de CS.</b> Tudo que é do nosso sistema de gestão de churn.</p>
+        </div>
+        <div class="route">
+          <span class="src ld">Lightdash</span>
+          <p class="q"><b>Ligação, hit rate, duração, consumo de chamada.</b> Os dados brutos, na origem — sem checagem manual demorada.</p>
+        </div>
+        <div class="route">
+          <span class="src repo">Código</span>
+          <p class="q"><b>"O app mostra isso pro usuário?"</b> Essa resposta está no código do produto, não num banco.</p>
+        </div>
+      </div>
+
+      <div class="routing-note">
+        <h3>Por que isso importa pra você</h3>
+        <p>A mesma pergunta feita à fonte errada gera uma resposta que <em>parece</em> certa e está errada. Por isso vale dizer de onde você quer o número — ex.: <span class="code">"pega do app"</span> ou <span class="code">"pega da fonte de ligações"</span>.</p>
+        <p>Se o número for pra decidir algo, peça pra ele <b>declarar a fonte</b>. Se a informação não existir em lugar nenhum, ele te diz isso — em vez de inventar um número parecido.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ROTINA ================= -->
+<section id="rotina">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Casos de rotina</span>
+      <h2>Situação real → como pedir. Copie e adapte.</h2>
+      <p>Estes casos saíram das nossas reuniões — o dia a dia que o time já delega ou está delegando pro Claude. Use como ponto de partida.</p>
+    </div>
+
+    <div class="lib-grid">
+      <div class="ex reveal">
+        <span class="ex-team">CS · Áudios</span>
+        <h4>Resumir áudios de WhatsApp</h4>
+        <p class="prompt">Segue um áudio longo do cliente. Compila os pontos principais num documento HTML curto e útil, destacando pedidos e combinados.</p>
+        <p class="result"><b>Resultado:</b> resumo pronto sem ouvir tudo de novo. Dica: abra uma sessão nova (ícone laranja) pra cada fluxo.</p>
+      </div>
+      <div class="ex reveal">
+        <span class="ex-team">CS · Base de dados</span>
+        <h4>Higienizar lista de clientes</h4>
+        <p class="prompt">Cruza essa lista de clientes cancelados, valida o status dos CNPJs e remove as empresas inativas da base de prospecção.</p>
+        <p class="result"><b>Resultado:</b> base limpa em minutos, sem checar cadastro por cadastro.</p>
+      </div>
+      <div class="ex reveal">
+        <span class="ex-team">CS · Consumo</span>
+        <h4>Analisar consumo de clientes</h4>
+        <p class="prompt">Analisa o consumo destes clientes e me aponta quem caiu de uso no último mês. Pega da fonte de ligações.</p>
+        <p class="result"><b>Resultado:</b> substitui a verificação manual demorada que era feita no Lightdash.</p>
+      </div>
+      <div class="ex reveal">
+        <span class="ex-team">CS · Reativação</span>
+        <h4>Montar planilha de reativação</h4>
+        <p class="prompt">Monta a base de reativação com colunas de MRR antes do cancelamento, CNPJ, data de cancelamento, último pagamento, quantidade de ramais e plano (Ilimitado / Recarga).</p>
+        <p class="result"><b>Resultado:</b> planilha filtrável, com "ramais" como medida de usuários (mais precisa).</p>
+      </div>
+      <div class="ex reveal">
+        <span class="ex-team">Operação · Automação</span>
+        <h4>Propor automação de planilha manual</h4>
+        <p class="prompt">Segue a planilha manual de controle de cancelamentos. Analisa e propõe uma lógica de automação, integrando com o Super App.</p>
+        <p class="result"><b>Resultado:</b> caminho pra aposentar o controle na mão — como o Bot Demanda CS.</p>
+      </div>
+      <div class="ex reveal">
+        <span class="ex-team">Seu caso aqui</span>
+        <h4>+ Adicione o próximo</h4>
+        <p class="prompt">Achei um jeito bom de pedir X... vou registrar aqui pro time reaproveitar.</p>
+        <p class="result"><b>Como:</b> veja <a href="#crescer">Como esta central cresce</a> — ela foi feita pra isso.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PRÁTICA / CASE ================= -->
+<section id="pratica">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Na prática</span>
+      <h2>Um app inteiro de CS, construído conversando.</h2>
+      <p>O sistema de gestão de risco de churn não foi encomendado a um fornecedor. Foi montado passo a passo, em conversa, com revisão a cada mudança. Esta é a linha do tempo real — cada ponto foi uma entrega aprovada.</p>
+    </div>
+
+    <div class="timeline reveal">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <span class="when">Fundação</span>
+          <h4>O painel de risco e o perfil do cliente</h4>
+          <p>Dashboard com base ativa, novos e churn; perfil de cada cliente com consumo, cobranças e linha do tempo. O CSM passou a enxergar quem está em risco antes de perder.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <span class="when">Automação</span>
+          <h4>Réguas que agem sozinhas</h4>
+          <p>Regras que criam tarefa quando o cliente atrasa pagamento e a cancelam sozinhas quando ele regulariza — respeitando a validação humana do CS antes do cancelamento definitivo.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <span class="when">Ingestão automática</span>
+          <h4>Cancelamentos entrando sem "baixa e cola"</h4>
+          <p>Os cancelamentos passaram a ser importados sozinhos, todo dia, direto da fonte — aposentando um trabalho manual repetitivo do time.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <span class="when">Agora</span>
+          <h4>Planilha de CS alimentada automaticamente</h4>
+          <p>A planilha que o time abastecia na mão passa a se alimentar sozinha, só de leitura, sem risco de bagunçar os dados. Dois "baixa e cola" diários a menos.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout reveal">
+      <div class="ct">
+        <h3>O detalhe que faz funcionar: disciplina, não mágica.</h3>
+        <p>Cada mudança foi pequena, reversível e revisada. Onde havia risco de verdade, o Claude parou e pediu autorização com a evidência na mão. É esse ritmo que dá pra ensinar — e é o que esta central existe pra passar adiante.</p>
+      </div>
+      <a href="#rotina" class="btn btn-primary">Ver casos de rotina →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= REGRAS DE OURO ================= -->
+<section id="regras">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Regras de ouro</span>
+      <h2>Automação não dispensa o humano — organiza ele.</h2>
+      <p>Ganhar tempo com o Claude só vale se o processo continuar confiável e visível. Estas são as regras que o time não abre mão.</p>
+    </div>
+
+    <div class="rules-grid">
+      <div class="rule hot reveal">
+        <h4>Finalize sempre no app</h4>
+        <p>Toda ação prática feita no sistema deve ser encerrada imediatamente no aplicativo. É o que dá visibilidade ao gestor e permite medir o tempo de resposta.</p>
+      </div>
+      <div class="rule hot reveal">
+        <h4>SLA de 24 horas</h4>
+        <p>O prazo de resposta é rigoroso. A automação ajuda a cumprir, mas a régua continua sendo o tempo — não deixe demanda parada.</p>
+      </div>
+      <div class="rule reveal">
+        <h4>Respeite os fluxos humanos</h4>
+        <p>Algumas etapas exigem o CS na alça: contas com 7 dias de atraso passam por análise manual antes do cancelamento definitivo. A máquina para e espera.</p>
+      </div>
+      <div class="rule reveal">
+        <h4>Confira antes de confiar</h4>
+        <p>O Claude erra com confiança. Leia o que voltou, compare com o que você sabe, e só então use. A decisão final é sempre humana.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= GROW ================= -->
+<section id="crescer">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Como esta central cresce</span>
+      <h2>Um material vivo, não um PDF esquecido.</h2>
+      <p>A ideia é que esta página vire o ponto único onde todo material de enablement mora — e que ganhe camadas conforme o time usa.</p>
+    </div>
+
+    <div class="grow-grid">
+      <div class="grow-card ready reveal">
+        <span class="gnum">01</span>
+        <h4>Estrutura no ar</h4>
+        <p>Trilhas, ambiente, fundamentos, casos de rotina e regras de ouro — já com o conteúdo real das reuniões.</p>
+        <span class="status"><span class="pip"></span>Feito</span>
+      </div>
+      <div class="grow-card reveal">
+        <span class="gnum">02</span>
+        <h4>Mais casos por time</h4>
+        <p>Uma aba por área (CS, vendas, operação) com as tarefas de rotina que cada uma já delega, ampliando a biblioteca.</p>
+        <span class="status"><span class="pip"></span>Próximo passo</span>
+      </div>
+      <div class="grow-card reveal">
+        <span class="gnum">03</span>
+        <h4>Trilhas em vídeo curto</h4>
+        <p>Gravar um "olha como eu peço" de 2 minutos por caso, pra quem aprende vendo.</p>
+        <span class="status"><span class="pip"></span>Ideia</span>
+      </div>
+      <div class="grow-card reveal">
+        <span class="gnum">04</span>
+        <h4>Onboarding guiado</h4>
+        <p>Um checklist de primeiro dia que leva o novo integrante do "instalei o VS Code" ao "resolvi minha primeira tarefa".</p>
+        <span class="status"><span class="pip"></span>Ideia</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <div class="brand" style="margin-bottom:8px;"><span class="dot" aria-hidden="true"></span><span>Central de Enablement · Time de CS</span></div>
+      <p class="muted">Conteúdo extraído das reuniões do time (Eduardo, Letícia, Jaine, Leonardo). Material vivo — cresce a cada novo caso.</p>
+    </div>
+    <span class="pill"><span class="pip"></span>versão 0.2 · com práticas reais</span>
+  </div>
+</footer>
+
+<script>
+  document.documentElement.classList.add('js');
+
+  (function () {
+    var root = document.documentElement;
+    var btn = document.getElementById('themeToggle');
+    function current() {
+      if (root.dataset.theme) return root.dataset.theme;
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    btn.addEventListener('click', function () {
+      root.dataset.theme = current() === 'dark' ? 'light' : 'dark';
+    });
+  })();
+
+  (function () {
+    var tabs = Array.prototype.slice.call(document.querySelectorAll('.track-tab'));
+    var panels = { 'tab-novo': 'panel-novo', 'tab-time': 'panel-time', 'tab-lider': 'panel-lider' };
+    function select(tab) {
+      tabs.forEach(function (t) {
+        var on = t === tab;
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        t.tabIndex = on ? 0 : -1;
+        document.getElementById(panels[t.id]).hidden = !on;
+      });
+    }
+    tabs.forEach(function (tab, i) {
+      tab.addEventListener('click', function () { select(tab); });
+      tab.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+          e.preventDefault();
+          var dir = e.key === 'ArrowRight' ? 1 : -1;
+          var next = tabs[(i + dir + tabs.length) % tabs.length];
+          select(next); next.focus();
+        }
+      });
+    });
+  })();
+
+  (function () {
+    var els = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) { els.forEach(function (el) { el.classList.add('in'); }); return; }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    els.forEach(function (el) { io.observe(el); });
+  })();
+
+  (function () {
+    var canvas = document.getElementById('wave');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var w, h, dpr;
+    function accent() { return getComputedStyle(document.documentElement).getPropertyValue('--signal').trim() || '#0C8F7E'; }
+    function resize() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var r = canvas.getBoundingClientRect();
+      w = r.width; h = r.height;
+      canvas.width = w * dpr; canvas.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    resize();
+    window.addEventListener('resize', resize);
+    function drawFrame(t) {
+      ctx.clearRect(0, 0, w, h);
+      var col = accent();
+      for (var l = 0; l < 3; l++) {
+        ctx.beginPath();
+        var amp = 16 + l * 10;
+        var yBase = h * (0.55 + l * 0.11);
+        var speed = reduce ? 0 : t * (0.0004 + l * 0.00015);
+        var freq = 0.006 + l * 0.0018;
+        for (var x = 0; x <= w; x += 6) {
+          var y = yBase + Math.sin(x * freq + speed) * amp + Math.sin(x * freq * 0.5 + speed * 1.6) * amp * 0.4;
+          if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        }
+        ctx.strokeStyle = col;
+        ctx.globalAlpha = 0.16 - l * 0.035;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      }
+      ctx.globalAlpha = 1;
+    }
+    if (reduce) { drawFrame(0); return; }
+    function loop(ts) { drawFrame(ts); requestAnimationFrame(loop); }
+    requestAnimationFrame(loop);
+  })();
+</script>
+</body>
+</html>
