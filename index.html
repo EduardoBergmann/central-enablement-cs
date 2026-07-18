@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<meta name="description" content="Central de Enablement do time de CS — usar o Claude no dia a dia.">
-<title>Central de Enablement · Time de CS</title>
+<meta name="description" content="Central de Enablement do time — usar o Claude no dia a dia.">
+<title>Central de Enablement</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%A1%3C/text%3E%3C/svg%3E">
 </head>
 <body>
@@ -17,7 +17,7 @@
     --human: #C9502F; --human-soft: #F8E7E0;
     --warn: #B5761A; --warn-soft: #F7ECD8;
     --shadow: 0 1px 2px rgba(20,32,31,.04), 0 8px 30px rgba(20,32,31,.06);
-    --radius: 14px; --maxw: 1120px;
+    --radius: 14px; --maxw: 1080px;
     --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     --mono: "Cascadia Code", "SF Mono", "JetBrains Mono", "Fira Code", Consolas, "Liberation Mono", monospace;
   }
@@ -48,281 +48,246 @@
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-  body { margin: 0; background: var(--bg); color: var(--body); font-family: var(--sans); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  body { margin: 0; background: var(--bg); color: var(--body); font-family: var(--sans); font-size: 17px; line-height: 1.62; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
   .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
-  h1, h2, h3, h4 { color: var(--ink); font-weight: 800; letter-spacing: -.02em; line-height: 1.1; text-wrap: balance; margin: 0; }
+  h1, h2, h3, h4 { color: var(--ink); font-weight: 800; letter-spacing: -.02em; line-height: 1.12; text-wrap: balance; margin: 0; }
   p { margin: 0; }
   a { color: var(--signal-ink); text-decoration: none; }
   a:hover { text-decoration: underline; }
-  .eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--signal-ink); font-weight: 600; }
+  strong, b { color: var(--ink); }
   .kbd { font-family: var(--mono); font-size: .82em; background: var(--surface-2); border: 1px solid var(--line); border-bottom-width: 2px; padding: 2px 7px; border-radius: 6px; color: var(--ink); white-space: nowrap; }
-  .code { font-family: var(--mono); font-size: .84em; background: var(--surface-2); padding: 3px 7px; border-radius: 6px; color: var(--signal-ink); word-break: break-all; }
+  .code { font-family: var(--mono); font-size: .84em; background: var(--surface-2); padding: 3px 7px; border-radius: 6px; color: var(--signal-ink); }
 
   /* Topbar */
-  .topbar { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--bg) 86%, transparent); backdrop-filter: saturate(160%) blur(10px); border-bottom: 1px solid var(--line); }
-  .topbar .wrap { display: flex; align-items: center; gap: 20px; height: 60px; }
-  .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; color: var(--ink); letter-spacing: -.01em; }
-  .brand .dot { width: 11px; height: 11px; border-radius: 50%; background: var(--signal); box-shadow: 0 0 0 4px var(--signal-soft); flex: none; }
-  .brand small { font-family: var(--mono); font-weight: 500; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  .topbar { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: saturate(160%) blur(10px); border-bottom: 1px solid var(--line); }
+  .topbar .wrap { display: flex; align-items: center; gap: 20px; height: 58px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; color: var(--ink); }
+  .brand .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--signal); box-shadow: 0 0 0 4px var(--signal-soft); flex: none; }
+  .brand span { font-size: 15px; }
   .nav { margin-left: auto; display: flex; gap: 2px; align-items: center; }
   .nav a { color: var(--muted); font-size: 13.5px; font-weight: 600; padding: 8px 10px; border-radius: 8px; }
   .nav a:hover { color: var(--ink); background: var(--surface-2); text-decoration: none; }
-  .toggle { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 9px; cursor: pointer; background: var(--surface); border: 1px solid var(--line); color: var(--ink); }
+  .toggle { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 9px; cursor: pointer; background: var(--surface); border: 1px solid var(--line); color: var(--ink); }
   .toggle:hover { border-color: var(--signal); }
   .nav-links { display: flex; gap: 1px; }
-  @media (max-width: 1040px) { .nav-links { display: none; } }
+  @media (max-width: 960px) { .nav-links { display: none; } }
 
   /* Hero */
   .hero { position: relative; overflow: hidden; border-bottom: 1px solid var(--line); }
-  .hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .5; }
-  @media (prefers-color-scheme: dark) { .hero canvas { opacity: .65; } }
-  .hero .wrap { position: relative; padding: 86px 24px 74px; }
-  .hero-inner { max-width: 730px; }
-  .hero h1 { font-size: clamp(2.4rem, 6vw, 4.05rem); margin: 20px 0 0; }
+  .hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .45; }
+  @media (prefers-color-scheme: dark) { .hero canvas { opacity: .6; } }
+  .hero .wrap { position: relative; padding: 80px 24px 66px; }
+  .hero-inner { max-width: 700px; }
+  .hero h1 { font-size: clamp(2.3rem, 5.6vw, 3.7rem); }
   .hero h1 .hl { color: var(--signal-ink); }
-  .hero .lede { font-size: clamp(1.05rem, 2.4vw, 1.28rem); color: var(--body); margin-top: 22px; max-width: 60ch; }
-  .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
+  .hero .lede { font-size: clamp(1.05rem, 2.2vw, 1.25rem); color: var(--body); margin-top: 20px; max-width: 58ch; }
+  .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
   .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 10px; font-weight: 700; font-size: 15px; cursor: pointer; border: 1px solid transparent; transition: transform .12s ease; }
   .btn:hover { text-decoration: none; transform: translateY(-1px); }
   .btn-primary { background: var(--signal); color: #04211D; }
   .btn-ghost { background: var(--surface); color: var(--ink); border-color: var(--line); }
   .btn-ghost:hover { border-color: var(--signal); }
-  .hero-meta { display: flex; flex-wrap: wrap; gap: 26px; margin-top: 46px; }
-  .hero-meta .stat { display: flex; flex-direction: column; }
-  .hero-meta .num { font-family: var(--mono); font-size: 1.65rem; font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; }
-  .hero-meta .lbl { font-size: 13px; color: var(--muted); max-width: 22ch; }
+  .btn[disabled] { opacity: .5; cursor: not-allowed; transform: none; }
 
   /* Section frame */
-  section { padding: 76px 0; border-bottom: 1px solid var(--line); }
-  .sec-head { max-width: 680px; margin-bottom: 40px; }
-  .sec-head h2 { font-size: clamp(1.7rem, 3.6vw, 2.45rem); margin-top: 12px; }
-  .sec-head p { margin-top: 14px; color: var(--body); font-size: 1.05rem; }
-  .sub { color: var(--ink); font-size: 1.15rem; font-weight: 800; letter-spacing: -.01em; margin: 34px 0 16px; }
+  section { padding: 64px 0; border-bottom: 1px solid var(--line); }
+  .sec-head { max-width: 640px; margin-bottom: 30px; }
+  .sec-head h2 { font-size: clamp(1.6rem, 3.4vw, 2.25rem); }
+  .sec-head p { margin-top: 12px; color: var(--body); font-size: 1.05rem; }
+  .lead-q { color: var(--signal-ink); font-weight: 700; }
 
-  /* Track selector */
-  .track-tabs { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 28px; }
-  .track-tab { display: flex; align-items: center; gap: 12px; text-align: left; padding: 16px 18px; border-radius: 12px; cursor: pointer; background: var(--surface); border: 1px solid var(--line); color: var(--ink); flex: 1 1 260px; transition: border-color .15s ease, background .15s ease; }
+  /* Track selector + dossiers */
+  .track-tabs { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 26px; }
+  .track-tab { display: flex; align-items: center; gap: 12px; text-align: left; padding: 15px 18px; border-radius: 12px; cursor: pointer; background: var(--surface); border: 1px solid var(--line); color: var(--ink); flex: 1 1 240px; transition: border-color .15s ease, background .15s ease; }
   .track-tab:hover { border-color: var(--signal); }
   .track-tab[aria-selected="true"] { border-color: var(--signal); background: var(--signal-soft); box-shadow: var(--shadow); }
-  .track-tab .ico { font-size: 26px; line-height: 1; flex: none; }
-  .track-tab .tt { display: flex; flex-direction: column; }
-  .track-tab .tt strong { font-size: 15px; }
-  .track-tab .tt span { font-size: 13px; color: var(--muted); }
-
-  /* Dossier (swaps per track) */
+  .track-tab .ico { font-size: 24px; line-height: 1; flex: none; }
+  .track-tab .tt strong { font-size: 15px; display: block; }
+  .track-tab .tt span { font-size: 12.5px; color: var(--muted); }
   .dossier[hidden] { display: none; }
-  .dossier-head { display: flex; align-items: flex-start; gap: 16px; flex-wrap: wrap; padding: 4px 2px 0; }
-  .dossier-head .plabel { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--human); font-weight: 600; }
-  .dossier-head h3 { font-size: clamp(1.4rem, 3vw, 1.9rem); margin-top: 6px; }
-  .d-foco { margin: 14px 0 0; font-size: 1rem; color: var(--body); background: var(--signal-soft); border-radius: 10px; padding: 13px 16px; }
+  .dossier h3 { font-size: clamp(1.35rem, 3vw, 1.75rem); }
+  .d-foco { margin: 12px 0 22px; font-size: 1rem; color: var(--body); }
   .d-foco b { color: var(--ink); }
-  .dpoints { display: grid; gap: 16px; margin-top: 24px; counter-reset: dp; }
-  .dpoint { display: grid; grid-template-columns: auto 1fr; gap: 20px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px 26px; box-shadow: var(--shadow); }
-  @media (max-width: 640px) { .dpoint { grid-template-columns: 1fr; gap: 12px; padding: 22px; } }
-  .dp-num { counter-increment: dp; width: 34px; height: 34px; border-radius: 9px; background: var(--signal); color: #04211D; font-family: var(--mono); font-weight: 700; display: flex; align-items: center; justify-content: center; font-size: 15px; flex: none; }
+  .dpoints { display: grid; gap: 14px; counter-reset: dp; }
+  .dpoint { display: grid; grid-template-columns: auto 1fr; gap: 18px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; box-shadow: var(--shadow); }
+  @media (max-width: 620px) { .dpoint { grid-template-columns: 1fr; gap: 10px; padding: 20px; } }
+  .dp-num { counter-increment: dp; width: 30px; height: 30px; border-radius: 9px; background: var(--signal); color: #04211D; font-family: var(--mono); font-weight: 700; display: flex; align-items: center; justify-content: center; font-size: 14px; flex: none; }
   .dp-num::before { content: counter(dp); }
-  .dp-body h4 { font-size: 1.22rem; }
-  .dp-body > p { margin-top: 9px; font-size: 1rem; color: var(--body); }
-  .dp-body > p b { color: var(--ink); }
-  .dp-ex { margin-top: 15px; background: var(--surface-2); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
-  .dp-ex .lbl { font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
-  .dp-ex .q { font-family: var(--mono); font-size: .85rem; line-height: 1.55; color: var(--body); margin-top: 8px; }
-  .dp-ex .q::before { content: "“"; color: var(--human); font-weight: 700; }
-  .dp-ex .q::after { content: "”"; color: var(--human); font-weight: 700; }
-  .ba { display: grid; gap: 9px; margin-top: 4px; }
+  .dp-body h4 { font-size: 1.12rem; }
+  .dp-body > p { margin-top: 7px; font-size: .98rem; color: var(--body); }
+  .dp-ex { margin-top: 13px; background: var(--surface-2); border: 1px solid var(--line); border-radius: 10px; padding: 13px 15px; }
+  .dp-ex .q { font-family: var(--mono); font-size: .84rem; line-height: 1.55; color: var(--body); }
+  .ba { display: grid; gap: 8px; }
   .ba .row { display: grid; grid-template-columns: auto 1fr; gap: 10px; align-items: start; }
   .ba .mark { font-family: var(--mono); font-weight: 700; font-size: .9rem; }
-  .ba .no .mark { color: var(--human); }
-  .ba .yes .mark { color: var(--signal-ink); }
-  .ba .txt { font-size: .9rem; color: var(--body); }
-  .ba .no .txt { color: var(--muted); }
-  .dp-list { margin: 4px 0 0; padding-left: 18px; display: grid; gap: 6px; }
+  .ba .no .mark { color: var(--human); } .ba .yes .mark { color: var(--signal-ink); }
+  .ba .txt { font-size: .89rem; color: var(--body); } .ba .no .txt { color: var(--muted); }
+  .dp-list { margin: 6px 0 0; padding-left: 18px; display: grid; gap: 5px; }
   .dp-list li { font-size: .92rem; color: var(--body); }
-  .dp-list li b { color: var(--ink); }
   .dp-route { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
   .dp-route .r { font-family: var(--mono); font-size: 11px; font-weight: 700; padding: 5px 9px; border-radius: 6px; background: var(--signal-soft); color: var(--signal-ink); }
-  .dp-more { display: inline-flex; align-items: center; gap: 6px; margin-top: 15px; font-size: .88rem; font-weight: 700; color: var(--signal-ink); }
+  .dp-more { display: inline-flex; gap: 6px; margin-top: 13px; font-size: .87rem; font-weight: 700; color: var(--signal-ink); }
 
-  /* Library band */
-  .lib-band { background: var(--surface-2); border-bottom: 1px solid var(--line); }
-  .lib-band .wrap { padding: 46px 24px; }
-  .lib-band h2 { font-size: clamp(1.4rem, 3vw, 2rem); margin-top: 8px; }
-  .lib-band p { margin-top: 12px; color: var(--body); max-width: 62ch; font-size: 1.02rem; }
+  /* Wizard */
+  .wizard { border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--surface); box-shadow: var(--shadow); }
+  .wz-top { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .wz-top .lbl { font-size: .9rem; color: var(--muted); }
+  .wz-top .lbl b { color: var(--ink); font-variant-numeric: tabular-nums; }
+  .wz-progress { flex: 1; max-width: 220px; height: 8px; background: var(--surface-2); border-radius: 999px; overflow: hidden; }
+  .wz-bar { height: 100%; width: 0; background: var(--signal); border-radius: 999px; transition: width .4s ease; }
+  .wz-step { display: grid; grid-template-columns: auto 1fr; gap: 16px; padding: 18px 20px; border-top: 1px solid var(--line); align-items: start; transition: opacity .25s ease; }
+  .wz-step:first-of-type { border-top: none; }
+  .wz-step.locked { opacity: .4; }
+  .wz-check { width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--line); flex: none; display: flex; align-items: center; justify-content: center; cursor: pointer; background: var(--surface); color: #04211D; font-size: 14px; margin-top: 1px; }
+  .wz-check svg { opacity: 0; }
+  .wz-step.done .wz-check { background: var(--signal); border-color: var(--signal); }
+  .wz-step.done .wz-check svg { opacity: 1; }
+  .wz-step.locked .wz-check { cursor: not-allowed; }
+  .wz-body h4 { font-size: 1.06rem; }
+  .wz-body p { font-size: .95rem; margin-top: 5px; color: var(--body); }
+  .wz-body .row2 { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+  .wz-body .db { font-size: .82rem; font-weight: 700; padding: 7px 13px; border-radius: 8px; background: var(--signal-soft); color: var(--signal-ink); border: 1px solid color-mix(in srgb, var(--signal) 30%, var(--line)); }
+  .wz-body .db:hover { text-decoration: none; border-color: var(--signal); }
+  .wz-step.locked .wz-body a { pointer-events: none; }
+  .wz-done-msg { padding: 16px 20px; background: var(--signal-soft); border-top: 1px solid var(--line); font-size: .95rem; color: var(--signal-ink); font-weight: 600; display: none; }
+  .wizard.complete .wz-done-msg { display: block; }
 
-  /* Downloads */
-  .dl-list { display: grid; gap: 12px; }
-  .dl { display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
-  .dl .di { width: 36px; height: 36px; border-radius: 9px; background: var(--signal-soft); color: var(--signal-ink); display: flex; align-items: center; justify-content: center; font-size: 19px; flex: none; }
-  .dl .dt strong { color: var(--ink); display: block; font-size: .98rem; }
-  .dl .dt span { font-size: .86rem; color: var(--muted); }
-  .dl .db { font-size: .85rem; font-weight: 700; white-space: nowrap; padding: 8px 14px; border-radius: 8px; background: var(--signal); color: #04211D; transition: transform .12s ease; }
-  .dl .db:hover { text-decoration: none; transform: translateY(-1px); }
-  .dl .db.ghost { background: var(--surface-2); color: var(--ink); border: 1px solid var(--line); }
-  @media (max-width: 580px) { .dl { grid-template-columns: auto 1fr; } .dl .db { grid-column: 2; justify-self: start; } }
+  /* Stepper */
+  .stepper { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); overflow: hidden; }
+  .st-dots { display: flex; gap: 6px; padding: 14px 16px; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+  .st-dot { display: inline-flex; align-items: center; gap: 8px; font-size: .82rem; font-weight: 600; color: var(--muted); cursor: pointer; padding: 6px 11px; border-radius: 999px; border: 1px solid transparent; }
+  .st-dot:hover { background: var(--surface-2); }
+  .st-dot .n { width: 22px; height: 22px; border-radius: 50%; background: var(--surface-2); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 11px; color: var(--muted); }
+  .st-dot[aria-current="true"] { color: var(--ink); background: var(--signal-soft); }
+  .st-dot[aria-current="true"] .n { background: var(--signal); color: #04211D; }
+  .st-panel { padding: 28px; }
+  .st-panel[hidden] { display: none; }
+  .st-panel .word { font-family: var(--mono); font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; color: var(--signal-ink); font-weight: 700; }
+  .st-panel h4 { font-size: 1.4rem; margin: 8px 0 12px; }
+  .st-panel > p { font-size: 1.02rem; color: var(--body); }
+  .st-analogy { margin-top: 16px; background: var(--surface-2); border-left: 3px solid var(--signal); border-radius: 0 10px 10px 0; padding: 13px 16px; font-size: .95rem; color: var(--body); }
+  .st-analogy b { color: var(--ink); }
+  .st-do { margin-top: 14px; font-size: .9rem; color: var(--muted); }
+  .st-do .code { display: inline-block; margin-top: 4px; }
+  .st-nav { display: flex; justify-content: space-between; gap: 12px; padding: 0 28px 26px; }
+  .st-nav button { font-size: .9rem; font-weight: 700; padding: 10px 18px; border-radius: 9px; cursor: pointer; border: 1px solid var(--line); background: var(--surface); color: var(--ink); }
+  .st-nav button:hover { border-color: var(--signal); }
+  .st-nav .st-next { background: var(--signal); color: #04211D; border-color: var(--signal); }
+  .st-nav button[disabled] { opacity: .4; cursor: not-allowed; }
 
-  .prompt-tip { background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--signal); border-radius: 12px; padding: 22px 24px; box-shadow: var(--shadow); }
-  .prompt-tip h4 { color: var(--ink); font-size: 1.08rem; }
-  .prompt-tip p { font-size: .96rem; margin-top: 8px; }
-  .prompt-tip .q { font-family: var(--mono); font-size: .86rem; line-height: 1.6; color: var(--body); background: var(--surface-2); border: 1px solid var(--line); border-radius: 9px; padding: 14px 16px; margin-top: 14px; }
-  .prompt-tip .q::before { content: "“"; color: var(--human); font-weight: 700; }
-  .prompt-tip .q::after { content: "”"; color: var(--human); font-weight: 700; }
+  /* Accordion (native details) */
+  details.acc { border: 1px solid var(--line); border-radius: 12px; background: var(--surface); overflow: hidden; }
+  details.acc + details.acc { margin-top: 10px; }
+  details.acc > summary { cursor: pointer; padding: 16px 20px; font-weight: 700; color: var(--ink); list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 1.02rem; }
+  details.acc > summary::-webkit-details-marker { display: none; }
+  details.acc > summary::after { content: "+"; color: var(--signal-ink); font-size: 1.3rem; font-weight: 700; line-height: 1; }
+  details.acc[open] > summary::after { content: "\2013"; }
+  details.acc > summary:hover { color: var(--signal-ink); }
+  .acc-body { padding: 4px 20px 20px; }
 
-  .env-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; align-items: start; margin-top: 16px; }
-  @media (max-width: 900px) { .env-grid { grid-template-columns: 1fr; } }
-  .tshoot { background: var(--warn-soft); border: 1px solid color-mix(in srgb, var(--warn) 40%, var(--line)); border-radius: var(--radius); padding: 24px; }
-  .tshoot h3 { font-size: 1.1rem; display: flex; align-items: center; gap: 9px; color: var(--ink); }
-  .tshoot .badge { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--warn); background: var(--surface); padding: 3px 8px; border-radius: 6px; border: 1px solid color-mix(in srgb, var(--warn) 35%, var(--line)); }
-  .tshoot ol { margin: 16px 0 0; padding-left: 20px; display: grid; gap: 10px; }
-  .tshoot li { font-size: .94rem; color: var(--body); }
-  .tshoot li b { color: var(--ink); }
-  .note { font-size: .9rem; color: var(--muted); margin-top: 14px; padding: 12px 14px; background: var(--surface-2); border-radius: 9px; }
-  .note b { color: var(--ink); }
-
-  /* Conversation turns */
-  .turns { display: grid; gap: 22px; }
+  /* Turns */
+  .turns { display: grid; gap: 18px; }
   .turn { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
   .turn-row { display: grid; grid-template-columns: 1fr 1fr; }
-  @media (max-width: 760px) { .turn-row { grid-template-columns: 1fr; } }
-  .turn-side { padding: 22px 24px; }
+  @media (max-width: 720px) { .turn-row { grid-template-columns: 1fr; } }
+  .turn-side { padding: 20px 22px; }
   .turn-you { border-right: 1px solid var(--line); }
-  @media (max-width: 760px) { .turn-you { border-right: none; border-bottom: 1px solid var(--line); } }
-  .turn-tag { display: inline-flex; align-items: center; gap: 7px; font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; font-weight: 600; margin-bottom: 12px; }
+  @media (max-width: 720px) { .turn-you { border-right: none; border-bottom: 1px solid var(--line); } }
+  .turn-tag { display: inline-flex; align-items: center; gap: 7px; font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; font-weight: 600; margin-bottom: 10px; }
   .turn-you .turn-tag { color: var(--human); }
   .turn-claude { background: var(--surface-2); }
   .turn-claude .turn-tag { color: var(--signal-ink); }
   .turn-tag .pip { width: 8px; height: 8px; border-radius: 50%; }
-  .turn-you .pip { background: var(--human); }
-  .turn-claude .pip { background: var(--signal); }
-  .turn-side .say { font-size: 1rem; color: var(--ink); }
-  .turn-side .say.mono { font-family: var(--mono); font-size: .9rem; line-height: 1.55; color: var(--body); }
-  .turn-lesson { padding: 14px 24px; border-top: 1px dashed var(--line); font-size: .9rem; color: var(--muted); display: flex; gap: 10px; align-items: baseline; }
-  .turn-lesson b { color: var(--signal-ink); font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; flex: none; }
+  .turn-you .pip { background: var(--human); } .turn-claude .pip { background: var(--signal); }
+  .turn-side .say { font-size: .98rem; color: var(--ink); }
+  .turn-side .say.mono { font-family: var(--mono); font-size: .88rem; line-height: 1.55; color: var(--body); }
 
-  /* Card grids */
-  .lib-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px; }
-  .ex { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 10px; }
-  .ex .ex-team { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--signal-ink); font-weight: 600; }
-  .ex h4 { color: var(--ink); font-size: 1.08rem; font-weight: 700; }
-  .ex .prompt { font-family: var(--mono); font-size: .84rem; line-height: 1.5; color: var(--body); background: var(--surface-2); border-radius: 9px; padding: 12px 14px; border: 1px solid var(--line); }
-  .ex .prompt::before { content: "“"; color: var(--human); font-weight: 700; }
-  .ex .prompt::after { content: "”"; color: var(--human); font-weight: 700; }
-  .ex .result { font-size: .9rem; color: var(--muted); margin-top: auto; }
-  .ex .result b { color: var(--ink); font-weight: 600; }
+  /* Card grid */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow); }
+  .card .tag { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--signal-ink); font-weight: 600; }
+  .card h4 { font-size: 1.05rem; margin: 6px 0 8px; }
+  .card p { font-size: .93rem; color: var(--body); }
+  .card .q { font-family: var(--mono); font-size: .82rem; line-height: 1.5; color: var(--body); background: var(--surface-2); border-radius: 9px; padding: 11px 13px; border: 1px solid var(--line); margin: 8px 0; }
+  .card .why { font-size: .88rem; color: var(--muted); } .card .why b { color: var(--ink); }
+  .auto-item { display: grid; gap: 2px; padding: 10px 0; border-top: 1px solid var(--line); }
+  .auto-item:first-of-type { border-top: none; padding-top: 4px; }
+  .auto-item .man { font-size: .88rem; color: var(--muted); } .auto-item .man b { color: var(--body); }
+  .auto-item .aut { font-size: .88rem; color: var(--body); } .auto-item .aut b { color: var(--signal-ink); }
 
-  /* Anatomy */
-  .anatomy { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 2px; background: var(--line); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
-  .anatomy .part { background: var(--surface); padding: 16px 18px; }
-  .anatomy .part .pl { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .07em; color: var(--signal-ink); font-weight: 600; }
-  .anatomy .part p { font-size: .88rem; margin-top: 7px; color: var(--body); }
-  .anatomy .part p em { color: var(--ink); font-style: normal; font-weight: 600; }
+  /* Skills */
+  .skill-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 720px) { .skill-cards { grid-template-columns: 1fr; } }
+  .skill { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow); }
+  .skill .cmd { display: inline-block; font-family: var(--mono); font-size: .8rem; font-weight: 700; color: var(--signal-ink); background: var(--signal-soft); padding: 4px 10px; border-radius: 7px; }
+  .skill h4 { font-size: 1.1rem; margin: 12px 0 8px; }
+  .skill p { font-size: .93rem; color: var(--body); }
+  .skill .who { margin-top: 12px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 600; }
 
   /* MCP */
-  .mcp-lead { display: grid; grid-template-columns: auto 1fr; gap: 22px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px 28px; box-shadow: var(--shadow); margin-bottom: 26px; }
-  @media (max-width: 700px) { .mcp-lead { grid-template-columns: 1fr; } }
-  .mcp-lead .glyph { width: 84px; height: 84px; border-radius: 18px; background: var(--signal-soft); color: var(--signal-ink); display: flex; align-items: center; justify-content: center; }
-  .mcp-lead h3 { font-size: 1.25rem; }
-  .mcp-lead p { margin-top: 8px; font-size: 1rem; }
-  .routing { display: grid; grid-template-columns: 1.1fr 1fr; gap: 30px; align-items: start; }
-  @media (max-width: 900px) { .routing { grid-template-columns: 1fr; } }
+  .routing { display: grid; grid-template-columns: 1.1fr 1fr; gap: 26px; align-items: start; }
+  @media (max-width: 860px) { .routing { grid-template-columns: 1fr; } }
   .route-list { display: grid; gap: 12px; }
-  .route { display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
-  .route .src { font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .04em; padding: 6px 10px; border-radius: 7px; white-space: nowrap; text-align: center; }
+  .route { display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 15px 17px; }
+  .route .src { font-family: var(--mono); font-size: 12px; font-weight: 700; padding: 6px 10px; border-radius: 7px; white-space: nowrap; text-align: center; }
   .route .src.sb { background: var(--signal-soft); color: var(--signal-ink); }
   .route .src.ld { background: #EAE3F6; color: #5B3FA8; }
   .route .src.repo { background: var(--human-soft); color: var(--human); }
   @media (prefers-color-scheme: dark) { .route .src.ld { background: #241C38; color: #B79BF0; } }
   :root[data-theme="dark"] .route .src.ld { background: #241C38; color: #B79BF0; }
-  .route .q { font-size: .95rem; color: var(--body); }
-  .route .q b { color: var(--ink); }
-  .routing-note { background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--human); border-radius: 12px; padding: 22px 24px; box-shadow: var(--shadow); }
-  .routing-note h3 { font-size: 1.15rem; }
-  .routing-note p { margin-top: 12px; font-size: .96rem; }
-
-  /* Automations by role */
-  .auto-item { display: grid; gap: 3px; padding: 11px 0; border-top: 1px solid var(--line); }
-  .auto-item:first-of-type { border-top: none; padding-top: 4px; }
-  .auto-item .man { font-size: .89rem; color: var(--muted); }
-  .auto-item .man b { color: var(--body); font-weight: 600; }
-  .auto-item .aut { font-size: .89rem; color: var(--body); }
-  .auto-item .aut b { color: var(--signal-ink); font-weight: 700; }
-
-  /* Skills */
-  .skill-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-  @media (max-width: 760px) { .skill-cards { grid-template-columns: 1fr; } }
-  .skill { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); }
-  .skill .cmd { display: inline-block; font-family: var(--mono); font-size: .8rem; font-weight: 700; color: var(--signal-ink); background: var(--signal-soft); padding: 4px 10px; border-radius: 7px; }
-  .skill h4 { color: var(--ink); font-size: 1.15rem; margin: 12px 0 8px; }
-  .skill p { font-size: .95rem; }
-  .skill .tag { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
-  .skill .tag .pip { width: 8px; height: 8px; border-radius: 50%; background: var(--signal); }
-  .skill.real .tag .pip { background: var(--human); }
+  .route .q { font-size: .93rem; color: var(--body); }
+  .routing-note { background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--human); border-radius: 12px; padding: 20px 22px; box-shadow: var(--shadow); }
+  .routing-note p { margin-top: 10px; font-size: .95rem; }
 
   /* Timeline */
-  .timeline { position: relative; display: grid; gap: 0; margin-left: 8px; }
-  .tl-item { display: grid; grid-template-columns: auto 1fr; gap: 22px; padding-bottom: 26px; position: relative; }
-  .tl-item:not(:last-child)::before { content: ""; position: absolute; left: 7px; top: 20px; bottom: -6px; width: 2px; background: var(--line); }
+  .timeline { display: grid; margin-left: 6px; }
+  .tl-item { display: grid; grid-template-columns: auto 1fr; gap: 20px; padding-bottom: 22px; position: relative; }
+  .tl-item:not(:last-child)::before { content: ""; position: absolute; left: 7px; top: 20px; bottom: -4px; width: 2px; background: var(--line); }
   .tl-dot { width: 16px; height: 16px; border-radius: 50%; background: var(--surface); border: 3px solid var(--signal); margin-top: 3px; z-index: 1; }
-  .tl-body h4 { color: var(--ink); font-size: 1.05rem; font-weight: 700; margin: 0 0 4px; }
-  .tl-body .when { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
-  .tl-body p { font-size: .95rem; margin-top: 6px; }
+  .tl-body h4 { font-size: 1.02rem; }
+  .tl-body p { font-size: .94rem; margin-top: 4px; color: var(--body); }
 
   /* Rules */
-  .rules-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 18px; }
-  .rule { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; border-top: 3px solid var(--signal); display: flex; flex-direction: column; }
-  .rule h4 { font-size: 1.08rem; margin-bottom: 8px; }
-  .rule p { font-size: .93rem; }
+  .rules-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+  .rule { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; border-top: 3px solid var(--signal); }
   .rule.hot { border-top-color: var(--human); }
-  .rule .q { font-family: var(--mono); font-size: .8rem; line-height: 1.5; color: var(--body); background: var(--surface-2); border: 1px solid var(--line); border-radius: 8px; padding: 9px 11px; margin-top: 12px; }
-  .rule .q::before { content: "“"; color: var(--human); font-weight: 700; }
-  .rule .q::after { content: "”"; color: var(--human); font-weight: 700; }
+  .rule h4 { font-size: 1.05rem; margin-bottom: 7px; }
+  .rule p { font-size: .92rem; color: var(--body); }
 
-  /* Grow */
-  .grow-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
-  .grow-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; }
-  .grow-card .gnum { font-family: var(--mono); font-size: 13px; color: var(--signal-ink); font-weight: 700; }
-  .grow-card h4 { color: var(--ink); font-size: 1.1rem; margin: 10px 0 8px; }
-  .grow-card p { font-size: .93rem; }
-  .grow-card .status { margin-top: 14px; display: inline-flex; align-items: center; gap: 7px; font-size: 12px; font-family: var(--mono); color: var(--muted); }
-  .grow-card .status .pip { width: 8px; height: 8px; border-radius: 50%; background: var(--human); }
-  .grow-card.ready .status .pip { background: var(--signal); }
-
-  .callout { background: linear-gradient(135deg, var(--signal-soft), var(--surface)); border: 1px solid var(--line); border-radius: var(--radius); padding: 32px; display: flex; gap: 24px; align-items: center; flex-wrap: wrap; margin-top: 30px; }
-  .callout .ct { flex: 1 1 320px; }
-  .callout h3 { font-size: 1.3rem; }
-  .callout p { margin-top: 10px; font-size: 1rem; }
-
-  footer { padding: 46px 0; border-bottom: none; }
-  footer .wrap { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; align-items: center; }
-  footer .muted { color: var(--muted); font-size: 13px; }
-  .pill { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; font-family: var(--mono); padding: 5px 11px; border-radius: 999px; background: var(--surface-2); color: var(--muted); letter-spacing: .04em; }
-  .pill .pip { width: 7px; height: 7px; border-radius: 50%; background: var(--signal); }
-  .src-note { font-size: 12px; color: var(--muted); margin-top: 22px; }
+  .callout { background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; }
+  .callout h4 { font-size: 1.1rem; margin-bottom: 8px; }
+  .callout p { font-size: .97rem; color: var(--body); }
+  .tshoot-body ol { margin: 8px 0 0; padding-left: 20px; display: grid; gap: 8px; }
+  .tshoot-body li { font-size: .93rem; color: var(--body); }
+  .note { font-size: .93rem; color: var(--body); background: var(--surface-2); border-radius: 10px; padding: 14px 16px; }
+  .note b { color: var(--ink); }
+  .src-note { font-size: 12px; color: var(--muted); margin-top: 18px; }
   .src-note a { color: var(--muted); text-decoration: underline; }
 
-  .js .reveal { opacity: 0; transform: translateY(14px); }
-  .js .reveal.in { opacity: 1; transform: none; transition: opacity .6s ease, transform .6s ease; }
+  footer { padding: 40px 0; }
+  footer .wrap { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; align-items: center; }
+  footer .muted { color: var(--muted); font-size: 13px; max-width: 60ch; }
+
+  .js .reveal { opacity: 0; transform: translateY(12px); }
+  .js .reveal.in { opacity: 1; transform: none; transition: opacity .5s ease, transform .5s ease; }
   @media (prefers-reduced-motion: reduce) { .js .reveal { opacity: 1 !important; transform: none !important; } }
   :focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; border-radius: 4px; }
 </style>
 
 <header class="topbar">
   <div class="wrap">
-    <div class="brand">
-      <span class="dot" aria-hidden="true"></span>
-      <span>Central de Enablement<br><small>Time de CS · usar o Claude no dia a dia</small></span>
-    </div>
+    <div class="brand"><span class="dot" aria-hidden="true"></span><span>Central de Enablement</span></div>
     <nav class="nav" aria-label="Seções">
       <div class="nav-links">
-        <a href="#comecar">Trilhas</a>
-        <a href="#ambiente">Instalar</a>
-        <a href="#conversar">Conversar</a>
+        <a href="#trilhas">Trilhas</a>
+        <a href="#instalar">Instalar</a>
+        <a href="#git">Git</a>
+        <a href="#pedir">Como pedir</a>
         <a href="#revisar">Revisar</a>
         <a href="#skills">Skills</a>
-        <a href="#dados">Dados</a>
         <a href="#rotina">Rotina</a>
-        <a href="#pratica">Na prática</a>
       </div>
-      <button class="toggle" id="themeToggle" aria-label="Alternar tema claro/escuro" title="Alternar tema">
+      <button class="toggle" id="themeToggle" aria-label="Alternar tema claro/escuro" title="Tema">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
       </button>
     </nav>
@@ -333,764 +298,495 @@
   <canvas id="wave" aria-hidden="true"></canvas>
   <div class="wrap">
     <div class="hero-inner">
-      <span class="eyebrow reveal">Guia vivo do time · leva ~15 min de leitura</span>
-      <h1 class="reveal">Aprender a <span class="hl">conversar com o Claude</span> é aprender a delegar.</h1>
-      <p class="lede reveal">Você não precisa saber programar. Precisa saber pedir bem, dar contexto e — importante — conferir o que volta, porque o Claude às vezes inventa. Escolha sua trilha abaixo: o conteúdo se ajusta ao seu perfil, com exemplos reais e fontes oficiais.</p>
+      <h1 class="reveal">Aquela tarefa que te toma horas toda semana? <span class="hl">Dá pra passar pro Claude.</span></h1>
+      <p class="lede reveal">Você não precisa saber programar. Precisa saber pedir — e conferir o que volta, porque de vez em quando ele inventa. Aqui a gente te mostra como, do jeito que o time já faz no dia a dia. Escolhe sua trilha ali embaixo que o resto se ajusta a você.</p>
       <div class="hero-cta reveal">
-        <a href="#comecar" class="btn btn-primary">Escolher minha trilha →</a>
-        <a href="#ambiente" class="btn btn-ghost">Instalar do zero</a>
-      </div>
-      <div class="hero-meta reveal">
-        <div class="stat"><span class="num">3</span><span class="lbl">trilhas que trocam o conteúdo</span></div>
-        <div class="stat"><span class="num">4</span><span class="lbl">programas pra instalar (com link)</span></div>
-        <div class="stat"><span class="num">100%</span><span class="lbl">do que ele te dá você confere</span></div>
+        <a href="#trilhas" class="btn btn-primary">Começar pela minha trilha</a>
+        <a href="#instalar" class="btn btn-ghost">Só quero instalar</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ================= TRACKS / DOSSIÊS ================= -->
-<section id="comecar">
+<!-- ===== TRILHAS ===== -->
+<section id="trilhas">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="eyebrow">Sua trilha</span>
-      <h2>Escolha seu perfil — o conteúdo muda pra você.</h2>
-      <p>Clique numa porta e o dossiê abaixo troca inteiro, detalhando os pontos que importam pra quem você é. Cada ponto tem exemplo prático e um link pra aprofundar na biblioteca.</p>
+      <h2>Por onde você começa?</h2>
+      <p>Clica no seu perfil. O conteúdo aqui embaixo muda pra falar com quem você é.</p>
     </div>
 
-    <div class="track-tabs reveal" role="tablist" aria-label="Trilhas por perfil">
+    <div class="track-tabs reveal" role="tablist" aria-label="Trilhas">
       <button class="track-tab" role="tab" aria-selected="true" aria-controls="dossie-novo" id="tab-novo">
         <span class="ico" aria-hidden="true">🌱</span>
-        <span class="tt"><strong>Cheguei agora</strong><span>Nunca usei o Claude</span></span>
+        <span class="tt"><strong>Cheguei agora</strong><span>Nunca usei</span></span>
       </button>
       <button class="track-tab" role="tab" aria-selected="false" aria-controls="dossie-time" id="tab-time" tabindex="-1">
         <span class="ico" aria-hidden="true">🛠️</span>
-        <span class="tt"><strong>Quero resolver algo da rotina</strong><span>CS, vendas, operação</span></span>
+        <span class="tt"><strong>Quero resolver algo</strong><span>CS, suporte, vendas</span></span>
       </button>
       <button class="track-tab" role="tab" aria-selected="false" aria-controls="dossie-lider" id="tab-lider" tabindex="-1">
         <span class="ico" aria-hidden="true">📊</span>
-        <span class="tt"><strong>Quero entender o potencial</strong><span>Liderança</span></span>
+        <span class="tt"><strong>Quero entender o ganho</strong><span>Liderança</span></span>
       </button>
     </div>
 
-    <!-- DOSSIÊ · CHEGUEI AGORA -->
     <div class="dossier reveal" id="dossie-novo" role="tabpanel" aria-labelledby="tab-novo" tabindex="0">
-      <div class="dossier-head">
-        <div>
-          <span class="plabel">Trilha · Cheguei agora</span>
-          <h3>Sua primeira semana com o Claude</h3>
-        </div>
-      </div>
-      <p class="d-foco"><b>Foco desta trilha:</b> sair do zero — montar o ambiente e resolver sua primeira tarefa com segurança.</p>
+      <h3>Bem-vindo. Bora do zero.</h3>
+      <p class="d-foco">Aqui você monta o ambiente e resolve sua primeira tarefa sem medo de quebrar nada.</p>
       <div class="dpoints">
-        <article class="dpoint">
-          <div class="dp-num" aria-hidden="true"></div>
-          <div class="dp-body">
-            <h4>Monte seu ambiente (uma vez só)</h4>
-            <p>O Claude do time mora dentro do <b>VS Code</b>, não no navegador. São 4 instalações rápidas, nesta ordem — depois você nunca mais mexe nisso.</p>
-            <ul class="dp-list">
-              <li><b>1. VS Code</b> — o editor, sua mesa de trabalho.</li>
-              <li><b>2. Node.js (LTS)</b> — o "motor" que faz o Claude rodar liso.</li>
-              <li><b>3. Git</b> — guarda o histórico dos arquivos.</li>
-              <li><b>4. Extensão Claude Code</b> — traz o Claude pra dentro do editor.</li>
-            </ul>
-            <p style="margin-top:12px;font-size:.92rem;color:var(--muted);">Precisa de conta paga do Claude (Pro, Max ou Team) — o plano grátis não inclui.</p>
-            <a class="dp-more" href="#ambiente">Aprofundar: Instalar do zero, com botões de download →</a>
-          </div>
-        </article>
-        <article class="dpoint">
-          <div class="dp-num" aria-hidden="true"></div>
-          <div class="dp-body">
-            <h4>Fale com ele como com um colega novo</h4>
-            <p>Não é buscador. Pense num <b>estagiário brilhante no primeiro dia</b>: faz tudo rápido, mas só sabe o que você contar. Frases inteiras, com contexto.</p>
-            <div class="dp-ex">
-              <div class="ba">
-                <div class="row no"><span class="mark">✗</span><span class="txt">"dados churn maio"</span></div>
-                <div class="row yes"><span class="mark">✓</span><span class="txt">"Sou do CS de telecom B2B. Preciso da lista de clientes que entraram em risco de churn em maio, com MRR e motivo. Me diga se faltar alguma informação."</span></div>
-              </div>
-            </div>
-            <a class="dp-more" href="#conversar">Aprofundar: O jeito de conversar (7 técnicas) →</a>
-          </div>
-        </article>
-        <article class="dpoint">
-          <div class="dp-num" aria-hidden="true"></div>
-          <div class="dp-body">
-            <h4>Descreva o problema antes da solução</h4>
-            <p>A regra de ouro do time. Em vez de já mandar o "como", conte a dor e o cenário — deixe o Claude propor os caminhos, e você escolhe qual seguir.</p>
-            <div class="dp-ex">
-              <span class="lbl">Cole algo assim</span>
-              <p class="q">Toda segunda eu monto na mão um resumo de risco pra reunião — toma 1h. Aqui está o modelo atual [cola]. Como você faria isso mais rápido? Me dê 2 ou 3 opções antes de executar.</p>
-            </div>
-            <a class="dp-more" href="#conversar">Aprofundar: O jeito de conversar →</a>
-          </div>
-        </article>
-        <article class="dpoint">
-          <div class="dp-num" aria-hidden="true"></div>
-          <div class="dp-body">
-            <h4>Confira sempre: ele inventa às vezes</h4>
-            <p>O Claude pode afirmar um número, nome ou data errados com <b>total confiança</b> — isso se chama alucinação. Antes de usar qualquer coisa, revise. Três hábitos já resolvem a maior parte:</p>
-            <ul class="dp-list">
-              <li>Peça: <b>"se não tiver certeza, diga 'não sei' em vez de chutar".</b></li>
-              <li>Confira nome, número e data na fonte antes de mandar pra frente.</li>
-              <li>Peça a fonte de cada dado importante.</li>
-            </ul>
-            <a class="dp-more" href="#revisar">Aprofundar: Revisar sempre (6 técnicas) →</a>
-          </div>
-        </article>
+        <article class="dpoint"><div class="dp-num" aria-hidden="true"></div><div class="dp-body">
+          <h4>Deixe as ferramentas prontas</h4>
+          <p>O Claude do time roda dentro do VS Code. São 5 passos e a gente montou um checklist que só libera o próximo quando você marca o anterior.</p>
+          <a class="dp-more" href="#instalar">Ir pro checklist de instalação →</a>
+        </div></article>
+        <article class="dpoint"><div class="dp-num" aria-hidden="true"></div><div class="dp-body">
+          <h4>Fale como você falaria com um colega novo</h4>
+          <p>Ele é rápido, mas só sabe o que você contar. Frase solta não ajuda; contexto ajuda.</p>
+          <div class="dp-ex"><div class="ba">
+            <div class="row no"><span class="mark">✗</span><span class="txt">"dados churn maio"</span></div>
+            <div class="row yes"><span class="mark">✓</span><span class="txt">"Sou do CS. Me lista os clientes que entraram em risco em maio, com MRR e motivo. Fala se faltar algo."</span></div>
+          </div></div>
+          <a class="dp-more" href="#pedir">Ver como pedir →</a>
+        </div></article>
+        <article class="dpoint"><div class="dp-num" aria-hidden="true"></div><div class="dp-body">
+          <h4>Conte o problema, não a solução</h4>
+          <p>Em vez de já mandar o "como", conte a dor. Deixa ele te dar os caminhos e você escolhe.</p>
+          <div class="dp-ex"><p class="q">Toda segunda eu monto na mão um resumo de risco pra reunião. Toma 1h. Como você faria isso mais rápido? Me dá 2 ou 3 opções antes de sair fazendo.</p></div>
+        </div></article>
+        <article class="dpoint"><div class="dp-num" aria-hidden="true"></div><div class="dp-body">
+          <h4>Confere sempre. Ele inventa.</h4>
+          <p>De vez em quando ele te dá um número ou um nome errado com a maior cara de certeza. Antes de usar, revise.</p>
+          <a class="dp-more" href="#revisar">Por que ele inventa e como se proteger →</a>
+        </div></article>
       </div>
     </div>
 
-    <!-- DOSSIÊ · ROTINA DO TIME -->
     <div class="dossier reveal" id="dossie-time" role="tabpanel" aria-labelledby="tab-time" tabindex="0" hidden>
-      <div class="dossier-head">
-        <div>
-          <span class="plabel">Trilha · Rotina do time</span>
-          <h3>Do "isso me toma horas" para "isso o Claude faz"</h3>
-        </div>
-      </div>
-      <p class="d-foco"><b>Foco desta trilha:</b> pegar uma tarefa chata da rotina e delegar de ponta a ponta, com segurança.</p>
+      <h3>Vamos tirar uma tarefa chata do seu dia.</h3>
+      <p class="d-foco">O foco aqui é pegar aquilo que te toma tempo e passar de ponta a ponta — com segurança.</p>
       <div class="dpoints">
-        <article class="dpoint">
-          <div class="dp-num" aria-hidden="true"></div>
-          <div class="dp-body">
-            <h4>Nomeie a dor, não a solução</h4>
-            <p>Seu maior ganho vem de descrever o trabalho chato como ele é — não de já pedir uma ferramenta pronta. Quase sempre o Claude propõe um caminho melhor do que você imaginou.</p>
-            <div class="dp-ex">
-              <div class="ba">
-                <div class="row no"><span class="mark">✗</span><span class="txt">"cria uma macro de Excel"</span></div>
-                <div class="row yes"><span class="mark">✓</span><span class="txt">"Toda semana eu cruzo essas duas planilhas na mão pra achar clientes cancelados que ainda estão na base de prospecção. Toma 2h. Como automatizar?"</span></div>
-              </div>
-            </div>
-            <a class="dp-more" href="#rotina">Aprofundar: Anatomia de um bom pedido + casos →</a>
-          </div>
-        </article>
-        <article class="dpoint">
-          <div class="dp-num" aria-hidden="true"></div>
-          <div class="dp-body">
-            <h4>Dê o material e trave os conceitos</h4>
-            <p>Cole o insumo real (planilha, áudio, print) e seja preciso nos termos — conceito vago vira base errada. O clássico do time: <b>churn</b> (perda de receita/risco) ≠ <b>cancelamento</b> (ação deliberada); quem está em recarga ainda usa a ferramenta.</p>
-            <div class="dp-ex">
-              <span class="lbl">Exemplo com colunas exatas</span>
-              <p class="q">Monta a base de reativação. Colunas: MRR antes do cancelamento, CNPJ, data de cancelamento, último pagamento, qtd de ramais e plano (Ilimitado/Recarga). Só cancelamento deliberado — não misture com churn de pagamento.</p>
-            </div>
-            <a class="dp-more" href="#conversar">Aprofundar: Precisão conceitual →</a>
-          </div>
-        </article>
-        <article class="dpoint">
-          <div class="dp-num" aria-hidden="true"></div>
-          <div class="dp-body">
-            <h4>Puxe dados sem saber SQL</h4>
-            <p>Via MCP, o Claude busca direto nos sistemas — você pergunta em português. Só diga <b>de onde</b> quer o número: a mesma pergunta na fonte errada devolve resposta que parece certa e está errada.</p>
-            <div class="dp-route">
-              <span class="r">App de risco</span><span class="r">Lightdash (ligações)</span><span class="r">Código</span>
-            </div>
-            <div class="dp-ex">
-              <span class="lbl">Pergunta pronta</span>
-              <p class="q">Quantos clientes entraram em risco crítico nos últimos 30 dias e quanto é em MRR? Pega do app e me declara a fonte.</p>
-            </div>
-            <a class="dp-more" href="#dados">Aprofundar: Buscar dados (MCP) →</a>
-          </div>
-        </article>
-        <article class="dpoint">
-          <div class="dp-num" aria-hidden="true"></div>
-          <div class="dp-body">
-            <h4>Revise antes de agir</h4>
-            <p>Antes de usar qualquer coisa, confira números e nomes — ele inventa. E lembre: o Claude tira o braçal do caminho, mas a decisão e o contato com o cliente continuam seus.</p>
-            <ul class="dp-list">
-              <li>Revisar o dado crítico contra a fonte.</li>
-              <li>Deixar a decisão final com a pessoa.</li>
-              <li>Respeitar os momentos que pedem gente (ex.: cliente em risco).</li>
-            </ul>
-            <a class="dp-more" href="#revisar">Aprofundar: Revisar sempre · Regras de ouro →</a>
-          </div>
-        </article>
+        <article class="dpoint"><div class="dp-num" aria-hidden="true"></div><div class="dp-body">
+          <h4>Diga a dor, não a ferramenta</h4>
+          <p>Quase sempre o Claude acha um caminho melhor que o que você tinha em mente. Deixa ele propor.</p>
+          <div class="dp-ex"><div class="ba">
+            <div class="row no"><span class="mark">✗</span><span class="txt">"cria uma macro de Excel"</span></div>
+            <div class="row yes"><span class="mark">✓</span><span class="txt">"Toda semana eu cruzo essas duas planilhas na mão pra achar cancelado que ainda tá na prospecção. Toma 2h. Como automatizar?"</span></div>
+          </div></div>
+          <a class="dp-more" href="#rotina">Ver ideias por papel →</a>
+        </div></article>
+        <article class="dpoint"><div class="dp-num" aria-hidden="true"></div><div class="dp-body">
+          <h4>Dê o material e trave os termos</h4>
+          <p>Cole a planilha, o áudio, o print. E deixe claro o conceito: churn (perda de receita) não é a mesma coisa que cancelamento (o cliente pediu pra sair). Misturar os dois gera base errada.</p>
+          <div class="dp-ex"><p class="q">Monta a base de reativação. Colunas: MRR antes do cancelamento, CNPJ, data de cancelamento, último pagamento, qtd de ramais e plano (Ilimitado/Recarga). Só cancelamento, não churn de pagamento.</p></div>
+        </div></article>
+        <article class="dpoint"><div class="dp-num" aria-hidden="true"></div><div class="dp-body">
+          <h4>Puxe número sem saber SQL</h4>
+          <p>Ele busca direto nos sistemas. Só diga de onde quer o dado — a mesma pergunta na fonte errada devolve resposta que parece certa.</p>
+          <div class="dp-route"><span class="r">App de risco</span><span class="r">Lightdash (ligações)</span><span class="r">Código</span></div>
+          <a class="dp-more" href="#dados">Como funciona a busca →</a>
+        </div></article>
+        <article class="dpoint"><div class="dp-num" aria-hidden="true"></div><div class="dp-body">
+          <h4>Revise e siga sendo você quem decide</h4>
+          <p>Confere número e nome antes de usar. O Claude tira o braçal do caminho, mas a decisão e a conversa com o cliente continuam suas.</p>
+          <a class="dp-more" href="#revisar">Revisar direito →</a>
+        </div></article>
       </div>
     </div>
 
-    <!-- DOSSIÊ · LIDERANÇA -->
     <div class="dossier reveal" id="dossie-lider" role="tabpanel" aria-labelledby="tab-lider" tabindex="0" hidden>
-      <div class="dossier-head">
-        <div>
-          <span class="plabel">Trilha · Liderança</span>
-          <h3>O que muda quando o time trabalha assim</h3>
-        </div>
-      </div>
-      <p class="d-foco"><b>Foco desta trilha:</b> enxergar o ganho de eficiência sem perder confiabilidade, controle nem o toque humano com o cliente.</p>
+      <h3>O que muda quando o time trabalha assim.</h3>
+      <p class="d-foco">Ganho de tempo real, sem abrir mão de controle nem do contato humano com o cliente.</p>
       <div class="dpoints">
-        <article class="dpoint">
-          <div class="dp-num" aria-hidden="true"></div>
-          <div class="dp-body">
-            <h4>Trabalho braçal sai do caminho do time</h4>
-            <p>Tarefas manuais e diárias passam a rodar em minutos — ou sozinhas. O CSM volta pro que importa: falar com cliente. Exemplos que já saíram do nosso próprio app de gestão de risco:</p>
-            <ul class="dp-list">
-              <li>Réguas de cobrança que criam e encerram tarefas sozinhas.</li>
-              <li>Cancelamentos importados automaticamente, todo dia.</li>
-              <li>Planilha de CS que se abastece sozinha (só leitura).</li>
-            </ul>
-            <a class="dp-more" href="#pratica">Aprofundar: Na prática (a linha do tempo real) →</a>
-          </div>
-        </article>
-        <article class="dpoint">
-          <div class="dp-num" aria-hidden="true"></div>
-          <div class="dp-body">
-            <h4>Uma ferramenta no lugar de várias</h4>
-            <p>O MCP é um <b>"tradutor de linguagem"</b>: deixa o Claude acessar os sistemas da empresa e buscar ou fazer coisas sozinho, sem o time abrir plataforma por plataforma. Menos troca de contexto, menos erro de copiar e colar.</p>
-            <div class="dp-route">
-              <span class="r">App de risco</span><span class="r">Lightdash</span><span class="r">Código</span>
-            </div>
-            <a class="dp-more" href="#dados">Aprofundar: Buscar dados →</a>
-          </div>
-        </article>
-        <article class="dpoint">
-          <div class="dp-num" aria-hidden="true"></div>
-          <div class="dp-body">
-            <h4>Confiabilidade é disciplina, não sorte</h4>
-            <p>O Claude erra com confiança. O que torna isso seguro é o método: <b>revisão obrigatória</b> do que sai e dados ligados à <b>fonte real</b> (via MCP) em vez de "memória". Onde o risco é real, ele para e pede autorização com a evidência na mão.</p>
-            <div class="dp-ex">
-              <span class="lbl">O princípio</span>
-              <p class="q">Mudanças pequenas, reversíveis e revisadas. Nada de "grande virada" sem como desfazer.</p>
-            </div>
-            <a class="dp-more" href="#revisar">Aprofundar: Revisar sempre · Na prática →</a>
-          </div>
-        </article>
-        <article class="dpoint">
-          <div class="dp-num" aria-hidden="true"></div>
-          <div class="dp-body">
-            <h4>O humano continua no centro</h4>
-            <p>A automação respeita os fluxos humanos: onde precisa do CS (ex.: um cliente em risco ou chateado), ela para e espera. A IA devolve tempo pro time fazer o que máquina não faz — ouvir e resolver com o cliente.</p>
-            <a class="dp-more" href="#regras">Aprofundar: Regras de ouro →</a>
-          </div>
-        </article>
+        <article class="dpoint"><div class="dp-num" aria-hidden="true"></div><div class="dp-body">
+          <h4>O braçal sai do caminho do time</h4>
+          <p>Tarefa manual e diária vira coisa de minutos — ou roda sozinha. O time volta pro que importa: falar com cliente. A gente já fez isso no nosso app:</p>
+          <ul class="dp-list">
+            <li>Cobrança que abre e fecha tarefa sozinha.</li>
+            <li>Cancelamento importado automático, todo dia.</li>
+            <li>Planilha de CS que se abastece sozinha.</li>
+          </ul>
+          <a class="dp-more" href="#pratica">Ver a linha do tempo →</a>
+        </div></article>
+        <article class="dpoint"><div class="dp-num" aria-hidden="true"></div><div class="dp-body">
+          <h4>Uma ferramenta no lugar de várias</h4>
+          <p>O time para de abrir plataforma por plataforma. O Claude acessa os sistemas e traz o que precisa.</p>
+          <a class="dp-more" href="#dados">Como ele busca →</a>
+        </div></article>
+        <article class="dpoint"><div class="dp-num" aria-hidden="true"></div><div class="dp-body">
+          <h4>Confiança vem de método, não de sorte</h4>
+          <p>Ele erra com cara de certeza. O que segura isso é revisão sempre e dado ligado à fonte real, não à memória dele. Onde o risco é grande, ele para e pede seu ok.</p>
+          <a class="dp-more" href="#revisar">O método de revisão →</a>
+        </div></article>
+        <article class="dpoint"><div class="dp-num" aria-hidden="true"></div><div class="dp-body">
+          <h4>O humano continua no centro</h4>
+          <p>Onde precisa de gente — um cliente chateado, uma conta em risco — a automação para e espera. A IA devolve tempo pro time fazer o que máquina não faz.</p>
+          <a class="dp-more" href="#regras">Os combinados do time →</a>
+        </div></article>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ================= BIBLIOTECA (banda divisória) ================= -->
-<div class="lib-band">
-  <div class="wrap reveal">
-    <span class="eyebrow">Biblioteca completa</span>
-    <h2>O detalhe por trás de cada link.</h2>
-    <p>As trilhas acima te apontam pra cá. Esta é a referência aprofundada — vale pros três perfis. Use como consulta sempre que um "aprofundar →" te trouxer.</p>
-  </div>
-</div>
-
-<!-- ================= AMBIENTE / INSTALAR ================= -->
-<section id="ambiente">
+<!-- ===== INSTALAR (wizard) ===== -->
+<section id="instalar">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="eyebrow">Instalar do zero</span>
-      <h2>O VS Code é a nossa mesa de trabalho.</h2>
-      <p>O time centraliza tudo no VS&nbsp;Code — em vez da versão web — pra construir projetos, analisar dados e salvar documentos de forma organizada. É lá que o Claude vira o <b>Claude Code</b>, um painel de IA dentro do editor. São 4 instalações; siga na ordem, sem pressa.</p>
+      <h2>Bora deixar tudo pronto.</h2>
+      <p>O time trabalha no VS Code, não no navegador. São 5 passos. Marca cada um conforme faz — <span class="lead-q">o próximo só abre depois</span>. Seu progresso fica salvo se você fechar a página.</p>
     </div>
 
-    <div class="reveal">
-      <h3 class="sub" style="margin-top:0;">O que baixar (nesta ordem)</h3>
-      <div class="dl-list">
-        <div class="dl">
-          <span class="di" aria-hidden="true">📝</span>
-          <span class="dt"><strong>1. VS Code</strong><span>O editor onde o Claude Code vai morar. Na instalação, marque "Add to PATH".</span></span>
-          <a class="db" href="https://code.visualstudio.com/download" target="_blank" rel="noopener">Baixar</a>
-        </div>
-        <div class="dl">
-          <span class="di" aria-hidden="true">⚙️</span>
-          <span class="dt"><strong>2. Node.js (versão LTS)</strong><span>O "motor" que o Claude Code usa pra rodar liso. Baixe a opção LTS (recomendada).</span></span>
-          <a class="db" href="https://nodejs.org/en/download" target="_blank" rel="noopener">Baixar</a>
-        </div>
-        <div class="dl">
-          <span class="di" aria-hidden="true">🔀</span>
-          <span class="dt"><strong>3. Git para Windows</strong><span>Guarda o histórico dos arquivos e ajuda o Claude a rodar comandos no Windows.</span></span>
-          <a class="db" href="https://git-scm.com/download/win" target="_blank" rel="noopener">Baixar</a>
-        </div>
-        <div class="dl">
-          <span class="di" aria-hidden="true">✨</span>
-          <span class="dt"><strong>4. Extensão Claude Code</strong><span>Dentro do VS&nbsp;Code: <span class="kbd">Ctrl + Shift + X</span> → busque "Claude Code" (por Anthropic) → Instalar.</span></span>
-          <a class="db ghost" href="https://code.claude.com/docs" target="_blank" rel="noopener">Ver docs</a>
+    <div class="wizard reveal" id="wizard">
+      <div class="wz-top">
+        <span class="lbl">Progresso: <b id="wz-count">0</b> de 5</span>
+        <span class="wz-progress"><span class="wz-bar" id="wz-bar"></span></span>
+      </div>
+
+      <div class="wz-step">
+        <span class="wz-check" role="button" tabindex="0" aria-label="Concluir passo"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>
+        <div class="wz-body">
+          <h4>1. Instale o VS Code</h4>
+          <p>É a sua mesa de trabalho. Na instalação, deixa marcado "Add to PATH".</p>
+          <div class="row2"><a class="db" href="https://code.visualstudio.com/download" target="_blank" rel="noopener">Baixar VS Code ↗</a></div>
         </div>
       </div>
-      <p class="note reveal"><b>Precisa de conta paga do Claude.</b> O Claude Code funciona com plano <b>Pro, Max, Team ou Enterprise</b> — o plano grátis do Claude não inclui. Se não sabe qual você tem, fale com quem cuida das ferramentas no time. Ao abrir a extensão, você faz login pelo navegador com sua conta Claude.</p>
+
+      <div class="wz-step">
+        <span class="wz-check" role="button" tabindex="0" aria-label="Concluir passo"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>
+        <div class="wz-body">
+          <h4>2. Instale o Node.js</h4>
+          <p>É o "motor" que faz o Claude rodar liso. Baixa a versão <b>LTS</b> (a recomendada).</p>
+          <div class="row2"><a class="db" href="https://nodejs.org/en/download" target="_blank" rel="noopener">Baixar Node.js LTS ↗</a></div>
+        </div>
+      </div>
+
+      <div class="wz-step">
+        <span class="wz-check" role="button" tabindex="0" aria-label="Concluir passo"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>
+        <div class="wz-body">
+          <h4>3. Instale o Git</h4>
+          <p>Guarda o histórico dos arquivos. Se não sabe o que é, tudo bem — tem uma seção só pra isso logo abaixo.</p>
+          <div class="row2"><a class="db" href="https://git-scm.com/download/win" target="_blank" rel="noopener">Baixar Git ↗</a><span style="font-size:.85rem;color:var(--muted);">Depois de instalar, feche e reabra o VS Code.</span></div>
+        </div>
+      </div>
+
+      <div class="wz-step">
+        <span class="wz-check" role="button" tabindex="0" aria-label="Concluir passo"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>
+        <div class="wz-body">
+          <h4>4. Instale a extensão Claude Code</h4>
+          <p>Dentro do VS Code: aperta <span class="kbd">Ctrl + Shift + X</span>, busca "Claude Code" (da Anthropic) e clica em Instalar.</p>
+        </div>
+      </div>
+
+      <div class="wz-step">
+        <span class="wz-check" role="button" tabindex="0" aria-label="Concluir passo"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>
+        <div class="wz-body">
+          <h4>5. Entre com sua conta</h4>
+          <p>Abre o painel do Claude (o ícone ✨) e faz login. Precisa de plano <b>Pro, Max ou Team</b> — o grátis não dá acesso ao Claude Code. Não sabe qual você tem? Fala com quem cuida das ferramentas.</p>
+        </div>
+      </div>
+
+      <div class="wz-done-msg">Pronto! Ambiente montado. 🎉 Agora dá uma passada na seção <a href="#git">Git sem susto</a> e depois em <a href="#pedir">Como pedir</a>.</div>
     </div>
 
-    <h3 class="sub reveal">A dica que economiza a maior dor de cabeça</h3>
-    <div class="env-grid">
-      <div class="prompt-tip reveal">
-        <h4>Peça pro Claude te instalar tudo</h4>
-        <p>Depois que o <b>VS&nbsp;Code + a extensão</b> estiverem prontos e você logado, o próprio Claude vira seu instalador guiado. Abra o painel dele (o ícone ✨) e cole:</p>
-        <p class="q">Estou no Windows 11 e nunca instalei ferramentas de desenvolvedor. Me guie passo a passo pra deixar tudo pronto pra trabalhar: confira se eu já tenho Node.js e Git instalados; se faltar algum, me diga exatamente o que baixar e instalar, um de cada vez, e espere eu confirmar antes de seguir. No fim, confirme que está tudo funcionando.</p>
-      </div>
+    <div class="callout reveal" style="margin-top:20px;">
+      <h4>Dica: deixa o próprio Claude terminar por você</h4>
+      <p>Com o VS Code e a extensão prontos, cola isso no painel dele que ele te guia no resto:</p>
+      <p class="q" style="font-family:var(--mono);font-size:.85rem;line-height:1.6;color:var(--body);background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:13px 15px;margin-top:12px;">Estou no Windows e nunca instalei ferramenta de dev. Confere se eu já tenho Node.js e Git; se faltar, me diz o que baixar, um de cada vez, e espera eu confirmar antes de seguir.</p>
+    </div>
 
-      <div class="tshoot reveal">
-        <h3>⚠️ Deu "bad credentials"? <span class="badge">login</span></h3>
-        <p style="margin-top:12px;font-size:.95rem;color:var(--body);">Erro de credencial ao sincronizar com o GitHub é comum. Faça assim:</p>
+    <details class="acc reveal" style="margin-top:16px;">
+      <summary>Deu erro de "bad credentials"?</summary>
+      <div class="acc-body tshoot-body">
         <ol>
-          <li><b>Feche</b> as janelas de erro.</li>
-          <li>Confira que o <b>navegador está logado com o e-mail corporativo correto</b> — é ele que autoriza o acesso.</li>
-          <li>Reinicie a janela: <span class="kbd">Ctrl + Shift + P</span> → digite <span class="code">Developer: Reload Window</span>.</li>
-          <li>Tente de novo.</li>
+          <li>Fecha as janelas de erro.</li>
+          <li>Confere se o navegador está logado com o <b>e-mail corporativo certo</b> — é ele que autoriza.</li>
+          <li>Reinicia a janela: <span class="kbd">Ctrl + Shift + P</span> → digita <span class="code">Developer: Reload Window</span>.</li>
+          <li>Tenta de novo.</li>
         </ol>
-        <p class="note" style="background:transparent;padding:0;margin-top:14px;"><b>Regra do Windows:</b> depois de instalar Node.js ou Git, <b>feche e reabra o VS&nbsp;Code</b> — janelas antigas não enxergam o que acabou de ser instalado.</p>
       </div>
-    </div>
-    <p class="src-note reveal">Links e passos conferidos nas fontes oficiais: <a href="https://code.visualstudio.com/download" target="_blank" rel="noopener">VS&nbsp;Code</a>, <a href="https://nodejs.org/en/download" target="_blank" rel="noopener">Node.js</a>, <a href="https://git-scm.com/download/win" target="_blank" rel="noopener">Git</a>, <a href="https://code.claude.com/docs" target="_blank" rel="noopener">Claude Code</a>.</p>
+    </details>
+    <p class="src-note reveal">Links oficiais: <a href="https://code.visualstudio.com/download" target="_blank" rel="noopener">VS Code</a> · <a href="https://nodejs.org/en/download" target="_blank" rel="noopener">Node.js</a> · <a href="https://git-scm.com/download/win" target="_blank" rel="noopener">Git</a> · <a href="https://code.claude.com/docs" target="_blank" rel="noopener">Claude Code</a>.</p>
   </div>
 </section>
 
-<!-- ================= CONVERSAR ================= -->
-<section id="conversar">
+<!-- ===== GIT ===== -->
+<section id="git">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="eyebrow">O jeito de conversar · engenharia de prompt</span>
-      <h2>A habilidade não é técnica. É saber pedir.</h2>
-      <p>Cada bloco é uma prática que o time definiu, alinhada às recomendações oficiais da Anthropic. Do lado esquerdo, o que você diz. Do lado direito, o que o Claude faz. A lição embaixo é o que você leva pra sua próxima conversa.</p>
+      <h2>Git sem susto.</h2>
+      <p>Repositório, commit, push, branch, merge... parece sete palavra difícil. Na real é só um fluxo. <span class="lead-q">Clica em cada etapa</span> e vê o que é — na ordem que acontece de verdade.</p>
+    </div>
+
+    <div class="stepper reveal" id="repo-stepper">
+      <div class="st-dots" role="tablist" aria-label="Etapas do Git">
+        <button class="st-dot" role="tab" aria-current="true"><span class="n">1</span> Repositório</button>
+        <button class="st-dot" role="tab" aria-current="false"><span class="n">2</span> Branch</button>
+        <button class="st-dot" role="tab" aria-current="false"><span class="n">3</span> Commit</button>
+        <button class="st-dot" role="tab" aria-current="false"><span class="n">4</span> Push</button>
+        <button class="st-dot" role="tab" aria-current="false"><span class="n">5</span> Pull Request</button>
+        <button class="st-dot" role="tab" aria-current="false"><span class="n">6</span> Merge</button>
+      </div>
+
+      <div class="st-panel" role="tabpanel">
+        <span class="word">Repositório</span>
+        <h4>A pasta do projeto, mas com memória.</h4>
+        <p>É onde vive todo o trabalho do projeto. A diferença pra uma pasta comum: ela guarda cada versão e sabe quem mudou o quê. Dá pra voltar no tempo. Fica na nuvem (no GitHub) pra todo mundo do time acessar o mesmo lugar.</p>
+        <div class="st-analogy"><b>Pensa assim:</b> um Google Drive que lembra de cada versão do arquivo e de quem mexeu — sem sobrescrever nada por acidente.</div>
+      </div>
+
+      <div class="st-panel" role="tabpanel" hidden>
+        <span class="word">Branch</span>
+        <h4>Uma cópia paralela pra você mexer à vontade.</h4>
+        <p>Antes de mudar qualquer coisa, você cria um branch: uma versão separada onde dá pra testar sua ideia sem tocar no que está no ar. Se der ruim, ninguém foi afetado. Se der certo, você junta depois.</p>
+        <div class="st-analogy"><b>Pensa assim:</b> um rascunho separado do documento oficial. Você rabisca à vontade; o original continua intacto até você decidir.</div>
+      </div>
+
+      <div class="st-panel" role="tabpanel" hidden>
+        <span class="word">Commit</span>
+        <h4>Salvar um marco do que você fez.</h4>
+        <p>Cada commit é uma "foto" das suas mudanças, com um bilhete curto explicando o que mudou. Você faz vários ao longo do trabalho. Se algo quebrar, dá pra voltar pra qualquer foto anterior.</p>
+        <div class="st-analogy"><b>Pensa assim:</b> aquele "salvar" do videogame com um checkpoint. Cada commit é um ponto seguro pra onde você pode voltar.</div>
+        <p class="st-do">Na dúvida, é só pedir: <span class="code">"commita essas mudanças com uma mensagem que explique o que fiz"</span></p>
+      </div>
+
+      <div class="st-panel" role="tabpanel" hidden>
+        <span class="word">Push &amp; Pull</span>
+        <h4>Mandar seu trabalho pro time (e receber o dos outros).</h4>
+        <p>Enquanto você só commita, tudo fica na sua máquina. O <b>push</b> envia seus commits pro repositório na nuvem, pra todo mundo alcançar. O <b>pull</b> é o contrário: puxa o que os outros mandaram, pra você ficar em dia.</p>
+        <div class="st-analogy"><b>Pensa assim:</b> push é subir seu arquivo pro Drive compartilhado; pull é baixar a versão mais nova que o colega subiu.</div>
+      </div>
+
+      <div class="st-panel" role="tabpanel" hidden>
+        <span class="word">Pull Request (PR)</span>
+        <h4>Pedir pra juntar seu trabalho — com revisão no meio.</h4>
+        <p>Terminou seu branch? Você abre um Pull Request: um pedido formal de "quero juntar isso no oficial". O time olha, comenta, sugere ajuste e aprova. É aqui que entra a revisão — a mesma ideia da <a href="#skills">skill de revisão</a>.</p>
+        <div class="st-analogy"><b>Pensa assim:</b> mandar seu texto pro editor antes de publicar. Ninguém publica sozinho no que é importante — passa por outro olhar.</div>
+      </div>
+
+      <div class="st-panel" role="tabpanel" hidden>
+        <span class="word">Merge</span>
+        <h4>Juntar de vez. Sua mudança entra no ar.</h4>
+        <p>Aprovado o PR, vem o merge: seu branch se funde no principal e a mudança passa a valer pra todo mundo. Fim da jornada — do rascunho ao oficial, com revisão no caminho.</p>
+        <div class="st-analogy"><b>Pensa assim:</b> o editor aprovou e o texto foi publicado. O que era seu rascunho agora é a versão oficial.</div>
+      </div>
+
+      <div class="st-nav">
+        <button class="st-prev" type="button">← Voltar</button>
+        <button class="st-next" type="button">Próximo →</button>
+      </div>
+    </div>
+
+    <p class="note reveal" style="margin-top:16px;"><b>Não precisa decorar nada disso.</b> Na hora real, é só pedir: <span class="code">"me guia pra criar um branch, commitar e abrir um PR dessa mudança"</span> — e o Claude te conduz etapa por etapa.</p>
+  </div>
+</section>
+
+<!-- ===== COMO PEDIR ===== -->
+<section id="pedir">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>Como pedir e conseguir o que você quer.</h2>
+      <p>Esquerda: o que você diz. Direita: o que ele faz com isso. São práticas que o time foi pegando na mão.</p>
     </div>
 
     <div class="turns">
       <div class="turn reveal">
         <div class="turn-row">
-          <div class="turn-side turn-you">
-            <span class="turn-tag"><span class="pip"></span>Você diz</span>
-            <p class="say">"Tenho esse problema e esse cenário [descreve o contexto]. Ainda não sei o melhor caminho — analisa e me sugere as opções."</p>
-          </div>
-          <div class="turn-side turn-claude">
-            <span class="turn-tag"><span class="pip"></span>O Claude faz</span>
-            <p class="say mono">Analisa o cenário e propõe caminhos, em vez de sair executando uma direção que você chutou às cegas no começo.</p>
-          </div>
+          <div class="turn-side turn-you"><span class="turn-tag"><span class="pip"></span>Você diz</span><p class="say">"Tenho esse problema [descreve]. Ainda não sei o melhor caminho — analisa e me sugere as opções."</p></div>
+          <div class="turn-side turn-claude"><span class="turn-tag"><span class="pip"></span>Ele faz</span><p class="say mono">Analisa o cenário e te dá caminhos, em vez de sair executando um chute seu do começo.</p></div>
         </div>
-        <div class="turn-lesson"><b>Regra de ouro</b><span>Contexto primeiro. Descreva o problema e a situação atual <em>antes</em> de pedir a solução — deixe o Claude sugerir o rumo.</span></div>
       </div>
-
       <div class="turn reveal">
         <div class="turn-row">
-          <div class="turn-side turn-you">
-            <span class="turn-tag"><span class="pip"></span>Você diz</span>
-            <p class="say">"Me devolve isso em HTML, organizado visualmente — pode ser um guia, um plano de ação ou um dashboard."</p>
-          </div>
-          <div class="turn-side turn-claude">
-            <span class="turn-tag"><span class="pip"></span>O Claude faz</span>
-            <p class="say mono">Gera um documento estruturado e fácil de consultar em vez de texto corrido. Dá pra montar um dashboard operacional em poucas horas.</p>
-          </div>
+          <div class="turn-side turn-you"><span class="turn-tag"><span class="pip"></span>Você diz</span><p class="say">"Me devolve em HTML, organizado — pode ser um guia, um plano ou um painel."</p></div>
+          <div class="turn-side turn-claude"><span class="turn-tag"><span class="pip"></span>Ele faz</span><p class="say mono">Monta um documento estruturado em vez de texto corrido. Dá pra virar dashboard em poucas horas.</p></div>
         </div>
-        <div class="turn-lesson"><b>Padrão do time</b><span>Peça em HTML sempre que possível. Fica mais legível, visual e didático — inclusive esta própria central é um HTML.</span></div>
       </div>
-
       <div class="turn reveal">
         <div class="turn-row">
-          <div class="turn-side turn-you">
-            <span class="turn-tag"><span class="pip"></span>Você diz</span>
-            <p class="say">"Atenção aos termos: <b>churn</b> é perda de receita / risco de pagamento; <b>cancelamento</b> é ação deliberada. Não misture — quem está em recarga ainda usa a ferramenta."</p>
-          </div>
-          <div class="turn-side turn-claude">
-            <span class="turn-tag"><span class="pip"></span>O Claude faz</span>
-            <p class="say mono">Processa a base com a definição certa, sem incluir cliente errado. E ao montar planilhas, usa as colunas exatas que você pediu (MRR, ramais, CNPJ, datas, plano).</p>
-          </div>
+          <div class="turn-side turn-you"><span class="turn-tag"><span class="pip"></span>Você diz</span><p class="say">"Bom começo. Agora encurta, foca no cliente X e deixa o tom mais formal."</p></div>
+          <div class="turn-side turn-claude"><span class="turn-tag"><span class="pip"></span>Ele faz</span><p class="say mono">Refina em cima do que já tinha. A primeira resposta é rascunho — o bom vem no vai-e-volta.</p></div>
         </div>
-        <div class="turn-lesson"><b>Precisão conceitual</b><span>Defina os termos do negócio. Instrução vaga gera base de dados errada — seja específico com os conceitos e com as colunas.</span></div>
-      </div>
-
-      <div class="turn reveal">
-        <div class="turn-row">
-          <div class="turn-side turn-you">
-            <span class="turn-tag"><span class="pip"></span>Você diz</span>
-            <p class="say">"Me explica em português o que essa mudança faz na prática, o pior caso se der errado, e se dá pra desfazer."</p>
-          </div>
-          <div class="turn-side turn-claude">
-            <span class="turn-tag"><span class="pip"></span>O Claude passa a fazer</span>
-            <p class="say mono">Efeito prático → pior caso → como reverter. Detalhe técnico só quando você pedir, sempre ancorando em "isso é reversível / isso não é".</p>
-          </div>
-        </div>
-        <div class="turn-lesson"><b>Lição</b><span>Você molda <em>como</em> o Claude fala com você. Se veio difícil, peça a versão que você entende — traduzir é papel dele.</span></div>
       </div>
     </div>
 
-    <h3 class="sub reveal">7 técnicas que sempre melhoram o resultado</h3>
-    <div class="lib-grid">
-      <div class="ex reveal">
-        <span class="ex-team">Contexto</span>
-        <h4>Fale como pra um estagiário no 1º dia</h4>
-        <p class="prompt">Você vai me ajudar com relatórios de CS de telecom B2B. Nosso cliente paga por ramal e...</p>
-        <p class="result"><b>Por quê:</b> ele é brilhante mas não conhece seu contexto. Explique o cenário, o objetivo e pra quem é.</p>
+    <details class="acc reveal" style="margin-top:20px;">
+      <summary>Abrir: 8 jeitos rápidos de pedir melhor</summary>
+      <div class="acc-body">
+        <div class="grid">
+          <div class="card"><span class="tag">Contexto</span><h4>Dá o cenário antes</h4><p>Pensa nele como um estagiário brilhante no primeiro dia: rápido, mas só sabe o que você contar. Diz quem você é, o objetivo e pra quem é.</p></div>
+          <div class="card"><span class="tag">Formato</span><h4>Diz como quer receber</h4><p>Tabela? Tópicos? HTML? Tom formal? Sem pedir, vem genérico.</p></div>
+          <div class="card"><span class="tag">Exemplo</span><h4>Mostra um modelo bom</h4><p>Cola um resultado que ficou legal e pede "faz no mesmo estilo". Mostrar vale mais que explicar.</p></div>
+          <div class="card"><span class="tag">Raciocínio</span><h4>Pede pra pensar antes</h4><p>Em conta e lógica, "pensa passo a passo" derruba erro e você confere o caminho.</p></div>
+          <div class="card"><span class="tag">Papel</span><h4>Dá um chapéu pra ele</h4><p>"Aja como um analista de CS experiente" já muda o tom e a profundidade.</p></div>
+          <div class="card"><span class="tag">Precisão</span><h4>Define os termos</h4><p>Palavra vaga vira base errada. Diz exatamente o que cada conceito significa (ex.: churn ≠ cancelamento).</p></div>
+          <div class="card"><span class="tag">Ordem</span><h4>Material longo primeiro</h4><p>Com documento grande, cola o texto <b>antes</b> da pergunta. A resposta melhora bastante.</p></div>
+          <div class="card"><span class="tag">Iterar</span><h4>A 1ª resposta é rascunho</h4><p>O resultado bom vem no vai-e-volta. Refina ("encurta", "foca no cliente X") em vez de recomeçar.</p></div>
+        </div>
+        <p class="src-note">Baseado nas boas práticas de <a href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview" target="_blank" rel="noopener">engenharia de prompt da Anthropic</a>.</p>
       </div>
-      <div class="ex reveal">
-        <span class="ex-team">Formato</span>
-        <h4>Diga exatamente o formato que quer</h4>
-        <p class="prompt">Responde em tabela, com colunas Cliente, MRR e Status. Tom direto, no máximo 5 linhas por item.</p>
-        <p class="result"><b>Por quê:</b> sem pedir formato, você recebe o formato genérico. Peça tabela, tópicos, HTML, tom.</p>
-      </div>
-      <div class="ex reveal">
-        <span class="ex-team">Exemplo</span>
-        <h4>Mostre um exemplo do que espera</h4>
-        <p class="prompt">Aqui vai um resumo que ficou bom [cola o modelo]. Faça os próximos no mesmo estilo.</p>
-        <p class="result"><b>Por quê:</b> um bom exemplo vale mais que um parágrafo de instrução. Mostrar &gt; explicar.</p>
-      </div>
-      <div class="ex reveal">
-        <span class="ex-team">Raciocínio</span>
-        <h4>Peça pra pensar passo a passo</h4>
-        <p class="prompt">Antes de responder, pense passo a passo e mostre o raciocínio. Depois dê a conclusão.</p>
-        <p class="result"><b>Por quê:</b> em contas e lógica, "pensar antes" reduz erro e deixa você conferir o caminho.</p>
-      </div>
-      <div class="ex reveal">
-        <span class="ex-team">Papel</span>
-        <h4>Dê um papel a ele</h4>
-        <p class="prompt">Aja como um analista de Customer Success experiente e critique este plano de retenção.</p>
-        <p class="result"><b>Por quê:</b> um papel foca o tom e a profundidade. Uma frase já muda a resposta.</p>
-      </div>
-      <div class="ex reveal">
-        <span class="ex-team">Ordem</span>
-        <h4>Material longo primeiro, pergunta por último</h4>
-        <p class="prompt">[cola o documento grande] ... Agora, com base no texto acima, responda: ...</p>
-        <p class="result"><b>Por quê:</b> com documentos longos, colar o material antes da pergunta melhora bastante a resposta.</p>
-      </div>
-      <div class="ex reveal">
-        <span class="ex-team">Iterar</span>
-        <h4>A 1ª resposta é rascunho</h4>
-        <p class="prompt">Bom começo. Agora encurta, foca no cliente X e deixa o tom mais formal.</p>
-        <p class="result"><b>Por quê:</b> conversar de volta é onde o resultado aparece. Refine em vez de recomeçar.</p>
-      </div>
-    </div>
-    <p class="src-note reveal">Baseado nas boas práticas oficiais de <a href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview" target="_blank" rel="noopener">engenharia de prompt da Anthropic</a>.</p>
+    </details>
   </div>
 </section>
 
-<!-- ================= REVISAR / ALUCINAÇÃO ================= -->
+<!-- ===== REVISAR ===== -->
 <section id="revisar">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="eyebrow">Revisar sempre</span>
-      <h2>O Claude às vezes inventa. E diz com a maior confiança.</h2>
-      <p>Isso tem nome: <b>alucinação</b>. O Claude foi treinado pra prever o texto mais provável, não pra consultar uma verdade. Quando não sabe algo, ele tende a <em>completar</em> com algo plausível — um número, um nome, uma citação — no mesmo tom seguro de quando acerta. Por isso, no nosso time, revisar não é opcional: é o que separa um material massa de um erro publicado.</p>
+      <h2>Ele inventa. Sério.</h2>
+      <p>Tem até nome: alucinação. O Claude foi feito pra prever o texto mais provável, não pra consultar uma verdade. Quando não sabe, ele completa com algo que <em>parece</em> certo — e fala com a mesma confiança de quando acerta. Por isso revisar não é frescura, é o que separa um trabalho massa de um erro publicado.</p>
     </div>
 
-    <div class="callout reveal" style="margin-top:0;margin-bottom:34px;">
-      <div class="ct">
-        <h3>A regra de bolso</h3>
-        <p>Quanto mais uma decisão depende de um dado, mais você confere esse dado. Nome de cliente, valor de MRR, data, número de contrato, citação de documento — trate como "a conferir" até bater com a fonte. Desconfie especialmente de <b>precisão suspeita</b> (um número exato demais que ninguém te deu).</p>
-      </div>
+    <div class="callout reveal" style="margin-bottom:24px;">
+      <h4>A regra de bolso</h4>
+      <p>Quanto mais uma decisão depende de um dado, mais você confere esse dado. Nome de cliente, valor, data, número de contrato — trata como "a conferir" até bater com a fonte. E desconfia de número exato demais que ninguém te deu.</p>
     </div>
 
-    <h3 class="sub reveal" style="margin-top:0;">6 jeitos de reduzir a invenção (com frases prontas)</h3>
-    <div class="rules-grid">
-      <div class="rule hot reveal">
-        <h4>Dê permissão pra dizer "não sei"</h4>
-        <p>A técnica mais simples e das mais eficazes: deixe explícito que admitir incerteza é aceitável.</p>
-        <p class="q">Se você não tiver certeza ou faltar informação, diga "não tenho dados suficientes" em vez de chutar.</p>
-      </div>
-      <div class="rule reveal">
-        <h4>Prenda ele ao material que você deu</h4>
-        <p>Impede que ele "complete" com o conhecimento geral dele no lugar dos seus dados.</p>
-        <p class="q">Responda apenas com base nos documentos que colei acima, não no seu conhecimento geral.</p>
-      </div>
-      <div class="rule reveal">
-        <h4>Exija a fonte de cada afirmação</h4>
-        <p>Torna a resposta auditável — e o próprio ato de citar já derruba invenções.</p>
-        <p class="q">Para cada número e afirmação, cite o trecho de onde tirou. Se não achar, remova a frase.</p>
-      </div>
-      <div class="rule reveal">
-        <h4>Peça o raciocínio antes da resposta</h4>
-        <p>Ver o passo a passo revela lógica torta ou uma suposição que ele inventou no caminho.</p>
-        <p class="q">Explique seu raciocínio passo a passo antes de me dar a conclusão.</p>
-      </div>
-      <div class="rule reveal">
-        <h4>Rode duas vezes e compare</h4>
-        <p>Faça a mesma pergunta em duas conversas. Se as respostas divergirem no que importa, é sinal de invenção.</p>
-        <p class="q">(mesma pergunta, em uma nova sessão — e compare os dois resultados)</p>
-      </div>
-      <div class="rule hot reveal">
-        <h4>Confira nomes, números e datas na mão</h4>
-        <p>A revisão humana é a última linha — e a mais importante. Para decisões de alto risco, sempre valide o dado crítico na fonte real.</p>
-        <p class="q">(você, batendo o número contra o app ou a planilha antes de usar)</p>
-      </div>
+    <div class="grid">
+      <div class="card"><h4>Deixa ele dizer "não sei"</h4><p class="why">A mais simples e das que mais funcionam.</p><p class="q">Se não tiver certeza, diz "não tenho dados suficientes" em vez de chutar.</p></div>
+      <div class="card"><h4>Prende ao seu material</h4><p class="why">Impede que ele complete com o conhecimento geral no lugar dos seus dados.</p><p class="q">Responde só com base nos documentos que colei, não no seu conhecimento geral.</p></div>
+      <div class="card"><h4>Pede a fonte de cada dado</h4><p class="why">O simples ato de citar já derruba invenção.</p><p class="q">Pra cada número, cita de onde tirou. Se não achar, remove a frase.</p></div>
+      <div class="card"><h4>Pede o raciocínio antes</h4><p class="why">Ver o passo a passo revela lógica torta ou uma suposição inventada no caminho.</p><p class="q">Explica seu raciocínio passo a passo antes de me dar a conclusão.</p></div>
+      <div class="card"><h4>Roda duas vezes e compara</h4><p class="why">Faz a mesma pergunta em duas conversas. Se divergir no que importa, é sinal de invenção.</p><p class="q">(mesma pergunta, numa sessão nova — e compara os dois resultados)</p></div>
+      <div class="card"><h4>Confere na mão o que é crítico</h4><p class="why">A última linha é você. Em decisão importante, valida na fonte.</p><p class="q">(você batendo o número contra o app ou a planilha antes de usar)</p></div>
     </div>
-    <p class="note reveal"><b>O melhor antídoto é ligar o Claude à fonte real.</b> Quando ele busca o dado ao vivo via MCP (em vez de "lembrar" de cabeça), a chance de invenção cai muito — porque a resposta vem do sistema, não da memória. Veja <a href="#dados">Buscar dados</a>.</p>
-    <p class="src-note reveal">Técnicas e exemplos adaptados do guia oficial <a href="https://docs.anthropic.com/en/docs/test-and-evaluate/strengthen-guardrails/reduce-hallucinations" target="_blank" rel="noopener">"Reduce hallucinations" da Anthropic</a>.</p>
+    <p class="note reveal" style="margin-top:16px;"><b>O melhor antídoto é ligar ele à fonte real.</b> Quando ele busca o dado ao vivo (ver <a href="#dados">Buscar dados</a>) em vez de lembrar de cabeça, a invenção cai muito — a resposta vem do sistema, não da memória.</p>
+    <p class="src-note reveal">Técnicas do guia <a href="https://docs.anthropic.com/en/docs/test-and-evaluate/strengthen-guardrails/reduce-hallucinations" target="_blank" rel="noopener">"Reduce hallucinations" da Anthropic</a>.</p>
   </div>
 </section>
 
-<!-- ================= SKILLS ================= -->
+<!-- ===== SKILLS ===== -->
 <section id="skills">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="eyebrow">Skills</span>
-      <h2>Ensine uma vez. Use pra sempre — e todo mundo igual.</h2>
-      <p>Uma <b>skill</b> é um procedimento salvo: você ensina ao Claude, uma vez, o passo a passo de como o time faz uma tarefa — e ele repete igualzinho toda vez, pra qualquer pessoa. Em vez de reexplicar o formato certo em cada conversa, você cria a skill uma vez e chama por um atalho.</p>
-    </div>
-
-    <div class="mcp-lead reveal">
-      <div class="glyph" aria-hidden="true">
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.3 4.7 5.2.8-3.8 3.6.9 5.1L12 14.8 7.4 17.2l.9-5.1L4.5 8.5l5.2-.8z"/></svg>
-      </div>
-      <div>
-        <h3>Por que isso importa</h3>
-        <p>Skill padroniza a qualidade: o resultado não depende mais de quem pediu nem de quem lembrou do jeito certo. O integrante novo já herda o "jeito da casa" no primeiro dia, e ninguém reinventa a roda. É a diferença entre "cada um pede de um jeito" e "o time inteiro entrega no mesmo padrão".</p>
-      </div>
+      <h2>Ensina uma vez, usa sempre.</h2>
+      <p>Uma <b>skill</b> é um procedimento que você ensina pro Claude uma vez — o passo a passo de como o time faz uma tarefa — e ele repete igualzinho toda vez, pra qualquer pessoa. Em vez de reexplicar o formato certo em cada conversa, você salva e chama por um atalho.</p>
     </div>
 
     <div class="skill-cards">
-      <div class="skill real reveal">
+      <div class="skill reveal">
         <span class="cmd">skill de revisão</span>
         <h4>A que a gente usa de verdade</h4>
-        <p>Depois de qualquer mudança no nosso app de gestão de risco, uma skill de revisão roda <b>sozinha</b> e confere o trabalho contra os padrões do time <em>antes</em> de entregar. Foi assim que a gente pegou erros antes deles irem pro ar — a revisão deixou de ser "se alguém lembrar" e virou automática.</p>
-        <span class="tag"><span class="pip"></span>Exemplo real do time</span>
+        <p>Toda vez que a gente mexe no nosso app, uma skill de revisão roda sozinha e confere o trabalho antes de entregar. Foi assim que a gente pegou erro antes de ir pro ar. A revisão deixou de ser "se alguém lembrar" e virou automática.</p>
+        <span class="who">Exemplo real do time</span>
       </div>
       <div class="skill reveal">
         <span class="cmd">/resumo-reuniao</span>
-        <h4>Um exemplo pro CS</h4>
-        <p>Ensine a skill uma vez: "extraia da reunião os combinados, o responsável e o prazo, e monte em HTML no formato X". Pronto — qualquer pessoa do time chama <b>/resumo-reuniao</b>, cola a transcrição e recebe o resumo sempre no mesmo padrão, sem reexplicar nada.</p>
-        <span class="tag"><span class="pip"></span>Ideia pra criar</span>
+        <h4>Uma ideia pro CS</h4>
+        <p>Ensina uma vez: "tira da reunião os combinados, o responsável e o prazo, monta em HTML nesse formato". Pronto — qualquer um do time chama <b>/resumo-reuniao</b>, cola a transcrição e recebe sempre no mesmo padrão.</p>
+        <span class="who">Ideia pra criar</span>
       </div>
     </div>
-
-    <p class="note reveal"><b>Como criar (sem programar):</b> descreva pro Claude o passo a passo de como você faz a tarefa e peça pra ele salvar isso como uma skill. Depois é só chamar pelo atalho. Dica: as melhores skills nascem de um caso de rotina que deu certo — ver <a href="#rotina">Casos de rotina</a>.</p>
+    <p class="note reveal" style="margin-top:16px;"><b>Como criar, sem programar:</b> descreve pro Claude o passo a passo de como você faz a tarefa e pede pra ele salvar como skill. As melhores nascem de um <a href="#rotina">caso de rotina</a> que já deu certo.</p>
   </div>
 </section>
 
-<!-- ================= DADOS / MCP ================= -->
+<!-- ===== DADOS ===== -->
 <section id="dados">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="eyebrow">Buscar dados sem saber SQL · MCP</span>
-      <h2>Você pergunta em português. Ele vai na fonte certa.</h2>
-      <p>O MCP conecta o Claude aos nossos sistemas. Você não precisa saber onde cada número mora — mas ele precisa, e já sabe. Bônus: dado buscado ao vivo é dado que ele não precisa inventar.</p>
+      <h2>Pergunta em português, ele busca.</h2>
+      <p>O Claude está ligado aos nossos sistemas. Você não precisa saber onde cada número mora — ele sabe. E dado buscado ao vivo é dado que ele não precisa inventar.</p>
     </div>
 
-    <div class="mcp-lead reveal">
-      <div class="glyph" aria-hidden="true">
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h10M4 7l3-3M4 7l3 3"/><path d="M20 17H10M20 17l-3-3M20 17l-3 3"/></svg>
-      </div>
-      <div>
-        <h3>O MCP é um "tradutor de linguagem"</h3>
-        <p>É assim que o time descreve: ele deixa o Claude acessar as diferentes ferramentas e sistemas da empresa pra buscar informação ou fazer tarefas sozinho — sem você abrir plataforma por plataforma.</p>
-      </div>
+    <div class="callout reveal" style="margin-bottom:22px;">
+      <h4>O que é isso, na real</h4>
+      <p>O nome técnico é MCP, mas o time descreve melhor: um <b>"tradutor de linguagem"</b>. Ele deixa o Claude acessar cada ferramenta da empresa e trazer o que precisa — sem você abrir plataforma por plataforma.</p>
     </div>
 
     <div class="routing reveal">
       <div class="route-list">
-        <div class="route">
-          <span class="src sb">App de risco</span>
-          <p class="q"><b>Risco, MRR, segmento, cobrança, atividades de CS.</b> Tudo que é do nosso sistema de gestão de churn.</p>
-        </div>
-        <div class="route">
-          <span class="src ld">Lightdash</span>
-          <p class="q"><b>Ligação, hit rate, duração, consumo de chamada.</b> Os dados brutos, na origem — sem checagem manual demorada.</p>
-        </div>
-        <div class="route">
-          <span class="src repo">Código</span>
-          <p class="q"><b>"O app mostra isso pro usuário?"</b> Essa resposta está no código do produto, não num banco.</p>
-        </div>
+        <div class="route"><span class="src sb">App de risco</span><p class="q"><b>Risco, MRR, cobrança, atividade de CS.</b> Tudo do nosso sistema de churn.</p></div>
+        <div class="route"><span class="src ld">Lightdash</span><p class="q"><b>Ligação, hit rate, duração, consumo.</b> Os dados de chamada, na origem.</p></div>
+        <div class="route"><span class="src repo">Código</span><p class="q"><b>"O app mostra isso pro usuário?"</b> Essa resposta tá no código, não num banco.</p></div>
       </div>
-
       <div class="routing-note">
-        <h3>Por que isso importa pra você</h3>
-        <p>A mesma pergunta feita à fonte errada gera uma resposta que <em>parece</em> certa e está errada. Por isso vale dizer de onde você quer o número — ex.: <span class="code">"pega do app"</span> ou <span class="code">"pega da fonte de ligações"</span>.</p>
-        <p>Se o número for pra decidir algo, peça pra ele <b>declarar a fonte</b>. Se a informação não existir em lugar nenhum, ele te diz isso — em vez de inventar um número parecido.</p>
+        <h4>O pulo do gato</h4>
+        <p>A mesma pergunta na fonte errada devolve resposta que parece certa e está errada. Então diz de onde quer: <span class="code">"pega do app"</span> ou <span class="code">"pega das ligações"</span>.</p>
+        <p>Se o número for pra decidir algo, pede pra ele <b>declarar a fonte</b>. Se não existir em lugar nenhum, ele te fala — em vez de inventar um parecido.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ================= ROTINA ================= -->
+<!-- ===== ROTINA ===== -->
 <section id="rotina">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="eyebrow">Casos de rotina</span>
-      <h2>Situação real → como pedir. Copie e adapte.</h2>
-      <p>Estes casos saíram das nossas reuniões — o dia a dia que o time já delega ou está delegando pro Claude. Antes deles, a "anatomia" de um pedido que funciona.</p>
+      <h2>O que dá pra tirar do seu prato.</h2>
+      <p>Toda hora gasta em tarefa braçal é hora que não foi pro cliente. Olha o que dá pra passar pro Claude — separado por papel.</p>
     </div>
 
-    <h3 class="sub reveal" style="margin-top:0;">Anatomia de um bom pedido</h3>
-    <div class="anatomy reveal">
-      <div class="part"><span class="pl">Contexto</span><p><em>Quem você é e a situação.</em> "Sou do CS, cuido de clientes de telecom B2B."</p></div>
-      <div class="part"><span class="pl">Tarefa</span><p><em>O que quer, em verbo.</em> "Resuma este áudio em tópicos de decisão."</p></div>
-      <div class="part"><span class="pl">Formato</span><p><em>Como quer receber.</em> "Em HTML, com título e lista."</p></div>
-      <div class="part"><span class="pl">Restrições</span><p><em>Limites e conceitos.</em> "Só o que está no áudio. Não invente nomes."</p></div>
-      <div class="part"><span class="pl">Material</span><p><em>O insumo colado.</em> A transcrição, a planilha, o print.</p></div>
+    <div class="grid">
+      <div class="card reveal">
+        <span class="tag">CSM</span><h4>Menos planilha, mais relação</h4>
+        <div class="auto-item"><span class="man">Manual: montar o <b>resumo de risco</b> pra reunião toda semana</span><span class="aut"><b>Auto:</b> ele puxa do app e monta em minutos</span></div>
+        <div class="auto-item"><span class="man">Manual: caçar <b>quem atrasou</b> e abrir tarefa na mão</span><span class="aut"><b>Auto:</b> uma régua abre e fecha a tarefa sozinha</span></div>
+        <div class="auto-item"><span class="man">Manual: passar a limpo <b>nota de call</b></span><span class="aut"><b>Auto:</b> a transcrição vira resumo + próximos passos</span></div>
+      </div>
+      <div class="card reveal">
+        <span class="tag">Analista de Suporte</span><h4>Menos triagem, mais solução</h4>
+        <div class="auto-item"><span class="man">Manual: ouvir <b>áudio longo de WhatsApp</b> inteiro</span><span class="aut"><b>Auto:</b> resumo em HTML com pedidos destacados</span></div>
+        <div class="auto-item"><span class="man">Manual: <b>triar demanda repetida</b> e replicar em tarefa</span><span class="aut"><b>Auto:</b> um bot acha o domínio do cliente e cria a tarefa no Super App</span></div>
+        <div class="auto-item"><span class="man">Manual: escrever <b>a mesma resposta</b> de sempre</span><span class="aut"><b>Auto:</b> rascunho padrão pra você só revisar</span></div>
+      </div>
+      <div class="card reveal">
+        <span class="tag">Vendas</span><h4>Menos preparação, mais conversa</h4>
+        <div class="auto-item"><span class="man">Manual: <b>higienizar a lista</b> de prospecção (CNPJ, inativo)</span><span class="aut"><b>Auto:</b> ele cruza e limpa em minutos</span></div>
+        <div class="auto-item"><span class="man">Manual: <b>pesquisar a conta</b> antes da call</span><span class="aut"><b>Auto:</b> um resumo do cliente na hora</span></div>
+        <div class="auto-item"><span class="man">Manual: montar <b>follow-up</b> do zero</span><span class="aut"><b>Auto:</b> rascunho a partir do contexto colado</span></div>
+      </div>
     </div>
 
-    <h3 class="sub reveal">Casos que o time já usa</h3>
-    <div class="lib-grid">
-      <div class="ex reveal">
-        <span class="ex-team">CS · Áudios</span>
-        <h4>Resumir áudios de WhatsApp</h4>
-        <p class="prompt">Segue um áudio longo do cliente. Compila os pontos principais num documento HTML curto, destacando pedidos e combinados. Use só o que está no áudio.</p>
-        <p class="result"><b>Resultado:</b> resumo pronto sem ouvir tudo de novo. Dica: abra uma sessão nova pra cada fluxo.</p>
+    <details class="acc reveal" style="margin-top:18px;">
+      <summary>Ver exemplos de pedidos prontos (é só copiar e adaptar)</summary>
+      <div class="acc-body">
+        <div class="card" style="margin-bottom:16px;">
+          <span class="tag">Anatomia de um bom pedido</span>
+          <h4>As 5 partes que fazem funcionar</h4>
+          <p><b>Contexto</b> (quem você é) · <b>Tarefa</b> (o que quer, em verbo) · <b>Formato</b> (como receber) · <b>Restrições</b> (limites e conceitos, ex.: "não inventa nome") · <b>Material</b> (o insumo colado: transcrição, planilha, print).</p>
+        </div>
+        <div class="grid">
+          <div class="card"><span class="tag">Áudios</span><h4>Resumir áudio de WhatsApp</h4><p class="q">Segue um áudio longo do cliente. Compila os pontos principais em HTML curto, destacando pedidos e combinados. Usa só o que tá no áudio.</p></div>
+          <div class="card"><span class="tag">Base</span><h4>Higienizar lista</h4><p class="q">Cruza essa lista de cancelados, valida os CNPJs e remove os inativos da prospecção. Me mostra o que saiu e por quê.</p></div>
+          <div class="card"><span class="tag">Consumo</span><h4>Ver quem caiu de uso</h4><p class="q">Analisa o consumo destes clientes e me aponta quem caiu no último mês. Pega das ligações e declara a fonte.</p></div>
+          <div class="card"><span class="tag">Reativação</span><h4>Montar a base de reativação</h4><p class="q">Monta a base de reativação com colunas: MRR antes do cancelamento, CNPJ, data de cancelamento, último pagamento, qtd de ramais e plano (Ilimitado/Recarga).</p></div>
+          <div class="card"><span class="tag">Automação</span><h4>Aposentar planilha manual</h4><p class="q">Segue a planilha manual de controle de cancelamentos. Analisa e propõe uma automação, integrando com o Super App.</p><p class="why">Foi de um pedido assim que nasceu o <b>Bot Demanda CS</b>.</p></div>
+        </div>
       </div>
-      <div class="ex reveal">
-        <span class="ex-team">CS · Base de dados</span>
-        <h4>Higienizar lista de clientes</h4>
-        <p class="prompt">Cruza essa lista de clientes cancelados, valida o status dos CNPJs e remove as empresas inativas da base de prospecção. Me mostre o que removeu e por quê.</p>
-        <p class="result"><b>Resultado:</b> base limpa em minutos, sem checar cadastro por cadastro — e você audita o que saiu.</p>
-      </div>
-      <div class="ex reveal">
-        <span class="ex-team">CS · Consumo</span>
-        <h4>Analisar consumo de clientes</h4>
-        <p class="prompt">Analisa o consumo destes clientes e me aponta quem caiu de uso no último mês. Pega da fonte de ligações e declara a fonte.</p>
-        <p class="result"><b>Resultado:</b> substitui a verificação manual demorada que era feita no Lightdash.</p>
-      </div>
-      <div class="ex reveal">
-        <span class="ex-team">CS · Reativação</span>
-        <h4>Montar planilha de reativação</h4>
-        <p class="prompt">Monta a base de reativação com colunas: MRR antes do cancelamento, CNPJ, data de cancelamento, último pagamento, quantidade de ramais e plano (Ilimitado / Recarga).</p>
-        <p class="result"><b>Resultado:</b> planilha filtrável, com "ramais" como medida de usuários (mais precisa).</p>
-      </div>
-      <div class="ex reveal">
-        <span class="ex-team">Operação · Automação</span>
-        <h4>Propor automação de planilha manual</h4>
-        <p class="prompt">Segue a planilha manual de controle de cancelamentos. Analisa e propõe uma lógica de automação, integrando com o Super App.</p>
-        <p class="result"><b>Resultado:</b> caminho pra aposentar o controle na mão — como o Bot Demanda CS.</p>
-      </div>
-      <div class="ex reveal">
-        <span class="ex-team">Seu caso aqui</span>
-        <h4>+ Adicione o próximo</h4>
-        <p class="prompt">Achei um jeito bom de pedir X... vou registrar aqui pro time reaproveitar.</p>
-        <p class="result"><b>Como:</b> veja <a href="#crescer">Como esta central cresce</a> — ela foi feita pra isso.</p>
-      </div>
-    </div>
+    </details>
   </div>
 </section>
 
-<!-- ================= PRÁTICA / CASE ================= -->
+<!-- ===== NA PRÁTICA ===== -->
 <section id="pratica">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="eyebrow">Na prática</span>
-      <h2>Um app inteiro de CS, construído conversando.</h2>
-      <p>O sistema de gestão de risco de churn não foi encomendado a um fornecedor. Foi montado passo a passo, em conversa, com revisão a cada mudança. Esta é a linha do tempo real — cada ponto foi uma entrega aprovada.</p>
+      <h2>A gente já fez isso aqui.</h2>
+      <p>O nosso app de gestão de risco de churn não veio de fornecedor. Foi montado conversando, passo a passo, com revisão a cada mudança. Cada ponto foi uma entrega aprovada.</p>
     </div>
 
     <div class="timeline reveal">
-      <div class="tl-item">
-        <div class="tl-dot"></div>
-        <div class="tl-body">
-          <span class="when">Fundação</span>
-          <h4>O painel de risco e o perfil do cliente</h4>
-          <p>Dashboard com base ativa, novos e churn; perfil de cada cliente com consumo, cobranças e linha do tempo. O CSM passou a enxergar quem está em risco antes de perder.</p>
-        </div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-dot"></div>
-        <div class="tl-body">
-          <span class="when">Automação</span>
-          <h4>Réguas que agem sozinhas</h4>
-          <p>Regras que criam tarefa quando o cliente atrasa pagamento e a cancelam sozinhas quando ele regulariza — respeitando a validação humana do CS antes do cancelamento definitivo.</p>
-        </div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-dot"></div>
-        <div class="tl-body">
-          <span class="when">Ingestão automática</span>
-          <h4>Cancelamentos entrando sem "baixa e cola"</h4>
-          <p>Os cancelamentos passaram a ser importados sozinhos, todo dia, direto da fonte — aposentando um trabalho manual repetitivo do time.</p>
-        </div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-dot"></div>
-        <div class="tl-body">
-          <span class="when">Agora</span>
-          <h4>Planilha de CS alimentada automaticamente</h4>
-          <p>A planilha que o time abastecia na mão passa a se alimentar sozinha, só de leitura, sem risco de bagunçar os dados. Dois "baixa e cola" diários a menos.</p>
-        </div>
-      </div>
-    </div>
-
-    <h3 class="sub reveal">Tire da sua rotina, devolva tempo pro cliente</h3>
-    <p class="reveal" style="max-width:64ch;color:var(--body);margin-bottom:20px;">Toda hora gasta em tarefa braçal é hora que não foi pro cliente. Veja o que dá pra tirar do prato — por papel. A regra é sempre a mesma: a máquina faz o repetitivo, você fica com a conversa.</p>
-    <div class="lib-grid">
-      <div class="ex reveal">
-        <span class="ex-team">CSM</span>
-        <h4>Menos planilha, mais relação</h4>
-        <div class="auto-item"><span class="man">Manual: montar o <b>resumo de risco/health</b> pra reunião toda semana</span><span class="aut"><b>Auto:</b> o Claude puxa do app e monta em HTML em minutos</span></div>
-        <div class="auto-item"><span class="man">Manual: caçar <b>quem atrasou pagamento</b> e abrir tarefa na mão</span><span class="aut"><b>Auto:</b> uma régua cria a tarefa e encerra sozinha quando ele paga</span></div>
-        <div class="auto-item"><span class="man">Manual: passar a limpo as <b>notas de call</b></span><span class="aut"><b>Auto:</b> transcrição vira resumo + próximos passos</span></div>
-      </div>
-      <div class="ex reveal">
-        <span class="ex-team">Analista de Suporte</span>
-        <h4>Menos triagem, mais solução</h4>
-        <div class="auto-item"><span class="man">Manual: ouvir <b>áudios longos de WhatsApp</b> inteiros</span><span class="aut"><b>Auto:</b> resumo em HTML com pedidos e combinados destacados</span></div>
-        <div class="auto-item"><span class="man">Manual: <b>triar demandas repetidas</b> e replicar em tarefa</span><span class="aut"><b>Auto:</b> um bot identifica o domínio do cliente e cria a tarefa no Super App</span></div>
-        <div class="auto-item"><span class="man">Manual: escrever <b>a mesma resposta</b> de sempre</span><span class="aut"><b>Auto:</b> rascunho padrão a partir da base — é só revisar e enviar</span></div>
-      </div>
-      <div class="ex reveal">
-        <span class="ex-team">Vendas</span>
-        <h4>Menos preparação, mais conversa</h4>
-        <div class="auto-item"><span class="man">Manual: <b>higienizar a lista</b> de prospecção (validar CNPJ, tirar inativo)</span><span class="aut"><b>Auto:</b> o Claude cruza e limpa a base em minutos</span></div>
-        <div class="auto-item"><span class="man">Manual: <b>pesquisar a conta</b> antes de cada call</span><span class="aut"><b>Auto:</b> um brief do cliente compilado na hora</span></div>
-        <div class="auto-item"><span class="man">Manual: montar <b>follow-up ou proposta</b> do zero</span><span class="aut"><b>Auto:</b> rascunho a partir do contexto colado, pronto pra ajustar</span></div>
-      </div>
-    </div>
-
-    <div class="callout reveal">
-      <div class="ct">
-        <h3>O detalhe que faz funcionar: disciplina, não mágica.</h3>
-        <p>Cada mudança foi pequena, reversível e revisada. Onde havia risco de verdade, o Claude parou e pediu autorização com a evidência na mão. É esse ritmo que dá pra ensinar — e é o que esta central existe pra passar adiante.</p>
-      </div>
-      <a href="#rotina" class="btn btn-primary">Ver casos de rotina →</a>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-body"><h4>O painel de risco e o perfil do cliente</h4><p>Base ativa, novos e churn num lugar só. O CSM passou a ver quem tá em risco antes de perder.</p></div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-body"><h4>Cobrança que age sozinha</h4><p>Abre tarefa quando o cliente atrasa e fecha sozinha quando ele paga — com o CS validando antes do que é definitivo.</p></div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-body"><h4>Cancelamento sem "baixa e cola"</h4><p>Passou a entrar sozinho, todo dia, direto da fonte. Um trabalho manual a menos.</p></div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-body"><h4>Planilha de CS que se abastece sozinha</h4><p>A que o time enchia na mão agora se alimenta sozinha, só de leitura. Dois "baixa e cola" diários a menos.</p></div></div>
     </div>
   </div>
 </section>
 
-<!-- ================= REGRAS DE OURO ================= -->
+<!-- ===== REGRAS ===== -->
 <section id="regras">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="eyebrow">Regras de ouro</span>
-      <h2>A automação serve pra você ser mais humano, não menos.</h2>
-      <p>Ganhar tempo com o Claude só vale se a pessoa continuar no centro. A máquina cuida do repetitivo; o cuidado com o cliente é seu. Estas são as regras que o time não abre mão.</p>
+      <h2>Os combinados que a gente não abre mão.</h2>
+      <p>Ganhar tempo com o Claude só vale se a pessoa continuar no centro. A máquina cuida do repetitivo; o cuidado com o cliente é seu.</p>
     </div>
 
     <div class="rules-grid">
-      <div class="rule hot reveal">
-        <h4>A pessoa no centro</h4>
-        <p>O tempo que a IA te devolve é pra ouvir, entender e resolver com o cliente. Automatize o braçal justamente pra ter <b>mais</b> contato humano — não menos.</p>
-      </div>
-      <div class="rule hot reveal">
-        <h4>A decisão final é sempre sua</h4>
-        <p>O Claude sugere e faz o trabalho repetitivo. Quem decide cobrar, cancelar, priorizar ou como falar com o cliente é a pessoa — nunca a máquina sozinha.</p>
-      </div>
-      <div class="rule reveal">
-        <h4>Onde pede gente, entra gente</h4>
-        <p>Momentos sensíveis — um cliente chateado, uma conta em risco — passam por uma pessoa antes de qualquer ação definitiva. A automação para e espera o seu ok.</p>
-      </div>
-      <div class="rule reveal">
-        <h4>Confira antes de confiar</h4>
-        <p>O Claude erra com confiança. Leia o que voltou, compare com o que você sabe, e só então use. A responsabilidade final é humana. Ver <a href="#revisar">Revisar sempre</a>.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= GROW ================= -->
-<section id="crescer">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow">Como esta central cresce</span>
-      <h2>Um material vivo, não um PDF esquecido.</h2>
-      <p>A ideia é que esta página seja o ponto único onde todo material de enablement mora — e que ganhe camadas conforme o time usa.</p>
-    </div>
-
-    <div class="grow-grid">
-      <div class="grow-card ready reveal">
-        <span class="gnum">01</span>
-        <h4>Trilhas com conteúdo próprio</h4>
-        <p>Cada perfil tem um dossiê que troca inteiro ao escolher a trilha, com exemplos e links pra biblioteca.</p>
-        <span class="status"><span class="pip"></span>Feito</span>
-      </div>
-      <div class="grow-card reveal">
-        <span class="gnum">02</span>
-        <h4>Mais casos por time</h4>
-        <p>Uma aba por área (CS, vendas, operação) com as tarefas de rotina que cada uma já delega, ampliando a biblioteca.</p>
-        <span class="status"><span class="pip"></span>Próximo passo</span>
-      </div>
-      <div class="grow-card reveal">
-        <span class="gnum">03</span>
-        <h4>Trilhas em vídeo curto</h4>
-        <p>Gravar um "olha como eu peço" de 2 minutos por caso, pra quem aprende vendo.</p>
-        <span class="status"><span class="pip"></span>Ideia</span>
-      </div>
-      <div class="grow-card reveal">
-        <span class="gnum">04</span>
-        <h4>Onboarding guiado</h4>
-        <p>Um checklist de primeiro dia que leva o novo integrante do "instalei o VS Code" ao "resolvi minha primeira tarefa".</p>
-        <span class="status"><span class="pip"></span>Ideia</span>
-      </div>
+      <div class="rule hot reveal"><h4>A pessoa no centro</h4><p>O tempo que a IA te devolve é pra ouvir e resolver com o cliente. Automatiza o braçal pra ter <b>mais</b> contato humano, não menos.</p></div>
+      <div class="rule hot reveal"><h4>Quem decide é você</h4><p>Ele sugere e faz o repetitivo. Cobrar, cancelar, priorizar, como falar com o cliente — isso é seu, nunca da máquina sozinha.</p></div>
+      <div class="rule reveal"><h4>Onde pede gente, entra gente</h4><p>Cliente chateado, conta em risco: passa por uma pessoa antes de qualquer ação definitiva. A automação para e espera seu ok.</p></div>
+      <div class="rule reveal"><h4>Confere antes de confiar</h4><p>Ele erra com cara de certeza. Lê, compara com o que você sabe, e só então usa. A responsabilidade é humana.</p></div>
     </div>
   </div>
 </section>
@@ -1098,10 +794,10 @@
 <footer>
   <div class="wrap">
     <div>
-      <div class="brand" style="margin-bottom:8px;"><span class="dot" aria-hidden="true"></span><span>Central de Enablement · Time de CS</span></div>
-      <p class="muted">Conteúdo extraído das reuniões do time (Eduardo, Letícia, Jaine, Leonardo) e das fontes oficiais da Anthropic. Material vivo — cresce a cada novo caso.</p>
+      <div class="brand" style="margin-bottom:8px;"><span class="dot" aria-hidden="true"></span><span>Central de Enablement</span></div>
+      <p class="muted">Feito com o time (Eduardo, Letícia, Jaine e Leonardo) e as fontes oficiais da Anthropic. Material vivo — cresce a cada caso novo.</p>
     </div>
-    <span class="pill"><span class="pip"></span>versão 0.5 · skills, automações por papel e foco humano</span>
+    <span style="font-family:var(--mono);font-size:12px;color:var(--muted);">v0.6</span>
   </div>
 </footer>
 
@@ -1109,90 +805,126 @@
   document.documentElement.classList.add('js');
 
   (function () {
-    var root = document.documentElement;
-    var btn = document.getElementById('themeToggle');
-    function current() {
-      if (root.dataset.theme) return root.dataset.theme;
-      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
-    btn.addEventListener('click', function () { root.dataset.theme = current() === 'dark' ? 'light' : 'dark'; });
+    var root = document.documentElement, btn = document.getElementById('themeToggle');
+    function cur() { return root.dataset.theme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); }
+    btn.addEventListener('click', function () { root.dataset.theme = cur() === 'dark' ? 'light' : 'dark'; });
   })();
 
+  // Trilhas
   (function () {
-    var tabs = Array.prototype.slice.call(document.querySelectorAll('.track-tab'));
-    var dossies = { 'tab-novo': 'dossie-novo', 'tab-time': 'dossie-time', 'tab-lider': 'dossie-lider' };
-    function select(tab) {
+    var tabs = [].slice.call(document.querySelectorAll('.track-tab'));
+    var map = { 'tab-novo': 'dossie-novo', 'tab-time': 'dossie-time', 'tab-lider': 'dossie-lider' };
+    function sel(tab) {
       tabs.forEach(function (t) {
         var on = t === tab;
         t.setAttribute('aria-selected', on ? 'true' : 'false');
         t.tabIndex = on ? 0 : -1;
-        var d = document.getElementById(dossies[t.id]);
-        if (d) d.hidden = !on;
+        var d = document.getElementById(map[t.id]); if (d) d.hidden = !on;
       });
     }
     tabs.forEach(function (tab, i) {
-      tab.addEventListener('click', function () { select(tab); });
+      tab.addEventListener('click', function () { sel(tab); });
       tab.addEventListener('keydown', function (e) {
         if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
           e.preventDefault();
-          var dir = e.key === 'ArrowRight' ? 1 : -1;
-          var next = tabs[(i + dir + tabs.length) % tabs.length];
-          select(next); next.focus();
+          var n = tabs[(i + (e.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length];
+          sel(n); n.focus();
         }
       });
     });
-    var initial = tabs.filter(function (t) { return t.getAttribute('aria-selected') === 'true'; })[0] || tabs[0];
-    if (initial) select(initial);
+    var init = tabs.filter(function (t) { return t.getAttribute('aria-selected') === 'true'; })[0] || tabs[0];
+    if (init) sel(init);
   })();
 
+  // Wizard de instalação (steps travados + progresso salvo)
+  (function () {
+    var wz = document.getElementById('wizard'); if (!wz) return;
+    var steps = [].slice.call(wz.querySelectorAll('.wz-step'));
+    var bar = document.getElementById('wz-bar'), count = document.getElementById('wz-count');
+    var KEY = 'enablement-wizard-v1', done = 0;
+    try { done = parseInt(localStorage.getItem(KEY) || '0', 10) || 0; } catch (e) {}
+    done = Math.max(0, Math.min(steps.length, done));
+    function render() {
+      steps.forEach(function (s, i) {
+        s.classList.toggle('done', i < done);
+        s.classList.toggle('locked', i > done);
+      });
+      bar.style.width = Math.round(done / steps.length * 100) + '%';
+      count.textContent = done;
+      wz.classList.toggle('complete', done >= steps.length);
+      try { localStorage.setItem(KEY, String(done)); } catch (e) {}
+    }
+    steps.forEach(function (s, i) {
+      var chk = s.querySelector('.wz-check');
+      function toggle() {
+        if (i > done) return;
+        done = (i === done) ? i + 1 : i;
+        render();
+      }
+      chk.addEventListener('click', toggle);
+      chk.addEventListener('keydown', function (e) { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); toggle(); } });
+    });
+    render();
+  })();
+
+  // Stepper do Git
+  (function () {
+    var st = document.getElementById('repo-stepper'); if (!st) return;
+    var dots = [].slice.call(st.querySelectorAll('.st-dot'));
+    var panels = [].slice.call(st.querySelectorAll('.st-panel'));
+    var prev = st.querySelector('.st-prev'), next = st.querySelector('.st-next');
+    var cur = 0;
+    function show(n) {
+      cur = Math.max(0, Math.min(panels.length - 1, n));
+      panels.forEach(function (p, i) { p.hidden = i !== cur; });
+      dots.forEach(function (d, i) { d.setAttribute('aria-current', i === cur ? 'true' : 'false'); });
+      prev.disabled = cur === 0;
+      next.textContent = cur === panels.length - 1 ? 'Recomeçar ↺' : 'Próximo →';
+    }
+    dots.forEach(function (d, i) { d.addEventListener('click', function () { show(i); }); });
+    prev.addEventListener('click', function () { show(cur - 1); });
+    next.addEventListener('click', function () { show(cur === panels.length - 1 ? 0 : cur + 1); });
+    show(0);
+  })();
+
+  // Reveal
   (function () {
     var els = document.querySelectorAll('.reveal');
     if (!('IntersectionObserver' in window)) { els.forEach(function (el) { el.classList.add('in'); }); return; }
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
-    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, { rootMargin: '0px 0px -6% 0px', threshold: 0.06 });
     els.forEach(function (el) { io.observe(el); });
   })();
 
+  // Onda telecom no hero
   (function () {
-    var canvas = document.getElementById('wave');
-    if (!canvas) return;
+    var canvas = document.getElementById('wave'); if (!canvas) return;
     var ctx = canvas.getContext('2d');
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var w, h, dpr;
     function accent() { return getComputedStyle(document.documentElement).getPropertyValue('--signal').trim() || '#0C8F7E'; }
     function resize() {
       dpr = Math.min(window.devicePixelRatio || 1, 2);
-      var r = canvas.getBoundingClientRect();
-      w = r.width; h = r.height;
-      canvas.width = w * dpr; canvas.height = h * dpr;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      var r = canvas.getBoundingClientRect(); w = r.width; h = r.height;
+      canvas.width = w * dpr; canvas.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
-    resize();
-    window.addEventListener('resize', resize);
-    function drawFrame(t) {
-      ctx.clearRect(0, 0, w, h);
-      var col = accent();
+    resize(); window.addEventListener('resize', resize);
+    function draw(t) {
+      ctx.clearRect(0, 0, w, h); var col = accent();
       for (var l = 0; l < 3; l++) {
         ctx.beginPath();
-        var amp = 16 + l * 10;
-        var yBase = h * (0.55 + l * 0.11);
-        var speed = reduce ? 0 : t * (0.0004 + l * 0.00015);
-        var freq = 0.006 + l * 0.0018;
+        var amp = 15 + l * 9, yBase = h * (0.56 + l * 0.11), sp = reduce ? 0 : t * (0.0004 + l * 0.00015), fq = 0.006 + l * 0.0018;
         for (var x = 0; x <= w; x += 6) {
-          var y = yBase + Math.sin(x * freq + speed) * amp + Math.sin(x * freq * 0.5 + speed * 1.6) * amp * 0.4;
+          var y = yBase + Math.sin(x * fq + sp) * amp + Math.sin(x * fq * 0.5 + sp * 1.6) * amp * 0.4;
           if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
         }
-        ctx.strokeStyle = col;
-        ctx.globalAlpha = 0.16 - l * 0.035;
-        ctx.lineWidth = 2;
-        ctx.stroke();
+        ctx.strokeStyle = col; ctx.globalAlpha = 0.15 - l * 0.035; ctx.lineWidth = 2; ctx.stroke();
       }
       ctx.globalAlpha = 1;
     }
-    if (reduce) { drawFrame(0); return; }
-    function loop(ts) { drawFrame(ts); requestAnimationFrame(loop); }
-    requestAnimationFrame(loop);
+    if (reduce) { draw(0); return; }
+    (function loop(ts) { draw(ts); requestAnimationFrame(loop); })(0);
   })();
 </script>
 </body>
