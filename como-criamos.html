@@ -11,160 +11,168 @@
 <body>
 <style>
   :root {
-    --bg: #F4F6F5; --surface: #FFFFFF; --surface-2: #EDF1EF;
-    --ink: #14201F; --body: #3B4744; --muted: #697673; --line: #DCE3E0;
-    --signal: #0C8F7E; --signal-ink: #076456; --signal-soft: #E1F1EE;
-    --human: #C9502F; --human-soft: #F8E7E0; --warn: #B5761A; --warn-soft: #F7ECD8;
-    --shadow: 0 1px 2px rgba(20,32,31,.04), 0 8px 30px rgba(20,32,31,.06);
-    --radius: 14px; --maxw: 1080px;
+    --bg: #F2F4F8; --surface: #FFFFFF; --surface-2: #E9EDF4;
+    --ink: #14203A; --body: #3A4560; --muted: #6A7590; --line: #D6DDEA;
+    --accent: #2F5BD6; --accent-ink: #23459F; --accent-soft: #E1E8FA;
+    --warm: #B8730F; --warm-soft: #F6ECD8;
+    --radius: 8px; --maxw: 1060px;
     --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     --mono: "Cascadia Code", "SF Mono", "JetBrains Mono", "Fira Code", Consolas, monospace;
   }
   @media (prefers-color-scheme: dark) { :root {
-    --bg: #0D1413; --surface: #141F1D; --surface-2: #1A2624; --ink: #EAF1EF; --body: #B2BFBC;
-    --muted: #7C8A87; --line: #24322F; --signal: #2FD4BF; --signal-ink: #6FE7D8; --signal-soft: #12312C;
-    --human: #F0805C; --human-soft: #331C15; --warn: #E0A64B; --warn-soft: #2E2413;
-    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 34px rgba(0,0,0,.35); } }
+    --bg: #0E1524; --surface: #151D31; --surface-2: #1C2540; --ink: #E8EDF7; --body: #ADB8CE;
+    --muted: #7C87A0; --line: #27314C; --accent: #6E92F5; --accent-ink: #9FB6FB; --accent-soft: #1A2547;
+    --warm: #E0A64B; --warm-soft: #2C2413; } }
   :root[data-theme="dark"] {
-    --bg: #0D1413; --surface: #141F1D; --surface-2: #1A2624; --ink: #EAF1EF; --body: #B2BFBC;
-    --muted: #7C8A87; --line: #24322F; --signal: #2FD4BF; --signal-ink: #6FE7D8; --signal-soft: #12312C;
-    --human: #F0805C; --human-soft: #331C15; --warn: #E0A64B; --warn-soft: #2E2413;
-    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 34px rgba(0,0,0,.35); }
+    --bg: #0E1524; --surface: #151D31; --surface-2: #1C2540; --ink: #E8EDF7; --body: #ADB8CE;
+    --muted: #7C87A0; --line: #27314C; --accent: #6E92F5; --accent-ink: #9FB6FB; --accent-soft: #1A2547;
+    --warm: #E0A64B; --warm-soft: #2C2413; }
   :root[data-theme="light"] {
-    --bg: #F4F6F5; --surface: #FFFFFF; --surface-2: #EDF1EF; --ink: #14201F; --body: #3B4744;
-    --muted: #697673; --line: #DCE3E0; --signal: #0C8F7E; --signal-ink: #076456; --signal-soft: #E1F1EE;
-    --human: #C9502F; --human-soft: #F8E7E0; --warn: #B5761A; --warn-soft: #F7ECD8;
-    --shadow: 0 1px 2px rgba(20,32,31,.04), 0 8px 30px rgba(20,32,31,.06); }
+    --bg: #F2F4F8; --surface: #FFFFFF; --surface-2: #E9EDF4; --ink: #14203A; --body: #3A4560;
+    --muted: #6A7590; --line: #D6DDEA; --accent: #2F5BD6; --accent-ink: #23459F; --accent-soft: #E1E8FA;
+    --warm: #B8730F; --warm-soft: #F6ECD8; }
 
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
   body { margin: 0; background: var(--bg); color: var(--body); font-family: var(--sans); font-size: 17px; line-height: 1.62; -webkit-font-smoothing: antialiased; }
-  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
-  h1, h2, h3, h4 { color: var(--ink); font-weight: 800; letter-spacing: -.02em; line-height: 1.12; text-wrap: balance; margin: 0; }
-  p { margin: 0; } a { color: var(--signal-ink); text-decoration: none; } a:hover { text-decoration: underline; }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 26px; }
+  h1, h2, h3, h4 { color: var(--ink); font-weight: 800; letter-spacing: -.02em; line-height: 1.1; text-wrap: balance; margin: 0; }
+  p { margin: 0; } a { color: var(--accent-ink); text-decoration: none; } a:hover { text-decoration: underline; }
   strong, b { color: var(--ink); }
-  .code { font-family: var(--mono); font-size: .84em; background: var(--surface-2); padding: 3px 7px; border-radius: 6px; color: var(--signal-ink); }
+  .mono-label { font-family: var(--mono); font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-ink); font-weight: 600; }
+  .code { font-family: var(--mono); font-size: .84em; background: var(--surface-2); padding: 3px 7px; border-radius: 5px; color: var(--accent-ink); }
 
-  .topbar { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: saturate(160%) blur(10px); border-bottom: 1px solid var(--line); }
-  .topbar .wrap { display: flex; align-items: center; gap: 20px; height: 58px; }
-  .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; color: var(--ink); font-size: 15px; }
-  .brand .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--signal); box-shadow: 0 0 0 4px var(--signal-soft); }
+  /* Topbar — spec-sheet, hairline */
+  .topbar { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--bg) 90%, transparent); backdrop-filter: saturate(150%) blur(10px); border-bottom: 1px solid var(--line); }
+  .topbar .wrap { display: flex; align-items: center; gap: 20px; height: 56px; }
+  .brand { display: flex; align-items: center; gap: 9px; font-family: var(--mono); font-weight: 700; color: var(--ink); font-size: 13px; letter-spacing: .02em; }
+  .brand .sq { width: 11px; height: 11px; background: var(--accent); border-radius: 2px; transform: rotate(45deg); }
   .nav { margin-left: auto; display: flex; gap: 2px; align-items: center; }
-  .nav a { color: var(--muted); font-size: 13.5px; font-weight: 600; padding: 8px 10px; border-radius: 8px; }
+  .nav a { color: var(--muted); font-family: var(--mono); font-size: 12px; letter-spacing: .04em; font-weight: 600; padding: 8px 9px; border-radius: 6px; }
   .nav a:hover { color: var(--ink); background: var(--surface-2); text-decoration: none; }
   .nav-links { display: flex; gap: 1px; } @media (max-width: 820px) { .nav-links { display: none; } }
-  .toggle { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 9px; cursor: pointer; background: var(--surface); border: 1px solid var(--line); color: var(--ink); }
-  .toggle:hover { border-color: var(--signal); }
+  .toggle { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 7px; cursor: pointer; background: var(--surface); border: 1px solid var(--line); color: var(--ink); }
+  .toggle:hover { border-color: var(--accent); }
 
-  .hero { position: relative; overflow: hidden; border-bottom: 1px solid var(--line); }
-  .hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .45; }
-  @media (prefers-color-scheme: dark) { .hero canvas { opacity: .6; } }
-  .hero .wrap { position: relative; padding: 78px 24px 62px; }
-  .hero-inner { max-width: 700px; }
-  .hero .up { font-family: var(--mono); font-size: 12px; letter-spacing: .06em; color: var(--signal-ink); font-weight: 700; margin-bottom: 14px; }
-  .hero h1 { font-size: clamp(2.2rem, 5.4vw, 3.5rem); } .hero h1 .hl { color: var(--signal-ink); }
-  .hero .lede { font-size: clamp(1.05rem, 2.2vw, 1.22rem); color: var(--body); margin-top: 18px; max-width: 58ch; }
+  /* Hero — masthead sobre grid técnico */
+  .hero { position: relative; border-bottom: 1px solid var(--line); overflow: hidden; }
+  .hero::before { content: ""; position: absolute; inset: 0;
+    background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 30px 30px; opacity: .5; -webkit-mask-image: radial-gradient(ellipse 80% 90% at 30% 0%, #000 30%, transparent 75%); mask-image: radial-gradient(ellipse 80% 90% at 30% 0%, #000 30%, transparent 75%); }
+  .hero .wrap { position: relative; padding: 74px 26px 58px; }
+  .hero .kick { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+  .hero .kick .mono-label { color: var(--warm); }
+  .hero .kick .bar { flex: 1; height: 1px; background: var(--line); max-width: 180px; }
+  .hero h1 { font-size: clamp(2.3rem, 6vw, 3.9rem); max-width: 16ch; }
+  .hero h1 .hl { color: var(--accent-ink); }
+  .hero .lede { font-size: clamp(1.05rem, 2.2vw, 1.24rem); color: var(--body); margin-top: 22px; max-width: 56ch; }
   .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
-  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 10px; font-weight: 700; font-size: 15px; cursor: pointer; border: 1px solid transparent; transition: transform .12s ease; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 20px; border-radius: 7px; font-weight: 700; font-size: 15px; cursor: pointer; border: 1px solid transparent; transition: transform .12s ease; }
   .btn:hover { text-decoration: none; transform: translateY(-1px); }
-  .btn-primary { background: var(--signal); color: #04211D; }
-  .btn-ghost { background: var(--surface); color: var(--ink); border-color: var(--line); } .btn-ghost:hover { border-color: var(--signal); }
+  .btn-primary { background: var(--accent); color: #fff; }
+  @media (prefers-color-scheme: dark) { .btn-primary { color: #0B1020; } } :root[data-theme="dark"] .btn-primary { color: #0B1020; } :root[data-theme="light"] .btn-primary { color: #fff; }
+  .btn-ghost { background: transparent; color: var(--ink); border-color: var(--line); } .btn-ghost:hover { border-color: var(--accent); }
 
-  section { padding: 60px 0; border-bottom: 1px solid var(--line); }
-  .sec-head { max-width: 640px; margin-bottom: 28px; }
-  .sec-head h2 { font-size: clamp(1.6rem, 3.4vw, 2.2rem); }
-  .sec-head p { margin-top: 12px; color: var(--body); font-size: 1.05rem; }
-  .lead-q { color: var(--signal-ink); font-weight: 700; }
+  /* Capítulos numerados */
+  section { padding: 58px 0; }
+  section + section .wrap > .chap { border-top: 1px solid var(--line); padding-top: 40px; }
+  .chap { display: grid; grid-template-columns: auto 1fr; gap: 22px; align-items: start; margin-bottom: 30px; }
+  @media (max-width: 620px) { .chap { grid-template-columns: 1fr; gap: 8px; } }
+  .chap .no { font-family: var(--mono); font-size: clamp(1.8rem, 5vw, 3rem); font-weight: 800; color: var(--accent); line-height: .9; letter-spacing: -.03em; }
+  .chap h2 { font-size: clamp(1.55rem, 3.4vw, 2.1rem); }
+  .chap p { margin-top: 11px; color: var(--body); font-size: 1.04rem; max-width: 60ch; }
+  .lead-q { color: var(--accent-ink); font-weight: 700; }
 
-  .intro-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
-  .icard { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow); }
-  .icard .k { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--signal-ink); font-weight: 700; }
-  .icard h4 { font-size: 1.08rem; margin: 8px 0 6px; } .icard p { font-size: .93rem; color: var(--body); }
+  /* Cards spec-sheet (crisp, hairline, sem sombra pesada) */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 14px; }
+  .intro-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; position: relative; }
+  .card::before { content: attr(data-n); position: absolute; top: 16px; right: 18px; font-family: var(--mono); font-size: 11px; color: var(--muted); }
+  .card .tag { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent-ink); font-weight: 700; }
+  .card h4 { font-size: 1.06rem; margin: 8px 0 7px; padding-right: 24px; } .card p { font-size: .92rem; color: var(--body); }
 
-  .stepper { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); overflow: hidden; }
-  .st-dots { display: flex; gap: 6px; padding: 14px 16px; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
-  .st-dot { display: inline-flex; align-items: center; gap: 8px; font-size: .82rem; font-weight: 600; color: var(--muted); cursor: pointer; padding: 6px 11px; border-radius: 999px; border: 1px solid transparent; }
-  .st-dot:hover { background: var(--surface-2); }
-  .st-dot .n { width: 22px; height: 22px; border-radius: 50%; background: var(--surface-2); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 11px; color: var(--muted); }
-  .st-dot[aria-current="true"] { color: var(--ink); background: var(--signal-soft); } .st-dot[aria-current="true"] .n { background: var(--signal); color: #04211D; }
-  .st-panel { padding: 28px; } .st-panel[hidden] { display: none; }
-  .st-panel .word { font-family: var(--mono); font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; color: var(--signal-ink); font-weight: 700; }
-  .st-panel h4 { font-size: 1.4rem; margin: 8px 0 12px; } .st-panel > p { font-size: 1.02rem; color: var(--body); }
-  .st-analogy { margin-top: 16px; background: var(--surface-2); border-left: 3px solid var(--signal); border-radius: 0 10px 10px 0; padding: 13px 16px; font-size: .95rem; color: var(--body); }
-  .st-nav { display: flex; justify-content: space-between; gap: 12px; padding: 0 28px 26px; }
-  .st-nav button { font-size: .9rem; font-weight: 700; padding: 10px 18px; border-radius: 9px; cursor: pointer; border: 1px solid var(--line); background: var(--surface); color: var(--ink); }
-  .st-nav button:hover { border-color: var(--signal); } .st-nav .st-next { background: var(--signal); color: #04211D; border-color: var(--signal); }
+  /* Stepper */
+  .stepper { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); overflow: hidden; }
+  .st-dots { display: flex; gap: 0; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+  .st-dot { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: .78rem; font-weight: 600; color: var(--muted); cursor: pointer; padding: 12px 14px; border-right: 1px solid var(--line); background: transparent; }
+  .st-dot:hover { background: var(--surface-2); color: var(--ink); }
+  .st-dot .n { color: var(--accent-ink); }
+  .st-dot[aria-current="true"] { color: var(--ink); background: var(--accent-soft); box-shadow: inset 0 -2px 0 var(--accent); }
+  .st-panel { padding: 30px; } .st-panel[hidden] { display: none; }
+  .st-panel .word { font-family: var(--mono); font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; color: var(--warm); font-weight: 700; }
+  .st-panel h4 { font-size: 1.42rem; margin: 8px 0 12px; } .st-panel > p { font-size: 1.02rem; color: var(--body); max-width: 60ch; }
+  .st-analogy { margin-top: 16px; background: var(--surface-2); border-left: 3px solid var(--warm); border-radius: 0 8px 8px 0; padding: 13px 16px; font-size: .95rem; color: var(--body); }
+  .st-analogy b { color: var(--ink); }
+  .st-nav { display: flex; justify-content: space-between; gap: 12px; padding: 0 30px 26px; }
+  .st-nav button { font-family: var(--mono); font-size: .84rem; font-weight: 700; padding: 9px 16px; border-radius: 6px; cursor: pointer; border: 1px solid var(--line); background: var(--surface); color: var(--ink); }
+  .st-nav button:hover { border-color: var(--accent); } .st-nav .st-next { background: var(--accent); color: #fff; border-color: var(--accent); }
+  @media (prefers-color-scheme: dark) { .st-nav .st-next { color: #0B1020; } } :root[data-theme="dark"] .st-nav .st-next { color: #0B1020; } :root[data-theme="light"] .st-nav .st-next { color: #fff; }
   .st-nav button[disabled] { opacity: .4; cursor: not-allowed; }
 
-  .voz-grid { display: grid; gap: 14px; }
-  .voz { display: grid; grid-template-columns: 1fr 1fr; gap: 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+  /* Voz antes→depois */
+  .voz-grid { display: grid; gap: 12px; }
+  .voz { display: grid; grid-template-columns: 1fr 1fr; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
   @media (max-width: 680px) { .voz { grid-template-columns: 1fr; } }
-  .voz .side { padding: 18px 20px; } .voz .no { border-right: 1px solid var(--line); }
+  .voz .side { padding: 17px 20px; } .voz .no { border-right: 1px solid var(--line); }
   @media (max-width: 680px) { .voz .no { border-right: none; border-bottom: 1px solid var(--line); } }
-  .voz .no { background: var(--human-soft); } .voz .yes { background: var(--signal-soft); }
   .voz .tag { font-family: var(--mono); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px; display: inline-block; }
-  .voz .no .tag { color: var(--human); } .voz .yes .tag { color: var(--signal-ink); }
+  .voz .no .tag { color: var(--warm); } .voz .yes .tag { color: var(--accent-ink); }
+  .voz .yes { background: var(--accent-soft); }
   .voz .txt { font-size: .95rem; color: var(--ink); }
 
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px; }
-  .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow); }
-  .card .tag { font-family: var(--mono); font-size: 11px; text-transform: uppercase; color: var(--signal-ink); font-weight: 600; }
-  .card h4 { font-size: 1.05rem; margin: 6px 0 8px; } .card p { font-size: .92rem; color: var(--body); }
-
-  details.acc { border: 1px solid var(--line); border-radius: 12px; background: var(--surface); overflow: hidden; }
+  /* Accordion */
+  details.acc { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); overflow: hidden; }
   details.acc + details.acc { margin-top: 10px; }
-  details.acc > summary { cursor: pointer; padding: 16px 20px; font-weight: 700; color: var(--ink); list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 1.02rem; }
+  details.acc > summary { cursor: pointer; padding: 15px 20px; font-weight: 700; color: var(--ink); list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 1rem; }
   details.acc > summary::-webkit-details-marker { display: none; }
-  details.acc > summary::after { content: "+"; color: var(--signal-ink); font-size: 1.3rem; font-weight: 700; }
+  details.acc > summary::after { content: "+"; color: var(--accent-ink); font-family: var(--mono); font-size: 1.2rem; font-weight: 700; }
   details.acc[open] > summary::after { content: "\2013"; }
-  .acc-body { padding: 4px 20px 20px; font-size: .95rem; color: var(--body); }
-  .acc-body b { color: var(--ink); }
+  .acc-body { padding: 2px 20px 20px; font-size: .95rem; color: var(--body); } .acc-body b { color: var(--ink); }
 
-  .note { font-size: .95rem; color: var(--body); background: var(--surface-2); border-radius: 10px; padding: 16px 18px; }
+  .note { font-size: .96rem; color: var(--body); background: var(--accent-soft); border: 1px solid color-mix(in srgb, var(--accent) 25%, var(--line)); border-radius: var(--radius); padding: 16px 18px; }
   .note b { color: var(--ink); }
 
-  footer { padding: 40px 0; } footer .wrap { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; align-items: center; }
-  footer .muted { color: var(--muted); font-size: 13px; max-width: 60ch; }
+  footer { padding: 40px 0; border-top: 1px solid var(--line); }
+  footer .wrap { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; align-items: center; }
+  footer .muted { color: var(--muted); font-size: 13px; max-width: 58ch; }
 
   .js .reveal { opacity: 0; transform: translateY(12px); }
   .js .reveal.in { opacity: 1; transform: none; transition: opacity .5s ease, transform .5s ease; }
   @media (prefers-reduced-motion: reduce) { .js .reveal { opacity: 1 !important; transform: none !important; } }
-  :focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; border-radius: 4px; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
 </style>
 
 <header class="topbar"><div class="wrap">
-  <div class="brand"><span class="dot" aria-hidden="true"></span><span>Central de Enablement</span></div>
+  <div class="brand"><span class="sq" aria-hidden="true"></span><span>MÉTODO / BASTIDORES</span></div>
   <nav class="nav" aria-label="Seções">
-    <div class="nav-links"><a href="#metodo">O método</a><a href="#voz">A voz</a><a href="#pecas">As peças</a><a href="#usar">Como usar</a></div>
+    <div class="nav-links"><a href="#c1">01</a><a href="#c2">02 método</a><a href="#c3">03 voz</a><a href="#c4">04 peças</a><a href="#c5">05 usar</a></div>
     <button class="toggle" id="themeToggle" aria-label="Alternar tema" title="Tema">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
     </button>
   </nav>
 </div></header>
 
-<section class="hero" style="border-top:none;"><canvas id="wave" aria-hidden="true"></canvas><div class="wrap">
-  <div class="hero-inner">
-    <p class="up reveal">Nos bastidores</p>
-    <h1 class="reveal">Como a gente monta essas páginas — <span class="hl">e como você faz a próxima.</span></h1>
-    <p class="lede reveal">A Central de Enablement não sai do nada e nem "do jeito que der". Tem um método, uma voz e um punhado de peças que a gente encaixa. Melhor: isso tudo virou uma ferramenta que o Claude já usa sozinho. Bora te mostrar.</p>
-    <div class="hero-cta reveal"><a href="#metodo" class="btn btn-primary">Ver o método</a><a href="#usar" class="btn btn-ghost">Como usar já</a></div>
-  </div>
+<section class="hero"><div class="wrap">
+  <div class="kick reveal"><span class="mono-label">Bastidores · Método v1</span><span class="bar"></span></div>
+  <h1 class="reveal">Como a gente monta essas páginas — <span class="hl">e como você faz a próxima.</span></h1>
+  <p class="lede reveal">A Central de Enablement não sai do nada nem "do jeito que der". Tem um método, uma voz e um punhado de peças que a gente encaixa. E tudo isso virou uma ferramenta que o Claude já usa sozinho. Bora abrir o capô.</p>
+  <div class="hero-cta reveal"><a href="#c2" class="btn btn-primary">Ver o método</a><a href="#c5" class="btn btn-ghost">Como usar já</a></div>
 </div></section>
 
-<!-- O QUE É -->
-<section id="oque"><div class="wrap">
-  <div class="sec-head reveal"><h2>Primeiro: o que é essa "skill".</h2><p>Skill é um procedimento que a gente ensina pro Claude uma vez e ele repete igual toda vez. A nossa se chama <span class="code">pagina-enablement</span> — ela carrega o método inteiro de construir páginas como esta.</p></div>
+<!-- 01 -->
+<section id="c1"><div class="wrap">
+  <div class="chap reveal"><span class="no">01</span><div><h2>Primeiro: o que é essa "skill".</h2><p>Skill é um procedimento que a gente ensina pro Claude uma vez e ele repete igual toda vez. A nossa se chama <span class="code">pagina-enablement</span> — ela carrega o método inteiro de construir páginas como esta.</p></div></div>
   <div class="intro-cards">
-    <div class="icard reveal"><span class="k">O que guarda</span><h4>Método + voz + design</h4><p>Os 7 passos, as regras de escrita e os componentes prontos, num pacote só.</p></div>
-    <div class="icard reveal"><span class="k">Onde mora</span><h4>Na sua máquina e no repo</h4><p>Ativa em qualquer projeto seu, e versionada no repositório da Central pro time puxar.</p></div>
-    <div class="icard reveal"><span class="k">Pra que serve</span><h4>Toda página igual, sem retrabalho</h4><p>Mesma cara, mesma voz, sem você reexplicar nada a cada vez.</p></div>
+    <div class="card reveal" data-n="i"><span class="tag">O que guarda</span><h4>Método + voz + design</h4><p>Os 7 passos, as regras de escrita e os componentes prontos, num pacote só.</p></div>
+    <div class="card reveal" data-n="ii"><span class="tag">Onde mora</span><h4>Na sua máquina e no repo</h4><p>Ativa em qualquer projeto seu, e versionada no repositório da Central pro time puxar.</p></div>
+    <div class="card reveal" data-n="iii"><span class="tag">Pra que serve</span><h4>Toda página igual, sem retrabalho</h4><p>Mesma cara, mesma voz, sem você reexplicar nada a cada vez.</p></div>
   </div>
 </div></section>
 
-<!-- O MÉTODO (stepper) -->
-<section id="metodo"><div class="wrap">
-  <div class="sec-head reveal"><h2>O método, do começo ao ar.</h2><p><span class="lead-q">Clica em cada passo</span> pra ver o que rola em cada um.</p></div>
+<!-- 02 -->
+<section id="c2"><div class="wrap">
+  <div class="chap reveal"><span class="no">02</span><div><h2>O método, do começo ao ar.</h2><p><span class="lead-q">Clica em cada passo</span> pra ver o que rola em cada um.</p></div></div>
   <div class="stepper reveal" id="stepper">
     <div class="st-dots" role="tablist" aria-label="Passos do método">
       <button class="st-dot" role="tab" aria-current="true"><span class="n">1</span> Entender</button>
@@ -178,17 +186,17 @@
     <div class="st-panel" role="tabpanel"><span class="word">Passo 1</span><h4>Entender pra quem é.</h4><p>Antes de qualquer coisa, a gente define quem vai ler (pode ter mais de um perfil) e qual é a tarefa da página. Se ficou ambíguo, é a hora de perguntar — num checkpoint só.</p></div>
     <div class="st-panel" role="tabpanel" hidden><span class="word">Passo 2</span><h4>Buscar na fonte certa.</h4><p>Fato técnico a gente não inventa. Instalação e produto vêm de doc oficial; número vem de fonte que dá pra citar. E os exemplos saem do material real do time — transcrição, repo, memória. Genérico é o que mais soa a robô.</p><div class="st-analogy"><b>Regra:</b> na dúvida, dizer "não sei" em vez de chutar um link ou uma versão.</div></div>
     <div class="st-panel" role="tabpanel" hidden><span class="word">Passo 3</span><h4>Estruturar enxuto.</h4><p>Uma seção, um objetivo. A profundidade fica escondida em blocos que abrem só se a pessoa quiser. A página abre curta e cresce sob demanda.</p></div>
-    <div class="st-panel" role="tabpanel" hidden><span class="word">Passo 4</span><h4>Escrever na voz do time.</h4><p>Aqui é onde a "cara de Claude" morre ou sobrevive. Fala com "você" e "a gente", frase curta, pergunta de abertura. Nada de título empilhado nem "não é X, é Y". Tem uma seção só pra isso logo abaixo.</p></div>
+    <div class="st-panel" role="tabpanel" hidden><span class="word">Passo 4</span><h4>Escrever na voz do time.</h4><p>Aqui é onde a "cara de Claude" morre ou sobrevive. Fala com "você" e "a gente", frase curta, pergunta de abertura. Nada de título empilhado nem "não é X, é Y". Tem um capítulo só pra isso logo abaixo.</p></div>
     <div class="st-panel" role="tabpanel" hidden><span class="word">Passo 5</span><h4>Botar interatividade de verdade.</h4><p>Se a pessoa só rola e lê, faltou coisa. A gente coloca algo pra ela fazer: marcar um passo pra liberar o próximo, clicar numa etapa, abrir um bloco. Aprende fazendo.</p></div>
     <div class="st-panel" role="tabpanel" hidden><span class="word">Passo 6</span><h4>Auditar pra não perder nada.</h4><p>Enxugar não pode apagar o que você já corrigiu. Antes de publicar, a gente compara a versão nova com a antiga, termo por termo. Se algo sumiu, volta.</p><div class="st-analogy"><b>Como:</b> um grep dos termos-chave (metáfora do time, exemplo real, nome próprio) na versão nova × antiga. Caiu pra zero? Foi perda. Restaura.</div></div>
-    <div class="st-panel" role="tabpanel" hidden><span class="word">Passo 7</span><h4>Publicar.</h4><p>Prévia primeiro, pra você navegar. Depois vira site no GitHub Pages, com o link fixo. Antes de subir, a gente confirma a marca e a visibilidade — é o único passo que sai pra fora.</p></div>
+    <div class="st-panel" role="tabpanel" hidden><span class="word">Passo 7</span><h4>Publicar.</h4><p>Prévia primeiro, pra você navegar. Depois vira site no GitHub Pages, com link fixo. Antes de subir, a gente confirma a marca e a visibilidade — é o único passo que sai pra fora.</p></div>
     <div class="st-nav"><button class="st-prev" type="button">← Voltar</button><button class="st-next" type="button">Próximo →</button></div>
   </div>
 </div></section>
 
-<!-- A VOZ -->
-<section id="voz"><div class="wrap">
-  <div class="sec-head reveal"><h2>A voz é o pulo do gato.</h2><p>O que mais entrega "cara de Claude" é o texto. Uns tiques a gente corta na raiz. Olha o antes e o depois.</p></div>
+<!-- 03 -->
+<section id="c3"><div class="wrap">
+  <div class="chap reveal"><span class="no">03</span><div><h2>A voz é o pulo do gato.</h2><p>O que mais entrega "cara de Claude" é o texto. Uns tiques a gente corta na raiz. Olha o antes e o depois.</p></div></div>
   <div class="voz-grid">
     <div class="voz reveal">
       <div class="side no"><span class="tag">✗ Cara de Claude</span><p class="txt">"Otimize sua rotina com inteligência artificial."</p></div>
@@ -209,22 +217,22 @@
   </div>
 </div></section>
 
-<!-- AS PEÇAS -->
-<section id="pecas"><div class="wrap">
-  <div class="sec-head reveal"><h2>As peças que a gente encaixa.</h2><p>Componentes prontos no esqueleto. É só escolher os que a página pede.</p></div>
+<!-- 04 -->
+<section id="c4"><div class="wrap">
+  <div class="chap reveal"><span class="no">04</span><div><h2>As peças que a gente encaixa.</h2><p>Componentes prontos no esqueleto. É só escolher os que a página pede.</p></div></div>
   <div class="grid">
-    <div class="card reveal"><span class="tag">Trilha</span><h4>Conteúdo que troca por perfil</h4><p>A pessoa clica no perfil dela e o bloco abaixo muda inteiro pra falar com ela.</p></div>
-    <div class="card reveal"><span class="tag">Wizard</span><h4>Passo travado</h4><p>O próximo só abre quando o anterior é marcado. Bom pra instalação e onboarding.</p></div>
-    <div class="card reveal"><span class="tag">Stepper</span><h4>Ensinar um fluxo clicando</h4><p>Etapa por etapa, cada uma com o conceito e uma analogia. (É este aqui de cima.)</p></div>
-    <div class="card reveal"><span class="tag">Accordion</span><h4>Esconder profundidade</h4><p>O detalhe fica num bloco que abre só se a pessoa quiser. Deixa a página leve.</p></div>
-    <div class="card reveal"><span class="tag">Turnos</span><h4>Você diz → ele faz</h4><p>Duas colunas pra ensinar como pedir e o que esperar de volta.</p></div>
-    <div class="card reveal"><span class="tag">Onda</span><h4>O toque de telecom</h4><p>Aquele sinal sutil no topo. Identidade sem enfeite demais.</p></div>
+    <div class="card reveal" data-n="P1"><span class="tag">Trilha</span><h4>Conteúdo que troca por perfil</h4><p>A pessoa clica no perfil dela e o bloco abaixo muda inteiro pra falar com ela.</p></div>
+    <div class="card reveal" data-n="P2"><span class="tag">Wizard</span><h4>Passo travado</h4><p>O próximo só abre quando o anterior é marcado. Bom pra instalação e onboarding.</p></div>
+    <div class="card reveal" data-n="P3"><span class="tag">Stepper</span><h4>Ensinar um fluxo clicando</h4><p>Etapa por etapa, cada uma com o conceito e uma analogia. (É este aqui de cima.)</p></div>
+    <div class="card reveal" data-n="P4"><span class="tag">Accordion</span><h4>Esconder profundidade</h4><p>O detalhe fica num bloco que abre só se a pessoa quiser. Deixa a página leve.</p></div>
+    <div class="card reveal" data-n="P5"><span class="tag">Turnos</span><h4>Você diz → ele faz</h4><p>Duas colunas pra ensinar como pedir e o que esperar de volta.</p></div>
+    <div class="card reveal" data-n="P6"><span class="tag">Grid técnico</span><h4>A identidade sem enfeite</h4><p>Cada página escolhe seu detalhe visual — aqui é a malha de blueprint no topo.</p></div>
   </div>
 </div></section>
 
-<!-- COMO USAR -->
-<section id="usar"><div class="wrap">
-  <div class="sec-head reveal"><h2>Como você usa isso amanhã.</h2><p>A melhor parte: você não precisa saber de nada disso. É só pedir.</p></div>
+<!-- 05 -->
+<section id="c5"><div class="wrap">
+  <div class="chap reveal"><span class="no">05</span><div><h2>Como você usa isso amanhã.</h2><p>A melhor parte: você não precisa saber de nada disso. É só pedir.</p></div></div>
   <div class="note reveal" style="margin-bottom:16px;">Pra criar uma página nova, fala normal: <span class="code">"monta uma página de enablement sobre onboarding de vendas"</span>. A skill dispara sozinha e o Claude segue todo esse método. Se quiser forçar, digita <span class="code">/pagina-enablement</span>.</div>
   <details class="acc reveal"><summary>Como o time inteiro replica</summary><div class="acc-body">Quem tem acesso ao repositório da Central copia a pasta <b>.claude/skills/pagina-enablement</b> pra máquina (ou trabalha dentro de um clone do repo). A partir daí, o Claude de qualquer pessoa constrói no mesmo padrão. É o "ensina uma vez, usa sempre" aplicado a quem cria as páginas.</div></details>
   <details class="acc reveal"><summary>Como a skill melhora com o tempo</summary><div class="acc-body">Achou um jeito melhor — um componente novo, um ajuste de voz? É só pedir pra atualizar a skill. Aí toda página futura já nasce com a melhoria, sem retrabalho nas antigas.</div></details>
@@ -232,7 +240,7 @@
 </div></section>
 
 <footer><div class="wrap">
-  <div><div class="brand" style="margin-bottom:8px;"><span class="dot" aria-hidden="true"></span><span>Central de Enablement</span></div><p class="muted">Os bastidores do método. Feito com o time e as fontes oficiais da Anthropic. Material vivo.</p></div>
+  <div><div class="brand" style="margin-bottom:8px;"><span class="sq" aria-hidden="true"></span><span>MÉTODO / BASTIDORES</span></div><p class="muted">Os bastidores do método. Feito com o time e as fontes oficiais da Anthropic. Material vivo.</p></div>
   <span style="font-family:var(--mono);font-size:12px;color:var(--muted);">método v1</span>
 </div></footer>
 
@@ -255,16 +263,6 @@
   (function () { var els = document.querySelectorAll('.reveal'); if (!('IntersectionObserver' in window)) { els.forEach(function (el) { el.classList.add('in'); }); return; }
     var io = new IntersectionObserver(function (es) { es.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } }); }, { rootMargin: '0px 0px -6% 0px', threshold: 0.06 });
     els.forEach(function (el) { io.observe(el); }); })();
-
-  (function () { var c = document.getElementById('wave'); if (!c) return; var x = c.getContext('2d'), rd = matchMedia('(prefers-reduced-motion: reduce)').matches, w, h, dpr;
-    function ac() { return getComputedStyle(document.documentElement).getPropertyValue('--signal').trim() || '#0C8F7E'; }
-    function rz() { dpr = Math.min(devicePixelRatio || 1, 2); var r = c.getBoundingClientRect(); w = r.width; h = r.height; c.width = w * dpr; c.height = h * dpr; x.setTransform(dpr, 0, 0, dpr, 0, 0); }
-    rz(); addEventListener('resize', rz);
-    function dr(t) { x.clearRect(0, 0, w, h); var col = ac(); for (var l = 0; l < 3; l++) { x.beginPath(); var a = 15 + l * 9, yb = h * (0.56 + l * 0.11), sp = rd ? 0 : t * (0.0004 + l * 0.00015), fq = 0.006 + l * 0.0018;
-      for (var px = 0; px <= w; px += 6) { var y = yb + Math.sin(px * fq + sp) * a + Math.sin(px * fq * 0.5 + sp * 1.6) * a * 0.4; px === 0 ? x.moveTo(px, y) : x.lineTo(px, y); }
-      x.strokeStyle = col; x.globalAlpha = 0.15 - l * 0.035; x.lineWidth = 2; x.stroke(); } x.globalAlpha = 1; }
-    if (rd) { dr(0); return; } (function lp(t) { dr(t); requestAnimationFrame(lp); })(0);
-  })();
 </script>
 </body>
 </html>
