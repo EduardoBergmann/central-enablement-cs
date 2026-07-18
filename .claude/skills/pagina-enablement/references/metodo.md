@@ -36,9 +36,24 @@ for t in "tradutor de linguagem" "Bot Demanda CS" "estagiário" "churn"; do
 done
 ```
 
+## Revisão ortográfica (parte b do passo 6)
+Erro de português destrói a credibilidade do material. Antes de publicar, extraia o
+texto visível (sem tags) e leia inteiro — não confie na leitura "por cima" do HTML.
+
+Extrair o texto visível pra revisar:
+```bash
+perl -0777 -pe 's/<style.*?<\/style>//gs; s/<script.*?<\/script>//gs; s/<[^>]+>/ /g; s/&nbsp;/ /g; s/&gt;/>/g; s/&amp;/\&/g; s/[ \t]+/ /g;' pagina.html | grep -vE '^\s*$'
+```
+Ao ler, cace especialmente:
+- **Concordância** plural/singular. Ex. real que escapou: "parece sete palavra difícil" → "parecem sete palavras difíceis".
+- **Crase** (à/a), **acento** (vêm/vem, é/e), pontuação.
+- O tique **"não é X, é Y"** (é erro de voz, não de ortografia, mas mata junto).
+Um espaço antes de vírgula/ponto na extração costuma ser artefato de `<span>` — confira no HTML antes de "corrigir".
+
 ## Checklist antes de publicar
 - [ ] Voz api4com aplicada (sem "não é X, é Y", sem títulos empilhados).
 - [ ] Pelo menos um componente interativo por página.
 - [ ] Auditoria anti-perda rodada (nenhum termo-chave zerado).
+- [ ] **Texto visível lido de ponta a ponta — zero erro de português.**
 - [ ] Marca e visibilidade confirmadas com o usuário.
 - [ ] `noindex` no `<head>`. Tema claro/escuro funcionando.

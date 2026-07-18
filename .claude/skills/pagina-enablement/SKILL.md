@@ -32,7 +32,7 @@ Na dúvida entre perguntar e seguir num passo reversível, siga.
 3. **Estruturar** — ver [references/metodo.md](references/metodo.md). Menos é mais: esconda profundidade em blocos que abrem (`<details>`). Uma seção = um objetivo.
 4. **Escrever na voz** — ver [references/voz.md](references/voz.md). Esta é a etapa que tira a cara de Claude. Não pule.
 5. **Interatividade real** — a pessoa faz algo pra avançar (marca passo, clica etapa, abre bloco). Reaproveite os componentes de [templates/base.html](templates/base.html).
-6. **Auditar perdas** — ao reescrever ou enxugar, compare termo a termo com a versão anterior. Enxugar ≠ apagar. Receita de grep em [references/metodo.md](references/metodo.md). NUNCA perca contexto que o usuário corrigiu ao longo do caminho.
+6. **Auditar e revisar** — duas checagens antes de publicar: (a) **perdas** — compare termo a termo com a versão anterior; enxugar ≠ apagar; nunca perca contexto que o usuário corrigiu. (b) **ortografia e gramática** — extraia o texto visível e leia de ponta a ponta (concordância, crase, acento, o tique "não é X, é Y"). Receitas das duas em [references/metodo.md](references/metodo.md).
 7. **Publicar** — ver [references/publicar.md](references/publicar.md). Prévia via Artifact + site no GitHub Pages. Confirme marca/visibilidade antes.
 
 ## Regras duras
@@ -40,5 +40,6 @@ Na dúvida entre perguntar e seguir num passo reversível, siga.
 - **Não reinvente o design.** Cores, tipografia e componentes vêm de [templates/base.html](templates/base.html).
 - **Interativo > estático.** Se a pessoa só rola e lê, faltou interatividade.
 - **Preserve o acumulado.** Cada correção do usuário é contexto que não se perde ao otimizar. Audite antes de publicar.
+- **Zero erro de português.** Antes de publicar, leia o texto visível inteiro. Concordância (plural/singular), crase e acento não passam. Ex. real que escapou: "sete palavra difícil" → "sete palavras difíceis".
 - **noindex por padrão** (conteúdo interno).
 - **Fato técnico só de fonte oficial.** Na dúvida, diga que não sabe — não chute link nem versão.
