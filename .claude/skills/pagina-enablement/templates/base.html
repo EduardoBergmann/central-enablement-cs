@@ -1,0 +1,313 @@
+<!--
+  ESQUELETO DE PÁGINA DE ENABLEMENT — design system "sinal sobre tinta".
+  Como usar: copie este arquivo, troque o CONTEÚDO do <body> pelas suas seções,
+  mantenha o <style> e o <script> (são o design system + os componentes).
+  Para virar site, embrulhe com o <head> de references/publicar.md.
+  Componentes prontos abaixo: topbar · hero+onda · trilha/dossiê · wizard travado ·
+  stepper · accordion · turnos · cards · callout · regras · footer.
+-->
+<style>
+  :root {
+    --bg: #F4F6F5; --surface: #FFFFFF; --surface-2: #EDF1EF;
+    --ink: #14201F; --body: #3B4744; --muted: #697673; --line: #DCE3E0;
+    --signal: #0C8F7E; --signal-ink: #076456; --signal-soft: #E1F1EE;
+    --human: #C9502F; --human-soft: #F8E7E0; --warn: #B5761A; --warn-soft: #F7ECD8;
+    --shadow: 0 1px 2px rgba(20,32,31,.04), 0 8px 30px rgba(20,32,31,.06);
+    --radius: 14px; --maxw: 1080px;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --mono: "Cascadia Code", "SF Mono", "JetBrains Mono", "Fira Code", Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) { :root {
+    --bg: #0D1413; --surface: #141F1D; --surface-2: #1A2624; --ink: #EAF1EF; --body: #B2BFBC;
+    --muted: #7C8A87; --line: #24322F; --signal: #2FD4BF; --signal-ink: #6FE7D8; --signal-soft: #12312C;
+    --human: #F0805C; --human-soft: #331C15; --warn: #E0A64B; --warn-soft: #2E2413;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 34px rgba(0,0,0,.35); } }
+  :root[data-theme="dark"] {
+    --bg: #0D1413; --surface: #141F1D; --surface-2: #1A2624; --ink: #EAF1EF; --body: #B2BFBC;
+    --muted: #7C8A87; --line: #24322F; --signal: #2FD4BF; --signal-ink: #6FE7D8; --signal-soft: #12312C;
+    --human: #F0805C; --human-soft: #331C15; --warn: #E0A64B; --warn-soft: #2E2413;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 34px rgba(0,0,0,.35); }
+  :root[data-theme="light"] {
+    --bg: #F4F6F5; --surface: #FFFFFF; --surface-2: #EDF1EF; --ink: #14201F; --body: #3B4744;
+    --muted: #697673; --line: #DCE3E0; --signal: #0C8F7E; --signal-ink: #076456; --signal-soft: #E1F1EE;
+    --human: #C9502F; --human-soft: #F8E7E0; --warn: #B5761A; --warn-soft: #F7ECD8;
+    --shadow: 0 1px 2px rgba(20,32,31,.04), 0 8px 30px rgba(20,32,31,.06); }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body { margin: 0; background: var(--bg); color: var(--body); font-family: var(--sans); font-size: 17px; line-height: 1.62; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+  h1, h2, h3, h4 { color: var(--ink); font-weight: 800; letter-spacing: -.02em; line-height: 1.12; text-wrap: balance; margin: 0; }
+  p { margin: 0; } a { color: var(--signal-ink); text-decoration: none; } a:hover { text-decoration: underline; }
+  strong, b { color: var(--ink); }
+  .kbd { font-family: var(--mono); font-size: .82em; background: var(--surface-2); border: 1px solid var(--line); border-bottom-width: 2px; padding: 2px 7px; border-radius: 6px; color: var(--ink); }
+  .code { font-family: var(--mono); font-size: .84em; background: var(--surface-2); padding: 3px 7px; border-radius: 6px; color: var(--signal-ink); }
+
+  .topbar { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: saturate(160%) blur(10px); border-bottom: 1px solid var(--line); }
+  .topbar .wrap { display: flex; align-items: center; gap: 20px; height: 58px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; color: var(--ink); font-size: 15px; }
+  .brand .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--signal); box-shadow: 0 0 0 4px var(--signal-soft); }
+  .nav { margin-left: auto; display: flex; gap: 2px; align-items: center; }
+  .nav a { color: var(--muted); font-size: 13.5px; font-weight: 600; padding: 8px 10px; border-radius: 8px; }
+  .nav a:hover { color: var(--ink); background: var(--surface-2); text-decoration: none; }
+  .nav-links { display: flex; gap: 1px; } @media (max-width: 960px) { .nav-links { display: none; } }
+  .toggle { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 9px; cursor: pointer; background: var(--surface); border: 1px solid var(--line); color: var(--ink); }
+  .toggle:hover { border-color: var(--signal); }
+
+  .hero { position: relative; overflow: hidden; border-bottom: 1px solid var(--line); }
+  .hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .45; }
+  @media (prefers-color-scheme: dark) { .hero canvas { opacity: .6; } }
+  .hero .wrap { position: relative; padding: 80px 24px 66px; }
+  .hero-inner { max-width: 700px; }
+  .hero h1 { font-size: clamp(2.3rem, 5.6vw, 3.7rem); } .hero h1 .hl { color: var(--signal-ink); }
+  .hero .lede { font-size: clamp(1.05rem, 2.2vw, 1.25rem); color: var(--body); margin-top: 20px; max-width: 58ch; }
+  .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 10px; font-weight: 700; font-size: 15px; cursor: pointer; border: 1px solid transparent; transition: transform .12s ease; }
+  .btn:hover { text-decoration: none; transform: translateY(-1px); }
+  .btn-primary { background: var(--signal); color: #04211D; }
+  .btn-ghost { background: var(--surface); color: var(--ink); border-color: var(--line); } .btn-ghost:hover { border-color: var(--signal); }
+
+  section { padding: 64px 0; border-bottom: 1px solid var(--line); }
+  .sec-head { max-width: 640px; margin-bottom: 30px; }
+  .sec-head h2 { font-size: clamp(1.6rem, 3.4vw, 2.25rem); }
+  .sec-head p { margin-top: 12px; color: var(--body); font-size: 1.05rem; }
+  .lead-q { color: var(--signal-ink); font-weight: 700; }
+
+  /* Trilha + dossiê */
+  .track-tabs { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 26px; }
+  .track-tab { display: flex; align-items: center; gap: 12px; text-align: left; padding: 15px 18px; border-radius: 12px; cursor: pointer; background: var(--surface); border: 1px solid var(--line); color: var(--ink); flex: 1 1 240px; }
+  .track-tab:hover { border-color: var(--signal); }
+  .track-tab[aria-selected="true"] { border-color: var(--signal); background: var(--signal-soft); box-shadow: var(--shadow); }
+  .track-tab .ico { font-size: 24px; } .track-tab .tt strong { font-size: 15px; display: block; } .track-tab .tt span { font-size: 12.5px; color: var(--muted); }
+  .dossier[hidden] { display: none; } .dossier h3 { font-size: clamp(1.35rem, 3vw, 1.75rem); }
+  .d-foco { margin: 12px 0 22px; font-size: 1rem; color: var(--body); }
+  .dpoints { display: grid; gap: 14px; }
+  .dpoint { display: grid; grid-template-columns: auto 1fr; gap: 18px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; box-shadow: var(--shadow); }
+  @media (max-width: 620px) { .dpoint { grid-template-columns: 1fr; } }
+  .dp-num { width: 30px; height: 30px; border-radius: 9px; background: var(--signal); color: #04211D; font-family: var(--mono); font-weight: 700; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+  .dp-body h4 { font-size: 1.12rem; } .dp-body > p { margin-top: 7px; font-size: .98rem; color: var(--body); }
+  .dp-more { display: inline-flex; gap: 6px; margin-top: 13px; font-size: .87rem; font-weight: 700; color: var(--signal-ink); }
+
+  /* Wizard travado */
+  .wizard { border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--surface); box-shadow: var(--shadow); }
+  .wz-top { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .wz-top .lbl { font-size: .9rem; color: var(--muted); } .wz-top .lbl b { color: var(--ink); }
+  .wz-progress { flex: 1; max-width: 220px; height: 8px; background: var(--surface-2); border-radius: 999px; overflow: hidden; }
+  .wz-bar { height: 100%; width: 0; background: var(--signal); border-radius: 999px; transition: width .4s ease; }
+  .wz-step { display: grid; grid-template-columns: auto 1fr; gap: 16px; padding: 18px 20px; border-top: 1px solid var(--line); align-items: start; transition: opacity .25s ease; }
+  .wz-step:first-of-type { border-top: none; } .wz-step.locked { opacity: .4; }
+  .wz-check { width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--line); display: flex; align-items: center; justify-content: center; cursor: pointer; background: var(--surface); color: #04211D; margin-top: 1px; }
+  .wz-check svg { opacity: 0; } .wz-step.done .wz-check { background: var(--signal); border-color: var(--signal); } .wz-step.done .wz-check svg { opacity: 1; }
+  .wz-step.locked .wz-check { cursor: not-allowed; }
+  .wz-body h4 { font-size: 1.06rem; } .wz-body p { font-size: .95rem; margin-top: 5px; color: var(--body); }
+  .wz-body .db { display: inline-block; margin-top: 10px; font-size: .82rem; font-weight: 700; padding: 7px 13px; border-radius: 8px; background: var(--signal-soft); color: var(--signal-ink); border: 1px solid color-mix(in srgb, var(--signal) 30%, var(--line)); }
+  .wz-step.locked .wz-body a { pointer-events: none; }
+  .wz-done-msg { padding: 16px 20px; background: var(--signal-soft); border-top: 1px solid var(--line); font-size: .95rem; color: var(--signal-ink); font-weight: 600; display: none; }
+  .wizard.complete .wz-done-msg { display: block; }
+
+  /* Stepper */
+  .stepper { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); overflow: hidden; }
+  .st-dots { display: flex; gap: 6px; padding: 14px 16px; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+  .st-dot { display: inline-flex; align-items: center; gap: 8px; font-size: .82rem; font-weight: 600; color: var(--muted); cursor: pointer; padding: 6px 11px; border-radius: 999px; border: 1px solid transparent; }
+  .st-dot:hover { background: var(--surface-2); }
+  .st-dot .n { width: 22px; height: 22px; border-radius: 50%; background: var(--surface-2); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 11px; color: var(--muted); }
+  .st-dot[aria-current="true"] { color: var(--ink); background: var(--signal-soft); } .st-dot[aria-current="true"] .n { background: var(--signal); color: #04211D; }
+  .st-panel { padding: 28px; } .st-panel[hidden] { display: none; }
+  .st-panel .word { font-family: var(--mono); font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; color: var(--signal-ink); font-weight: 700; }
+  .st-panel h4 { font-size: 1.4rem; margin: 8px 0 12px; } .st-panel > p { font-size: 1.02rem; color: var(--body); }
+  .st-analogy { margin-top: 16px; background: var(--surface-2); border-left: 3px solid var(--signal); border-radius: 0 10px 10px 0; padding: 13px 16px; font-size: .95rem; color: var(--body); }
+  .st-nav { display: flex; justify-content: space-between; gap: 12px; padding: 0 28px 26px; }
+  .st-nav button { font-size: .9rem; font-weight: 700; padding: 10px 18px; border-radius: 9px; cursor: pointer; border: 1px solid var(--line); background: var(--surface); color: var(--ink); }
+  .st-nav button:hover { border-color: var(--signal); } .st-nav .st-next { background: var(--signal); color: #04211D; border-color: var(--signal); }
+  .st-nav button[disabled] { opacity: .4; cursor: not-allowed; }
+
+  /* Accordion nativo */
+  details.acc { border: 1px solid var(--line); border-radius: 12px; background: var(--surface); overflow: hidden; }
+  details.acc + details.acc { margin-top: 10px; }
+  details.acc > summary { cursor: pointer; padding: 16px 20px; font-weight: 700; color: var(--ink); list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 1.02rem; }
+  details.acc > summary::-webkit-details-marker { display: none; }
+  details.acc > summary::after { content: "+"; color: var(--signal-ink); font-size: 1.3rem; font-weight: 700; }
+  details.acc[open] > summary::after { content: "\2013"; }
+  .acc-body { padding: 4px 20px 20px; }
+
+  /* Turnos */
+  .turn { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+  .turn-row { display: grid; grid-template-columns: 1fr 1fr; } @media (max-width: 720px) { .turn-row { grid-template-columns: 1fr; } }
+  .turn-side { padding: 20px 22px; } .turn-you { border-right: 1px solid var(--line); } .turn-claude { background: var(--surface-2); }
+  .turn-tag { display: inline-flex; align-items: center; gap: 7px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; font-weight: 600; margin-bottom: 10px; }
+  .turn-you .turn-tag { color: var(--human); } .turn-claude .turn-tag { color: var(--signal-ink); }
+  .turn-tag .pip { width: 8px; height: 8px; border-radius: 50%; } .turn-you .pip { background: var(--human); } .turn-claude .pip { background: var(--signal); }
+  .turn-side .say { font-size: .98rem; color: var(--ink); } .turn-side .say.mono { font-family: var(--mono); font-size: .88rem; color: var(--body); }
+
+  /* Cards */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow); }
+  .card .tag { font-family: var(--mono); font-size: 11px; text-transform: uppercase; color: var(--signal-ink); font-weight: 600; }
+  .card h4 { font-size: 1.05rem; margin: 6px 0 8px; } .card p { font-size: .93rem; color: var(--body); }
+  .card .q { font-family: var(--mono); font-size: .82rem; color: var(--body); background: var(--surface-2); border-radius: 9px; padding: 11px 13px; border: 1px solid var(--line); margin: 8px 0; }
+  .auto-item { display: grid; gap: 2px; padding: 10px 0; border-top: 1px solid var(--line); } .auto-item:first-of-type { border-top: none; }
+  .auto-item .man { font-size: .88rem; color: var(--muted); } .auto-item .aut { font-size: .88rem; color: var(--body); } .auto-item .aut b { color: var(--signal-ink); }
+
+  /* Regras / callout */
+  .rules-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+  .rule { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; border-top: 3px solid var(--signal); } .rule.hot { border-top-color: var(--human); }
+  .rule h4 { font-size: 1.05rem; margin-bottom: 7px; } .rule p { font-size: .92rem; color: var(--body); }
+  .callout { background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; }
+  .callout h4 { font-size: 1.1rem; margin-bottom: 8px; } .callout p { font-size: .97rem; color: var(--body); }
+  .note { font-size: .93rem; color: var(--body); background: var(--surface-2); border-radius: 10px; padding: 14px 16px; }
+  .src-note { font-size: 12px; color: var(--muted); margin-top: 18px; } .src-note a { color: var(--muted); text-decoration: underline; }
+
+  footer { padding: 40px 0; } footer .wrap { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; align-items: center; }
+  footer .muted { color: var(--muted); font-size: 13px; max-width: 60ch; }
+
+  .js .reveal { opacity: 0; transform: translateY(12px); }
+  .js .reveal.in { opacity: 1; transform: none; transition: opacity .5s ease, transform .5s ease; }
+  @media (prefers-reduced-motion: reduce) { .js .reveal { opacity: 1 !important; transform: none !important; } }
+  :focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; border-radius: 4px; }
+</style>
+
+<header class="topbar"><div class="wrap">
+  <div class="brand"><span class="dot" aria-hidden="true"></span><span>Central de Enablement</span></div>
+  <nav class="nav" aria-label="Seções">
+    <div class="nav-links"><a href="#trilhas">Trilhas</a><a href="#instalar">Instalar</a><a href="#fluxo">Fluxo</a></div>
+    <button class="toggle" id="themeToggle" aria-label="Alternar tema" title="Tema">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    </button>
+  </nav>
+</div></header>
+
+<!-- HERO: pergunta de abertura, uma frase, um CTA. Sem rótulo em cima do H1. -->
+<section class="hero" style="border-top:none;"><canvas id="wave" aria-hidden="true"></canvas><div class="wrap">
+  <div class="hero-inner">
+    <h1 class="reveal">Pergunta de abertura que a pessoa já se faz? <span class="hl">Resposta curta e direta.</span></h1>
+    <p class="lede reveal">Uma frase de contexto na voz do time (você/a gente), sem tagline de marketing.</p>
+    <div class="hero-cta reveal"><a href="#trilhas" class="btn btn-primary">CTA principal</a><a href="#instalar" class="btn btn-ghost">CTA secundário</a></div>
+  </div>
+</div></section>
+
+<!-- TRILHA + DOSSIÊ: ao clicar numa aba, o dossiê correspondente troca inteiro. -->
+<section id="trilhas"><div class="wrap">
+  <div class="sec-head reveal"><h2>Por onde você começa?</h2><p>Clica no seu perfil que o conteúdo muda.</p></div>
+  <div class="track-tabs reveal" role="tablist" aria-label="Trilhas">
+    <button class="track-tab" role="tab" aria-selected="true" aria-controls="dossie-a" id="tab-a"><span class="ico" aria-hidden="true">🌱</span><span class="tt"><strong>Perfil A</strong><span>subtítulo</span></span></button>
+    <button class="track-tab" role="tab" aria-selected="false" aria-controls="dossie-b" id="tab-b" tabindex="-1"><span class="ico" aria-hidden="true">🛠️</span><span class="tt"><strong>Perfil B</strong><span>subtítulo</span></span></button>
+  </div>
+  <div class="dossier reveal" id="dossie-a" role="tabpanel" aria-labelledby="tab-a" tabindex="0">
+    <h3>Título do dossiê A</h3><p class="d-foco">Foco desta trilha, uma linha.</p>
+    <div class="dpoints">
+      <article class="dpoint"><div class="dp-num">1</div><div class="dp-body"><h4>Ponto com exemplo</h4><p>Explicação curta na voz do time.</p><a class="dp-more" href="#instalar">Aprofundar →</a></div></article>
+    </div>
+  </div>
+  <div class="dossier reveal" id="dossie-b" role="tabpanel" aria-labelledby="tab-b" tabindex="0" hidden>
+    <h3>Título do dossiê B</h3><p class="d-foco">Foco do perfil B.</p>
+    <div class="dpoints"><article class="dpoint"><div class="dp-num">1</div><div class="dp-body"><h4>Outro ponto</h4><p>Conteúdo próprio deste perfil.</p></div></article></div>
+  </div>
+</div></section>
+
+<!-- WIZARD TRAVADO: o próximo passo só abre quando o anterior é marcado. Salva progresso. -->
+<section id="instalar"><div class="wrap">
+  <div class="sec-head reveal"><h2>Bora deixar tudo pronto.</h2><p>Marca cada passo — <span class="lead-q">o próximo só abre depois</span>.</p></div>
+  <div class="wizard reveal" id="wizard">
+    <div class="wz-top"><span class="lbl">Progresso: <b id="wz-count">0</b> de 2</span><span class="wz-progress"><span class="wz-bar" id="wz-bar"></span></span></div>
+    <div class="wz-step"><span class="wz-check" role="button" tabindex="0" aria-label="Concluir passo"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><div class="wz-body"><h4>1. Primeiro passo</h4><p>Descrição. Botão de download opcional.</p><a class="db" href="#" target="_blank" rel="noopener">Baixar ↗</a></div></div>
+    <div class="wz-step"><span class="wz-check" role="button" tabindex="0" aria-label="Concluir passo"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><div class="wz-body"><h4>2. Segundo passo</h4><p>Descrição do segundo passo.</p></div></div>
+    <div class="wz-done-msg">Pronto! 🎉 Mensagem de conclusão com link pro próximo trecho.</div>
+  </div>
+</div></section>
+
+<!-- STEPPER: ensina um fluxo. Cada etapa = conceito + analogia + o que pedir. -->
+<section id="fluxo"><div class="wrap">
+  <div class="sec-head reveal"><h2>Um fluxo sem susto.</h2><p><span class="lead-q">Clica em cada etapa</span> e vê o que é.</p></div>
+  <div class="stepper reveal" id="stepper">
+    <div class="st-dots" role="tablist" aria-label="Etapas">
+      <button class="st-dot" role="tab" aria-current="true"><span class="n">1</span> Etapa 1</button>
+      <button class="st-dot" role="tab" aria-current="false"><span class="n">2</span> Etapa 2</button>
+    </div>
+    <div class="st-panel" role="tabpanel"><span class="word">Etapa 1</span><h4>Nome em linguagem simples.</h4><p>O que é, sem jargão.</p><div class="st-analogy"><b>Pensa assim:</b> uma analogia do dia a dia.</div></div>
+    <div class="st-panel" role="tabpanel" hidden><span class="word">Etapa 2</span><h4>Segunda etapa.</h4><p>Explicação.</p></div>
+    <div class="st-nav"><button class="st-prev" type="button">← Voltar</button><button class="st-next" type="button">Próximo →</button></div>
+  </div>
+  <p class="note reveal" style="margin-top:16px;">Fecho na voz do time: "Não precisa decorar. É só pedir: <span class="code">me guia nisso</span>."</p>
+</div></section>
+
+<!-- ACCORDION: esconde profundidade. TURNOS e CARDS abaixo como referência de markup. -->
+<section><div class="wrap">
+  <div class="sec-head reveal"><h2>Profundidade sob demanda.</h2></div>
+  <details class="acc reveal"><summary>Abrir: conteúdo extra</summary><div class="acc-body">
+    <div class="turn"><div class="turn-row">
+      <div class="turn-side turn-you"><span class="turn-tag"><span class="pip"></span>Você diz</span><p class="say">"Exemplo do que você pede."</p></div>
+      <div class="turn-side turn-claude"><span class="turn-tag"><span class="pip"></span>Ele faz</span><p class="say mono">O que ele devolve.</p></div>
+    </div></div>
+    <div class="grid" style="margin-top:16px;">
+      <div class="card"><span class="tag">Papel</span><h4>Card de exemplo</h4><p class="q">Um pedido pronto pra copiar.</p></div>
+      <div class="card"><span class="tag">Automação</span><h4>Manual → auto</h4><div class="auto-item"><span class="man">Manual: tarefa chata</span><span class="aut"><b>Auto:</b> como o Claude faz</span></div></div>
+    </div>
+  </div></details>
+  <p class="src-note reveal">Rodapé de fonte quando usar fato externo: <a href="#">link oficial</a>.</p>
+</div></section>
+
+<footer><div class="wrap">
+  <div><div class="brand" style="margin-bottom:8px;"><span class="dot" aria-hidden="true"></span><span>Central de Enablement</span></div><p class="muted">Crédito do time + fontes. Material vivo.</p></div>
+  <span style="font-family:var(--mono);font-size:12px;color:var(--muted);">v0.1</span>
+</div></footer>
+
+<script>
+  document.documentElement.classList.add('js');
+
+  (function () { var r = document.documentElement, b = document.getElementById('themeToggle');
+    function c() { return r.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); }
+    b && b.addEventListener('click', function () { r.dataset.theme = c() === 'dark' ? 'light' : 'dark'; }); })();
+
+  // Trilha: troca o dossiê inteiro. Adicione ids em `map` conforme suas abas/dossiês.
+  (function () {
+    var tabs = [].slice.call(document.querySelectorAll('.track-tab'));
+    var map = { 'tab-a': 'dossie-a', 'tab-b': 'dossie-b' };
+    function sel(t) { tabs.forEach(function (x) { var on = x === t; x.setAttribute('aria-selected', on ? 'true' : 'false'); x.tabIndex = on ? 0 : -1; var d = document.getElementById(map[x.id]); if (d) d.hidden = !on; }); }
+    tabs.forEach(function (t, i) { t.addEventListener('click', function () { sel(t); });
+      t.addEventListener('keydown', function (e) { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); var n = tabs[(i + (e.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length]; sel(n); n.focus(); } }); });
+    var init = tabs.filter(function (t) { return t.getAttribute('aria-selected') === 'true'; })[0] || tabs[0]; if (init) sel(init);
+  })();
+
+  // Wizard: passos travados + progresso salvo. Troque a KEY por página.
+  (function () {
+    var wz = document.getElementById('wizard'); if (!wz) return;
+    var steps = [].slice.call(wz.querySelectorAll('.wz-step')), bar = document.getElementById('wz-bar'), count = document.getElementById('wz-count');
+    var KEY = 'enablement-wizard', done = 0; try { done = parseInt(localStorage.getItem(KEY) || '0', 10) || 0; } catch (e) {}
+    done = Math.max(0, Math.min(steps.length, done));
+    function render() { steps.forEach(function (s, i) { s.classList.toggle('done', i < done); s.classList.toggle('locked', i > done); });
+      bar.style.width = Math.round(done / steps.length * 100) + '%'; if (count) count.textContent = done; wz.classList.toggle('complete', done >= steps.length);
+      try { localStorage.setItem(KEY, String(done)); } catch (e) {} }
+    steps.forEach(function (s, i) { var chk = s.querySelector('.wz-check');
+      function tg() { if (i > done) return; done = (i === done) ? i + 1 : i; render(); }
+      chk.addEventListener('click', tg); chk.addEventListener('keydown', function (e) { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); tg(); } }); });
+    render();
+  })();
+
+  // Stepper: dots + voltar/próximo.
+  (function () {
+    var st = document.getElementById('stepper'); if (!st) return;
+    var dots = [].slice.call(st.querySelectorAll('.st-dot')), panels = [].slice.call(st.querySelectorAll('.st-panel'));
+    var prev = st.querySelector('.st-prev'), next = st.querySelector('.st-next'), cur = 0;
+    function show(n) { cur = Math.max(0, Math.min(panels.length - 1, n)); panels.forEach(function (p, i) { p.hidden = i !== cur; });
+      dots.forEach(function (d, i) { d.setAttribute('aria-current', i === cur ? 'true' : 'false'); }); prev.disabled = cur === 0; next.textContent = cur === panels.length - 1 ? 'Recomeçar ↺' : 'Próximo →'; }
+    dots.forEach(function (d, i) { d.addEventListener('click', function () { show(i); }); });
+    prev.addEventListener('click', function () { show(cur - 1); }); next.addEventListener('click', function () { show(cur === panels.length - 1 ? 0 : cur + 1); }); show(0);
+  })();
+
+  // Reveal on scroll
+  (function () { var els = document.querySelectorAll('.reveal'); if (!('IntersectionObserver' in window)) { els.forEach(function (el) { el.classList.add('in'); }); return; }
+    var io = new IntersectionObserver(function (es) { es.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } }); }, { rootMargin: '0px 0px -6% 0px', threshold: 0.06 });
+    els.forEach(function (el) { io.observe(el); }); })();
+
+  // Onda de sinal no hero (telecom). Respeita reduced-motion.
+  (function () { var c = document.getElementById('wave'); if (!c) return; var x = c.getContext('2d'), rd = matchMedia('(prefers-reduced-motion: reduce)').matches, w, h, dpr;
+    function ac() { return getComputedStyle(document.documentElement).getPropertyValue('--signal').trim() || '#0C8F7E'; }
+    function rz() { dpr = Math.min(devicePixelRatio || 1, 2); var r = c.getBoundingClientRect(); w = r.width; h = r.height; c.width = w * dpr; c.height = h * dpr; x.setTransform(dpr, 0, 0, dpr, 0, 0); }
+    rz(); addEventListener('resize', rz);
+    function dr(t) { x.clearRect(0, 0, w, h); var col = ac(); for (var l = 0; l < 3; l++) { x.beginPath(); var a = 15 + l * 9, yb = h * (0.56 + l * 0.11), sp = rd ? 0 : t * (0.0004 + l * 0.00015), fq = 0.006 + l * 0.0018;
+      for (var px = 0; px <= w; px += 6) { var y = yb + Math.sin(px * fq + sp) * a + Math.sin(px * fq * 0.5 + sp * 1.6) * a * 0.4; px === 0 ? x.moveTo(px, y) : x.lineTo(px, y); }
+      x.strokeStyle = col; x.globalAlpha = 0.15 - l * 0.035; x.lineWidth = 2; x.stroke(); } x.globalAlpha = 1; }
+    if (rd) { dr(0); return; } (function lp(t) { dr(t); requestAnimationFrame(lp); })(0);
+  })();
+</script>
